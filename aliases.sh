@@ -1,6 +1,9 @@
 #########################
-##    Aliases v1.0     ##
+##    Aliases v1.1     ##
 #########################
+
+# aliases for repo
+alias alias_update="cd ~/.aliases && git pull && cd -"
 
 # Utils Short Commands
 alias s='git status'
