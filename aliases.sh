@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.3     ##
+##    Aliases v1.5     ##
 #########################
 
 # aliases for repo
@@ -69,7 +69,7 @@ ccd() {
 mkcd() {
     if [ ! -d "$1" ]; then
         mkdir $1; cd $1;
-        echo "directory created successfully, you are here $(pwd) now"
+        echo "directory created successfully, you are in $(pwd) now"
         return true
     fi
 
@@ -84,6 +84,14 @@ storage(){
 
 help(){
     wget -qO- http://cheat.sh/$1 | less
+}
+
+pack(){
+    tar -czf pack-$(date '+%Y%m%d%H%M%S').tar.gz $1
+}
+
+unpack(){
+    tar -xzf $1
 }
 
 ####
