@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.5     ##
+##    Aliases v1.6     ##
 #########################
 
 # aliases for repo
@@ -60,6 +60,14 @@ dumpMongo() {
     mongodump --db $DATABASE --out $DIR
 
     echo "dumped in $DIR"
+}
+
+install() {
+    sudo apt-get update && sudo apt-get install $1 -y
+}
+
+uninstall() {
+    sudo apt-get remove $1 -y && sudo apt-get purge $1
 }
 
 ccd() {
