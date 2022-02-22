@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.7     ##
+##    Aliases v1.8     ##
 #########################
 
 # aliases for repo
@@ -41,6 +41,13 @@ alias limpar=clear
 alias limpa=clear
 alias clea=clear
 alias rl="clear & ls -la"
+
+
+# check if bat is installed
+if command -v batcat &> /dev/null
+then
+    alias bat="batcat"
+fi
 
 dumpMongo() {
     PATH_TO_DUMP="$HOME/dumps/"
