@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.8     ##
+##    Aliases v1.10    ##
 #########################
 
 # aliases for repo
@@ -19,6 +19,7 @@ alias clears='clear; git status'
 alias workspace='cd ~/Projects/'
 alias ws=workspace
 alias :q="exit"
+alias :Q="exit"
 alias vimconfig="vim ~/.vimrc"
 alias vc=vimconfig
 alias static_server='docker run --name "$(basename $(pwd))_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'
@@ -149,3 +150,7 @@ open() {
 ####################
 # alias mysql=/usr/local/mysql/bin/mysql
 # alias ar='sudo apachectl restart'
+
+
+echo "[ $(whoami) ]"
+
