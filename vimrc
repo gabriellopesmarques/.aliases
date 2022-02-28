@@ -97,7 +97,7 @@ nnoremap <M-Right> :bn<cr>
 nnoremap <M-Left>  :bp<cr>
 
 "reindent
-map <F7> gg=G<C-o><C-o>
+map <F9> gg=G
 
 "fzf shortcut
 nnoremap <silent> <C-p> :GFiles<CR>
