@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.10    ##
+##    Aliases v1.11    ##
 #########################
 
 # aliases for repo
@@ -71,6 +71,10 @@ dumpMongo() {
     mongodump --db $DATABASE --out $DIR
 
     echo "dumped in $DIR"
+}
+
+md5(){
+    echo -n $1 | md5sum
 }
 
 install() {
