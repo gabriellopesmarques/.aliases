@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.11    ##
+##    Aliases v1.12    ##
 #########################
 
 # aliases for repo
@@ -115,6 +115,11 @@ pack(){
 
 unpack(){
     tar -xzf $1
+}
+
+rememberme(){
+    INTERVAL="${2:-1 minutes}"
+    echo "notify-send '» remember' \"$1\"" | at now + $INTERVAL
 }
 
 ####
