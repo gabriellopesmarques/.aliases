@@ -96,6 +96,10 @@ let g:vimade.basebg='#0a0a0a'
 nnoremap <M-Right> :bn<cr>
 nnoremap <M-Left>  :bp<cr>
 
+" toggle comments
+nmap <C-_>   <Plug>NERDCommenterToggle
+vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
+
 "reindent
 map <F9> gg=G
 

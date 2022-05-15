@@ -122,6 +122,10 @@ rememberme(){
     echo "notify-send '» remember' \"$1\"" | at now + $INTERVAL
 }
 
+composer(){
+    docker run --rm --interactive --tty --volume $PWD:/app --user $(id -u):$(id -g) composer $@
+} 
+
 ####
 # Docker aliases
 ####################
