@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.12    ##
+##    Aliases v1.13    ##
 #########################
 
 # aliases for repo
@@ -49,6 +49,10 @@ if command -v batcat &> /dev/null
 then
     alias bat="batcat"
 fi
+
+cc(){
+    xclip -sel clip $1
+}
 
 dumpMongo() {
     PATH_TO_DUMP="$HOME/dumps/"

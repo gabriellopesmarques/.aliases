@@ -91,6 +91,8 @@ let g:vimade.basebg='#0a0a0a'
 
 
 "# mappings
+" copy to clipboard
+vnoremap <silent><Leader>y "yy <Bar> :call system('xclip -sel clip', @y)<CR>
 
 " navigate between buffers
 nnoremap <M-Right> :bn<cr>
