@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.13    ##
+##    Aliases v1.14    ##
 #########################
 
 # aliases for repo
@@ -16,12 +16,16 @@ alias ac='git commit -a -m $1'
 alias b='git branch -a'
 alias co='git checkout $1'
 alias clears='clear; git status'
+alias downloads="cd ~/Downloads"
+alias dl="downloads"
 alias workspace='cd ~/Projects/'
 alias ws=workspace
 alias :q="exit"
 alias :Q="exit"
-alias vimconfig="vim ~/.vimrc"
+alias vimconfig="vim ~/.aliases/vimrc"
 alias vc=vimconfig
+alias tmux="tmux -2"
+alias ae="vim ~/.aliases/aliases.sh"
 alias static_server='docker run --name "$(basename $(pwd))_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'
 alias php56_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:5.6-apache'
 alias php71_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.1-apache'
