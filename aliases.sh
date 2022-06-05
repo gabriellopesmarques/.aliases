@@ -142,9 +142,9 @@ dps(){
     echo "NAME|IMAGE|PORTS" | cat - <(docker ps --format "{{.Names}}|{{.Image}}|{{.Ports}}\n") | column -t -s "|"
 }
 
-alias dcu="docker-compose up -d"
-alias dcub="docker-compose up -d --build"
-alias dcd="docker-compose down"
+alias dcu="docker compose up -d"
+alias dcub="docker compose up -d --build"
+alias dcd="docker compose down"
 alias dpsa="docker ps -a"
 
 ####
