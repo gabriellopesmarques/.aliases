@@ -1,6 +1,9 @@
 #########################
-##    Aliases v1.16    ##
+##    Aliases v1.17    ##
 #########################
+
+# add current directory on path
+PATH=.:$PATH
 
 # aliases for repo
 alias alias_update="cd ~/.aliases && git pull && cd -"
