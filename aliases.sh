@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.14    ##
+##    Aliases v1.15    ##
 #########################
 
 # aliases for repo
@@ -56,6 +56,15 @@ fi
 
 cc(){
     xclip -sel clip $1
+}
+
+import_shortcuts(){
+    ~/.aliases/keybinding-gnome.pl -i ~/.aliases/gnome-shortcuts.conf
+}
+
+export_shortcuts(){
+    ~/.aliases/keybinding-gnome.pl -e ~/.aliases/gnome-shortcuts.conf && \
+    echo "successfully exported! :D"
 }
 
 dumpMongo() {
