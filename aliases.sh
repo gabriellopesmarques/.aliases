@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.15    ##
+##    Aliases v1.16    ##
 #########################
 
 # aliases for repo
@@ -24,6 +24,7 @@ alias :q="exit"
 alias :Q="exit"
 alias vimconfig="vim ~/.aliases/vimrc"
 alias vc=vimconfig
+alias vim_install="vim +PlugInstall +qall"
 alias tmux="tmux -2"
 alias ae="vim ~/.aliases/aliases.sh"
 alias static_server='docker run --name "$(basename $(pwd))_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'

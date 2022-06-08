@@ -27,6 +27,7 @@ call plug#begin()
     Plug 'jiangmiao/auto-pairs'
     Plug 'vim-airline/vim-airline'
     Plug 'editorconfig/editorconfig-vim'
+    Plug 'airblade/vim-gitgutter'
     Plug 'mattn/emmet-vim'
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -48,7 +49,7 @@ filetype plugin on
 set clipboard=unnamedplus
 
 " theme
-colorscheme nord "https://www.nordtheme.com/docs/ports/vim
+silent! colorscheme nord "https://www.nordtheme.com/docs/ports/vim
 
 " editor config
 syntax enable
