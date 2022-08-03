@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.17    ##
+##    Aliases v1.19    ##
 #########################
 
 # add current directory on path
@@ -50,6 +50,7 @@ alias limpar=clear
 alias limpa=clear
 alias clea=clear
 alias rl="clear & ls -la"
+alias osls="hostnamectl"
 
 
 # check if bat is installed
@@ -57,6 +58,11 @@ if command -v batcat &> /dev/null
 then
     alias bat="batcat"
 fi
+
+delete_branch(){
+    git branch -d $1 && \
+    git push origin --delete $1
+}
 
 cc(){
     xclip -sel clip $1
