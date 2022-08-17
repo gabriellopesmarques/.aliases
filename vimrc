@@ -28,6 +28,7 @@ call plug#begin()
     Plug 'vim-airline/vim-airline'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'airblade/vim-gitgutter'
+    Plug 'zivyangll/git-blame.vim'
     Plug 'mattn/emmet-vim'
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -98,6 +99,7 @@ vnoremap <silent><Leader>y "yy <Bar> :call system('xclip -sel clip', @y)<CR>
 " navigate between buffers
 nnoremap <M-Right> :bn<cr>
 nnoremap <M-Left>  :bp<cr>
+nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
 
 " toggle comments
 nmap <C-_>   <Plug>NERDCommenterToggle
