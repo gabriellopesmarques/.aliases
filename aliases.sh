@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.19    ##
+##    Aliases v1.20    ##
 #########################
 
 # add current directory on path
@@ -19,6 +19,7 @@ alias ac='git commit -a -m $1'
 alias b='git branch -a'
 alias co='git checkout $1'
 alias clears='clear; git status'
+alias rank="sort | uniq -c | sort -nr"
 alias downloads="cd ~/Downloads"
 alias dl="downloads"
 alias workspace='cd ~/Projects/'
