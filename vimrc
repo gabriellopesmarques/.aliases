@@ -126,3 +126,6 @@ command W w
 command Q q
 command QW wq
 
+" load coc configs
+source ~/.aliases/cocrc
+
