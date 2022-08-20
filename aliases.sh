@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.20    ##
+##    Aliases v1.21    ##
 #########################
 
 # add current directory on path
@@ -30,6 +30,7 @@ alias vimconfig="vim ~/.aliases/vimrc"
 alias vc=vimconfig
 alias vim_install="vim +PlugInstall +qall"
 alias tmux="tmux -2"
+alias tl="tmux ls"
 alias ae="vim ~/.aliases/aliases.sh"
 alias static_server='docker run --name "$(basename $(pwd))_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'
 alias php56_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:5.6-apache'
