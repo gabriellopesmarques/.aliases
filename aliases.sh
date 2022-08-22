@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.21    ##
+##    Aliases v1.23    ##
 #########################
 
 # add current directory on path
@@ -37,6 +37,8 @@ alias php56_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "
 alias php71_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.1-apache'
 alias php72_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.2-apache'
 alias php80_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.0-apache'
+alias docker_images_size='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -r -k 2 -h'
+alias reload="source ~/.zshrc"
 
 # dummy ways to write clear
 alias claer=clear
@@ -52,7 +54,6 @@ alias limpar=clear
 alias limpa=clear
 alias clea=clear
 alias rl="clear & ls -la"
-alias osls="hostnamectl"
 
 
 # check if bat is installed
