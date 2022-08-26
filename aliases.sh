@@ -4,6 +4,7 @@
 
 # add current directory on path
 PATH=.:$PATH
+HISTCONTROL=ignoreboth # ignore spaces and duplicated commands (ignorespace, ignoredups)
 
 # aliases for repo
 alias alias_update="cd ~/.aliases && git pull && cd -"
@@ -32,13 +33,9 @@ alias vim_install="vim +PlugInstall +qall"
 alias tmux="tmux -2"
 alias tl="tmux ls"
 alias ae="vim ~/.aliases/aliases.sh"
-alias static_server='docker run --name "$(basename $(pwd))_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'
-alias php56_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:5.6-apache'
-alias php71_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.1-apache'
-alias php72_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.2-apache'
-alias php80_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.0-apache'
-alias docker_images_size='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -r -k 2 -h'
 alias reload="source ~/.zshrc"
+alias weather="curl https://wttr.in/\?format\=1"
+
 
 # dummy ways to write clear
 alias claer=clear
@@ -149,17 +146,34 @@ unpack(){
 
 rememberme(){
     INTERVAL="${2:-1 minutes}"
+    # if doesnt works install libnotify-bin
     echo "notify-send '» remember' \"$1\"" | at now + $INTERVAL
 }
 
 composer(){
     docker run --rm --interactive --tty --volume $PWD:/app --user $(id -u):$(id -g) composer $@
-} 
+}
+
+tmux_dev(){
+    SESSION_NAME=$1
+    WORK_DIR=$2
+
+    # create session, windows and panels
+    tmux new-session -s $SESSION_NAME -n editor -d 
+    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; vim ." C-m
+    tmux new-window -n zsh -t $SESSION_NAME
+    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; docker ps" C-m
+    tmux split-window -v -t $SESSION_NAME
+    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; git status" C-m
+    tmux split-window -h -t $SESSION_NAME
+    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear" C-m
+
+    tmux attach -t $1
+}
 
 ####
 # Docker aliases
 ####################
-
 dps(){
     echo "NAME|IMAGE|PORTS" | cat - <(docker ps --format "{{.Names}}|{{.Image}}|{{.Ports}}\n") | column -t -s "|"
 }
@@ -168,34 +182,23 @@ alias dcu="docker compose up -d"
 alias dcub="docker compose up -d --build"
 alias dcd="docker compose down"
 alias dpsa="docker ps -a"
+alias di="docker images"
+alias dv="docker volume ls"
+alias docker_images_size='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -r -k 2 -h'
+
+# fast services
+alias static_server='docker run --name "$(basename $(pwd))_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'
+alias php56_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:5.6-apache'
+alias php71_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.1-apache'
+alias php72_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.2-apache'
+alias php80_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.0-apache'
 
 ####
-# Linux
+# Gnome
 ####################
-# alias ar='sudo service apache2 restart'
-
-# Switch PHP
-# alias php56='sudo a2dismod php5.6; sudo a2dismod php7.1; sudo a2dismod php7.2; sudo a2dismod php7.0; sudo a2enmod php5.6; sudo service apache2 restart; sudo update-alternatives --set php /usr/bin/php5.6; clear; php -v;'
-# alias php70='sudo a2dismod php5.6; sudo a2dismod php7.1; sudo a2dismod php7.2; sudo a2dismod php7.0; sudo a2enmod php7.0; sudo service apache2 restart; sudo update-alternatives --set php /usr/bin/php7.0; clear; php -v;'
-# alias php71='sudo a2dismod php5.6; sudo a2dismod php7.1; sudo a2dismod php7.2; sudo a2dismod php7.0; sudo a2enmod php7.1; sudo service apache2 restart; sudo update-alternatives --set php /usr/bin/php7.1; clear; php -v;'
-# alias php72='sudo a2dismod php5.6; sudo a2dismod php7.1; sudo a2dismod php7.2; sudo a2dismod php7.0; sudo a2enmod php7.2; sudo service apache2 restart; sudo update-alternatives --set php /usr/bin/php7.2; clear; php -v;'
-
-## XFCE open WM
-# open() {
-#     thunar $1 > /dev/null 2>&1 &
-# }
-
-# GNOME open WM
 open() {
     nautilus --new-window $1 > /dev/null 2>&1 &
 }
-
-####
-# macOs
-####################
-# alias mysql=/usr/local/mysql/bin/mysql
-# alias ar='sudo apachectl restart'
-
 
 echo "[ $(whoami) ]"
 
