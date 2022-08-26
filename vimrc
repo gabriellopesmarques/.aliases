@@ -85,6 +85,12 @@ set nowrap
 " guide line to max 80 characters per line
 set colorcolumn=80
 
+" search on the fly
+set incsearch
+
+" show menu instead search by tab
+set wildmenu
+
 "set configs to vimade
 let g:vimade = {}
 let g:vimade.fadelevel = 0.3
