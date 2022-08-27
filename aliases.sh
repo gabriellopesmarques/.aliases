@@ -28,11 +28,12 @@ alias ws=workspace
 alias :q="exit"
 alias :Q="exit"
 alias vimconfig="vim ~/.aliases/vimrc"
-alias vc=vimconfig
 alias vim_install="vim +PlugInstall +qall"
+alias vc=vimconfig
+alias ac="vim ~/.aliases/aliases.sh"
+alias zc="vim ~/.zshrc"
 alias tmux="tmux -2"
 alias tl="tmux ls"
-alias ae="vim ~/.aliases/aliases.sh"
 alias reload="source ~/.zshrc"
 alias weather="curl https://wttr.in/\?format\=1"
 
