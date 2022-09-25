@@ -8,8 +8,7 @@ cd ~
 git clone <repo>
 ```
 
-
-### load aliases
+### using only aliases
 
 #### zsh
 ```
@@ -20,3 +19,27 @@ echo "source ~/.aliases/aliases.sh" >> ~/.zshrc
 ```
 echo "source ~/.aliases/aliases.sh" >> ~/.bashrc
 ```
+
+
+### all env
+
+#### i3wm
+```
+./i3/install.sh
+```
+
+#### zsh
+```
+./oh-my-zsh/install.sh
+```
+
+#### tmux
+```
+./tmux/install.sh
+```
+
+#### vim
+```
+./vim/install.sh
+```
+
