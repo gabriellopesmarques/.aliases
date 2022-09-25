@@ -22,8 +22,8 @@ call plug#begin()
 
     " customize editor
     Plug 'preservim/nerdcommenter'
-    Plug 'TaDaa/vimade'
     Plug 'Yggdroot/indentLine'
+    "Plug 'TaDaa/vimade'
     Plug 'jiangmiao/auto-pairs'
     Plug 'vim-airline/vim-airline'
     Plug 'editorconfig/editorconfig-vim'

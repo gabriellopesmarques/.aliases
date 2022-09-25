@@ -28,7 +28,6 @@ alias ws=workspace
 alias :q="exit"
 alias :Q="exit"
 alias vimconfig="vim ~/.aliases/vimrc"
-alias vim_install="vim +PlugInstall +qall"
 alias vc=vimconfig
 alias ac="vim ~/.aliases/aliases.sh"
 alias zc="vim ~/.zshrc"

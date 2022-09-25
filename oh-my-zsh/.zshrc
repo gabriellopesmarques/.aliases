@@ -5,7 +5,6 @@ ZSH_THEME="x"
 plugins=(
     git
     zsh-autosuggestions
-    zsh-syntax-highlighting
 )
 
 # imports
