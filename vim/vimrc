@@ -23,7 +23,6 @@ call plug#begin()
     " customize editor
     Plug 'preservim/nerdcommenter'
     Plug 'Yggdroot/indentLine'
-    "Plug 'TaDaa/vimade'
     Plug 'jiangmiao/auto-pairs'
     Plug 'vim-airline/vim-airline'
     Plug 'editorconfig/editorconfig-vim'
@@ -91,12 +90,6 @@ set incsearch
 " show menu instead search by tab
 set wildmenu
 
-"set configs to vimade
-let g:vimade = {}
-let g:vimade.fadelevel = 0.3
-let g:vimade.enablesigns = 1
-let g:vimade.basebg='#0a0a0a'
-
 
 "# mappings
 " copy to clipboard
@@ -133,5 +126,5 @@ command Q q
 command QW wq
 
 " load coc configs
-source ~/.aliases/cocrc
+source ~/.aliases/vim/cocrc
 
