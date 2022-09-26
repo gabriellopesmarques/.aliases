@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## install vim
-sudo apt-get install curl vim -y
+sudo apt-get install git curl vim -y
 
 ## install plug.vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
