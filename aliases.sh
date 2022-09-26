@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.23    ##
+##    Aliases v1.24    ##
 #########################
 
 # add current directory on path
@@ -31,6 +31,7 @@ alias vimconfig="vim ~/.aliases/vim/vimrc"
 alias vc=vimconfig
 alias ac="vim ~/.aliases/aliases.sh"
 alias zc="vim ~/.zshrc"
+alias ic="vim ~/.aliases/i3/i3.conf"
 alias tmux="tmux -2"
 alias tl="tmux ls"
 alias reload="source ~/.zshrc"
