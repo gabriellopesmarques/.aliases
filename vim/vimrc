@@ -124,6 +124,7 @@ command Wq wq
 command W w
 command Q q
 command QW wq
+command Vsp vsp
 
 " load coc configs
 source ~/.aliases/vim/cocrc
