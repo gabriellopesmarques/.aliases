@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.24    ##
+##    Aliases v1.25    ##
 #########################
 
 # add current directory on path
@@ -7,6 +7,7 @@ PATH=.:$PATH
 HISTCONTROL=ignoreboth # ignore spaces and duplicated commands (ignorespace, ignoredups)
 
 # aliases for repo
+alias aliases="cd ~/.aliases"
 alias alias_update="cd ~/.aliases && git pull && cd -"
 
 # Utils Short Commands
@@ -138,16 +139,16 @@ help(){
 }
 
 pack(){
-    tar -czf pack-$(date '+%Y%m%d%H%M%S').tar.gz $1
+    tar -cvzf pack-$1-$(date '+%Y%m%d%H%M%S').tar.gz $1
 }
 
 unpack(){
-    tar -xzf $1
+    tar -xvzf $1
 }
 
 rememberme(){
     INTERVAL="${2:-1 minutes}"
-    # if doesnt works install libnotify-bin
+    # sudo apt-get install libnotify-bin at -y
     echo "notify-send '» remember' \"$1\"" | at now + $INTERVAL
 }
 
