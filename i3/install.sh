@@ -15,3 +15,9 @@ mkdir -p ~/.config/i3status
 # link config file
 ln -s ~/.aliases/i3/i3status.conf  ~/.config/i3status/config
 
+# create dunst config directory
+mkdir -p ~/.config/dunst/
+
+# link config file
+ln -s ~/.aliases/i3/dunstrc  ~/.config/dunst/dunstrc
+
