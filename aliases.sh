@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.25    ##
+##    Aliases v1.27    ##
 #########################
 
 # add current directory on path
@@ -43,6 +43,7 @@ alias weather="curl https://wttr.in/\?format\=1"
 alias claer=clear
 alias cl='clear && ls'
 alias cll='clear && ls -lA'
+alias dll='dl; l'
 alias ckear=clear
 alias clearl='clear && ls'
 alias lear=clear
@@ -68,6 +69,20 @@ delete_branch(){
 
 cc(){
     xclip -sel clip $1
+}
+
+download_magnet(){
+    # sudo apt-get install aria2
+    if ! [[ $1 =~ "magnet" ]]; then
+        echo "arg 1 should be a magnet link"
+        return 1;
+    fi
+
+    aria2c -d ~/Downloads --seed-ratio="2.0" $1
+}
+
+download_torrent(){
+    aria2c -d ~/Downloads --seed-ratio="2.0" --torrent-file=$1
 }
 
 import_shortcuts(){
