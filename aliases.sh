@@ -36,14 +36,16 @@ alias ic="vim ~/.aliases/i3/i3.conf"
 alias tmux="tmux -2"
 alias tl="tmux ls"
 alias reload="source ~/.zshrc"
-alias weather="curl https://wttr.in/\?format\=1"
+alias dc="cd"
+alias dll='dl; l'
 
+alias weather="curl https://wttr.in/\?format\=1"
+alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
 
 # dummy ways to write clear
 alias claer=clear
 alias cl='clear && ls'
 alias cll='clear && ls -lA'
-alias dll='dl; l'
 alias ckear=clear
 alias clearl='clear && ls'
 alias lear=clear
