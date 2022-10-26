@@ -12,8 +12,16 @@
 "
 "
 
+" help key-notation to define shortcuts
+
 " set encoding
 set encoding=utf-8
+
+" fold
+"" zM - all collapse
+"" zR - all reveal
+"" za - toggle
+set foldmethod=indent
 
 " plugins
 call plug#begin()
@@ -96,11 +104,19 @@ set wildmenu
 vnoremap <silent><Leader>y "yy <Bar> :call system('xclip -sel clip', @y)<CR>
 
 " navigate between buffers
-nnoremap <M-Right> :bn<cr>
-nnoremap <M-Left>  :bp<cr>
+"" buffer next default: Ctrl + O, but include lines too
+nnoremap <F10> :bn<cr>
+"" buffer previous default: Ctrl + I
+nnoremap <F12> :bp<cr>
+
+" navigate between tabs
+nnoremap <Leader><Tab> :tabnext<CR>
+nnoremap <Leader><S-Tab> :tabprevious<CR>
+
+" git blame
 nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
 
-" toggle comments
+" toggle comments (ctrl + /)
 nmap <C-_>   <Plug>NERDCommenterToggle
 vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
 
@@ -125,6 +141,7 @@ command W w
 command Q q
 command QW wq
 command Vsp vsp
+command E e
 
 " load coc configs
 source ~/.aliases/vim/cocrc
