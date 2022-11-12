@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.27    ##
+##    Aliases v1.28    ##
 #########################
 
 # add current directory on path
@@ -41,13 +41,14 @@ alias dll='dl; l'
 
 alias weather="curl https://wttr.in/\?format\=1"
 alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
+alias calendar="dialog --calendar 'calendar' 0 0"
 
 # dummy ways to write clear
 alias claer=clear
-alias cl='clear && ls'
-alias cll='clear && ls -lA'
+alias cl='clear; ls'
+alias cll='clear; ls -lA'
 alias ckear=clear
-alias clearl='clear && ls'
+alias clearl='clear; ls'
 alias lear=clear
 alias ear=clear
 alias cear=clear
@@ -133,7 +134,7 @@ install() {
 }
 
 uninstall() {
-    sudo apt-get remove $1 -y && sudo apt-get purge $1
+    sudo apt-get purge $1
 }
 
 ccd() {
