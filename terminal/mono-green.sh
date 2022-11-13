@@ -8,7 +8,7 @@ export COLOR_04="#0BFF00"           # Yellow
 export COLOR_05="#0BFF00"           # Blue
 export COLOR_06="#0BFF00"           # Magenta
 export COLOR_07="#0BFF00"           # Cyan
-export COLOR_08="#0BFF00"           # Light gray
+export COLOR_08="#0F510C"           # Light gray
 
 export COLOR_09="#0BFF00"           # Dark gray
 export COLOR_10="#0BFF00"           # Light Red
