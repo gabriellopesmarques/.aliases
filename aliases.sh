@@ -35,6 +35,7 @@ alias zc="vim ~/.zshrc"
 alias ic="vim ~/.aliases/i3/i3.conf"
 alias tmux="tmux -2"
 alias tl="tmux ls"
+alias cli="tmux new-session -s 'cli'"
 alias reload="source ~/.zshrc"
 alias dc="cd"
 alias dll='dl; l'
