@@ -1,0 +1,91 @@
+[/]
+list=['bee600a7-b73c-4b4c-82ac-56dcf47af6c2', '2ffce69a-5008-43cc-b3fb-073f4b77d228', '4d6d6b0c-e12c-47c9-a708-8a7a7f340d66', 'efccf285-c345-4a5f-a735-47da39297b72']
+
+[:2ffce69a-5008-43cc-b3fb-073f4b77d228]
+allow-bold=true
+background-color='#2B2B0C0C0000'
+bold-color='#FFFF36360000'
+bold-color-same-as-fg=true
+cursor-background-color='#FFFF36360000'
+cursor-colors-set=true
+cursor-foreground-color='#2B2B0C0C0000'
+font='Victor Mono 12'
+foreground-color='#FFFF36360000'
+palette=['#404012120000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000', '#FFFF36360000']
+scrollbar-policy='never'
+use-system-font=false
+use-theme-background=false
+use-theme-colors=false
+use-theme-transparency=false
+visible-name='prod (mono-red)'
+
+[:4d6d6b0c-e12c-47c9-a708-8a7a7f340d66]
+allow-bold=true
+background-color='#000000000000'
+bold-color='#0B0BFFFF0000'
+bold-color-same-as-fg=true
+bold-is-bright=true
+cell-height-scale=1.6000000000000005
+cursor-background-color='#0B0BFFFF0000'
+cursor-blink-mode='on'
+cursor-colors-set=true
+cursor-foreground-color='#000000000000'
+font='Press Start 2P Medium 12'
+foreground-color='#0B0BFFFF0000'
+highlight-background-color='rgb(6,115,1)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(11,255,0)'
+palette=['rgb(0,0,0)', 'rgb(11,255,0)', 'rgb(11,255,0)', 'rgb(11,255,0)', 'rgb(11,255,0)', 'rgb(11,255,0)', 'rgb(11,255,0)', 'rgb(15,81,12)', 'rgb(15,81,12)', 'rgb(11,255,0)', 'rgb(15,81,12)', 'rgb(11,255,0)', 'rgb(11,255,0)', 'rgb(11,255,0)', 'rgb(11,255,0)', 'rgb(11,255,0)']
+scrollbar-policy='never'
+use-system-font=false
+use-theme-background=false
+use-theme-colors=false
+use-theme-transparency=false
+visible-name='oldSchool (mono-green)'
+
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+scrollbar-policy='never'
+
+[:bee600a7-b73c-4b4c-82ac-56dcf47af6c2]
+allow-bold=true
+background-color='#2E2E34344040'
+bold-color='#D8D8DEDEE9E9'
+bold-color-same-as-fg=true
+bold-is-bright=true
+cursor-background-color='#D8D8DEDEE9E9'
+cursor-blink-mode='on'
+cursor-colors-set=true
+cursor-foreground-color='#2E2E34344040'
+cursor-shape='block'
+font='JetBrains Mono 12'
+foreground-color='#D8D8DEDEE9E9'
+highlight-colors-set=false
+palette=['#3B3B42425252', '#BFBF61616A6A', '#A3A3BEBE8C8C', '#EBEBCBCB8B8B', '#8181A1A1C1C1', '#B4B48E8EADAD', '#8888C0C0D0D0', '#E5E5E9E9F0F0', '#4C4C56566A6A', '#BFBF61616A6A', '#A3A3BEBE8C8C', '#EBEBCBCB8B8B', '#8181A1A1C1C1', '#B4B48E8EADAD', '#8F8FBCBCBBBB', '#ECECEFEFF4F4']
+scrollbar-policy='never'
+use-system-font=false
+use-theme-background=false
+use-theme-colors=false
+use-theme-transparency=false
+visible-name='Nord'
+
+[:efccf285-c345-4a5f-a735-47da39297b72]
+background-color='#000000000000'
+bold-color='rgb(255,168,0)'
+bold-color-same-as-fg=true
+bold-is-bright=true
+cell-height-scale=1.0
+cell-width-scale=1.0
+cursor-background-color='rgb(255,168,0)'
+cursor-blink-mode='on'
+cursor-colors-set=true
+cursor-foreground-color='#000000000000'
+font='Glass TTY VT220 Medium 16'
+foreground-color='rgb(255,168,0)'
+highlight-background-color='rgb(117,77,0)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(255,168,0)'
+palette=['rgb(0,0,0)', 'rgb(255,168,0)', 'rgb(255,168,0)', 'rgb(255,168,0)', 'rgb(255,168,0)', 'rgb(255,168,0)', 'rgb(255,168,0)', 'rgb(117,77,0)', 'rgb(117,77,0)', 'rgb(255,168,0)', 'rgb(117,77,0)', 'rgb(255,168,0)', 'rgb(255,168,0)', 'rgb(255,168,0)', 'rgb(255,168,0)', 'rgb(255,168,0)']
+scrollbar-policy='never'
+use-system-font=false
+use-theme-colors=false
+visible-name='vt220 (mono-orange)'
