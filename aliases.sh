@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.28    ##
+##    Aliases v1.30    ##
 #########################
 
 # add current directory on path
@@ -15,6 +15,7 @@ alias l='ls -lhAF'
 alias lsa='ls -AF'
 alias lsat='ls -lhAFt' # sort by modification time, newest first
 alias s='git status'
+alias u="git fetch --prune && git pull"
 alias a='git add .'
 alias c='git commit -m $1'
 alias ac='git commit -a -m $1'
@@ -132,6 +133,10 @@ md5(){
 
 install() {
     sudo apt-get update && sudo apt-get install $1 -y
+}
+
+update(){
+    sudo apt-get update && sudo apt-get upgrade
 }
 
 uninstall() {
