@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.30    ##
+##    Aliases v1.31    ##
 #########################
 
 # add current directory on path
@@ -25,7 +25,7 @@ alias clears='clear; git status'
 alias rank="sort | uniq -c | sort -nr"
 alias downloads="cd ~/Downloads; l"
 alias dl="downloads"
-alias workspace='cd ~/Projects/'
+alias workspace='cd ~/Projects/; l'
 alias ws=workspace
 alias :q="exit"
 alias :Q="exit"
@@ -39,7 +39,6 @@ alias tl="tmux ls"
 alias cli="tmux new-session -s 'cli'"
 alias reload="source ~/.zshrc"
 alias dc="cd"
-alias dll='dl; l'
 
 alias weather="curl https://wttr.in/\?format\=1"
 alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
