@@ -39,7 +39,7 @@ alias tl="tmux ls"
 alias cli="tmux new-session -s 'cli'"
 alias reload="source ~/.zshrc"
 alias dc="cd"
-alias UPDATE="omz update; alias_update; update"
+alias UPDATE="alias_update; update; omz update;"
 
 alias weather="curl https://wttr.in/\?format\=1"
 alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
