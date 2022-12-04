@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install i3 and utils
-sudo apt-get install xorg i3 i3status feh gnome-terminal pulseaudio brightnessctl
+sudo apt-get install xorg i3 i3status feh gnome-terminal pulseaudio brightnessctl rofi
 
 # create i3 config directory
 mkdir -p ~/.config/i3
@@ -26,4 +26,7 @@ mkdir -p ~/.config/dunst/
 
 # link config file
 ln -s ~/.aliases/i3/dunstrc  ~/.config/dunst/dunstrc
+
+# link rofi config
+ln -s ~/.aliases/i3/rofi ~/.config/rofi
 

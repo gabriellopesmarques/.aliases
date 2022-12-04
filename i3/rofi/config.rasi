@@ -1,0 +1,4 @@
+configuration {
+    font: "Space Mono 12";
+    theme: "nord";
+}
