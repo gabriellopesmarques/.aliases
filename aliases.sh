@@ -27,6 +27,7 @@ alias downloads="cd ~/Downloads; l"
 alias dl="downloads"
 alias workspace='cd ~/Projects/; l'
 alias ws=workspace
+alias wd="cd $WORK_DIR"
 alias :q="exit"
 alias :Q="exit"
 alias vimconfig="vim ~/.aliases/vim/vimrc"
@@ -187,7 +188,7 @@ composer(){
 
 tmux_dev(){
     SESSION_NAME=$1
-    WORK_DIR=$2
+    export WORK_DIR=$2
 
     # create session, windows and panels
     tmux new-session -s $SESSION_NAME -n editor -d 
