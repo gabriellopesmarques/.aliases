@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install i3 and utils
-sudo apt-get install xorg i3 i3status feh gnome-terminal picom pulseaudio brightnessctl rofi
+sudo apt-get install xorg i3 i3status feh gnome-terminal picom pulseaudio brightnessctl rofi conky-all
 
 # create i3 config directory
 mkdir -p ~/.config/i3
@@ -32,4 +32,10 @@ ln -s ~/.aliases/i3/rofi ~/.config/rofi
 
 # picom (i3 transparency)
 ln -s ~/.aliases/i3/picom.conf ~/.config/picom.conf
+
+# create conky config directory
+mkdir -p ~/.config/conky/
+
+# link conky configs
+ln -s ~/.aliases/i3/.conkyrc  ~/.config/conky/conky.conf
 
