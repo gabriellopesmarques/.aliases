@@ -2,9 +2,13 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="x"
 
+# vim mode
+bindkey -v
+
 plugins=(
     git
     zsh-autosuggestions
+    vi-mode
 )
 
 # imports
