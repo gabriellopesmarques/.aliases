@@ -27,6 +27,7 @@ set foldmethod=indent
 call plug#begin()
     " theme
     Plug 'arcticicestudio/nord-vim'
+    Plug 'patstockwell/vim-monokai-tasty'
 
     " customize editor
     Plug 'preservim/nerdcommenter'
@@ -44,6 +45,7 @@ call plug#begin()
     Plug 'dense-analysis/ale'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'marlonfan/coc-phpls'
+    Plug 'clangd/coc-clangd'
  
 call plug#end()
 

@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.31    ##
+##    Aliases v1.32    ##
 #########################
 
 # add current directory on path
@@ -15,7 +15,7 @@ alias l='ls -lhAF'
 alias lsa='ls -AF'
 alias lsat='ls -lhAFt' # sort by modification time, newest first
 alias s='git status'
-alias u="git fetch --prune && git pull"
+alias u="git fetch --all --prune && git pull --all"
 alias a='git add .'
 alias c='git commit -m $1'
 alias ac='git commit -a -m $1'
@@ -197,8 +197,6 @@ tmux_dev(){
     tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; docker ps" C-m
     tmux split-window -v -t $SESSION_NAME
     tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; git status" C-m
-    tmux split-window -h -t $SESSION_NAME
-    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear" C-m
 
     tmux attach -t $1
 }
