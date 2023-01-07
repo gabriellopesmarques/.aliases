@@ -201,6 +201,10 @@ tmux_dev(){
     tmux attach -t $1
 }
 
+tmux_copy_buffer(){
+    tmux save-buffer - | xclip -i -sel clipboard
+}
+
 ####
 # Docker aliases
 ####################
