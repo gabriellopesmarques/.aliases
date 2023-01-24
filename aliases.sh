@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.32    ##
+##    Aliases v1.33    ##
 #########################
 
 # add current directory on path
@@ -166,6 +166,10 @@ storage(){
 
 help(){
     wget -qO- http://cheat.sh/$1 | less
+}
+
+explain(){
+    w3m "https://explainshell.com/explain?cmd=$1"
 }
 
 pack(){

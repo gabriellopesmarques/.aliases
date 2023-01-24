@@ -4,6 +4,7 @@ sudo apt-get install git ntpdate htop tree bc gnome-screenshot
 sudo apt-get install ncdu     \ # Disk Usage Tool
                     ranger    \ # console file manager
                     shellcheck  # check syntax in shell scripts
+#                   lm-sensors  # check temp
 #                   exa         # modern alternative to ls
 #                   bat         # modren alternative to cat
 #                   lnav        # ncurses-based log file viewer
