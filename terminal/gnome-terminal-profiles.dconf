@@ -1,11 +1,11 @@
 [/]
 default='0c670e86-8ec0-4621-94ee-c7b73dacf0ca'
-list=['bee600a7-b73c-4b4c-82ac-56dcf47af6c2', '2ffce69a-5008-43cc-b3fb-073f4b77d228', '4d6d6b0c-e12c-47c9-a708-8a7a7f340d66', 'efccf285-c345-4a5f-a735-47da39297b72', '0c670e86-8ec0-4621-94ee-c7b73dacf0ca', '50da505d-fd08-48db-840b-76782cce413f']
+list=['bee600a7-b73c-4b4c-82ac-56dcf47af6c2', '2ffce69a-5008-43cc-b3fb-073f4b77d228', '4d6d6b0c-e12c-47c9-a708-8a7a7f340d66', 'efccf285-c345-4a5f-a735-47da39297b72', '0c670e86-8ec0-4621-94ee-c7b73dacf0ca', '50da505d-fd08-48db-840b-76782cce413f', 'b177d9fb-4707-443e-9088-3029f2393df9']
 
 [:0c670e86-8ec0-4621-94ee-c7b73dacf0ca]
 background-color='rgb(0,0,0)'
 bold-color='rgb(102,102,102)'
-bold-color-same-as-fg=true
+bold-color-same-as-fg=false
 bold-is-bright=true
 cell-height-scale=1.0
 cell-width-scale=1.0
@@ -13,7 +13,7 @@ cursor-background-color='rgb(216,222,233)'
 cursor-blink-mode='on'
 cursor-colors-set=true
 cursor-foreground-color='rgb(0,0,0)'
-font='Space Mono 14'
+font='IBM Plex Mono 14'
 foreground-color='rgb(216,222,233)'
 highlight-background-color='rgb(102,102,102)'
 highlight-colors-set=true
@@ -72,7 +72,7 @@ visible-name='oldSchool (mono-green)'
 
 [:50da505d-fd08-48db-840b-76782cce413f]
 allow-bold=true
-background-color='#242428283b3b'
+background-color='rgb(36,40,59)'
 bold-color='#c0c0cacaf5f5'
 bold-color-same-as-fg=true
 bold-is-bright=true
@@ -81,19 +81,42 @@ cell-width-scale=1.0
 cursor-background-color='rgb(192,202,245)'
 cursor-blink-mode='on'
 cursor-colors-set=true
-cursor-foreground-color='#242428283b3b'
-font='Space Mono 12'
+cursor-foreground-color='rgb(36,40,59)'
+font='IBM Plex Mono 14'
 foreground-color='#c0c0cacaf5f5'
 highlight-background-color='rgb(102,102,102)'
 highlight-colors-set=true
 highlight-foreground-color='rgb(216,222,233)'
 palette=['rgb(65,72,104)', 'rgb(247,118,142)', 'rgb(158,206,106)', 'rgb(224,175,104)', 'rgb(122,162,247)', 'rgb(187,154,247)', 'rgb(125,207,255)', 'rgb(192,202,245)', 'rgb(86,96,140)', 'rgb(247,118,142)', 'rgb(158,206,106)', 'rgb(224,175,104)', 'rgb(122,162,247)', 'rgb(187,154,247)', 'rgb(125,207,255)', 'rgb(192,202,245)']
+scrollback-unlimited=true
 scrollbar-policy='never'
 use-system-font=false
 use-theme-background=false
 use-theme-colors=false
 use-theme-transparency=false
 visible-name='Tokyo Night Storm'
+
+[:b177d9fb-4707-443e-9088-3029f2393df9]
+background-color='rgb(0,0,17)'
+bold-color='#c0c0cacaf5f5'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cell-height-scale=1.0
+cell-width-scale=1.0
+cursor-background-color='rgb(122,162,247)'
+cursor-blink-mode='on'
+cursor-colors-set=true
+cursor-foreground-color='rgb(0,0,17)'
+font='IBM Plex Mono 14'
+foreground-color='rgb(192,202,245)'
+highlight-background-color='rgb(15,27,81)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(192,202,245)'
+palette=['rgb(15,27,81)', 'rgb(247,118,142)', 'rgb(158,206,106)', 'rgb(224,175,104)', 'rgb(122,162,247)', 'rgb(187,154,247)', 'rgb(125,207,255)', 'rgb(192,202,245)', 'rgb(64,64,64)', 'rgb(247,118,142)', 'rgb(158,206,106)', 'rgb(224,175,104)', 'rgb(122,162,247)', 'rgb(187,154,247)', 'rgb(125,207,255)', 'rgb(192,202,245)']
+scrollbar-policy='never'
+use-system-font=false
+use-theme-colors=false
+visible-name='deepBlue'
 
 [:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
 scrollbar-policy='never'
@@ -131,7 +154,7 @@ cursor-background-color='rgb(255,168,0)'
 cursor-blink-mode='on'
 cursor-colors-set=true
 cursor-foreground-color='#000000000000'
-font='Glass TTY VT220 Medium 16'
+font='Glass TTY VT220 Medium 20'
 foreground-color='rgb(255,168,0)'
 highlight-background-color='rgb(138,95,12)'
 highlight-colors-set=true
