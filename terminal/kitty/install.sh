@@ -1,11 +1,15 @@
 #!/bin/env bash
 
+kitty_conf=$HOME/.config/kitty/kitty.conf
+
 # install kitty
 sudo apt-get install kitty
 
 # create kitt config directory
-mkdir -p ~/.config/kitty
+mkdir -p $(dirname $kitty_conf)
 
-# link kitty config (default theme: deep-blue)
-ln -s ~/.aliases/terminal/deep-blue.conf ~/.config/kitty/kitty.conf
+rm -f $kitty_conf
+
+# link kitty config (default theme: deep_blue)
+ln -s $HOME/.aliases/terminal/kitty/deep_blue.conf $kitty_conf
 
