@@ -1,4 +1,4 @@
 configuration {
-    font: "Space Mono 12";
-    theme: "nord";
+    font: "IBM Plex Mono 14";
+    theme: "deep_blue";
 }

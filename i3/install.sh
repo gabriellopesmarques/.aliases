@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install i3 and utils
-sudo apt-get install xorg i3 i3status feh gnome-terminal picom pulseaudio brightnessctl rofi conky-all
+sudo apt-get install xorg i3 i3status feh kitty picom pulseaudio brightnessctl rofi conky-all
 
 # create i3 config directory
 mkdir -p ~/.config/i3
