@@ -11,7 +11,8 @@ alias aliases="cd ~/.aliases"
 alias alias_update="cd ~/.aliases && git pull && cd -"
 
 # Utils Short Commands
-alias l='ls -lhAF'
+alias l='ls -lhF'
+alias ll='ls -lAhF'
 alias lsa='ls -AF'
 alias lsat='ls -lhAFt' # sort by modification time, newest first
 alias s='git status'
