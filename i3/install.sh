@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # install i3 and utils
-sudo apt-get install xorg i3 i3status feh kitty picom pulseaudio rofi
+sudo apt-get install xorg i3 i3status feh kitty picom pulseaudio rofi \
+    gnome-screenshot libnotify-bin at
 
 # create i3 config directory
 mkdir -p ~/.config/i3

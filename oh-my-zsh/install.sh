@@ -1,16 +1,17 @@
 #!/bin/bash
 
 ## install zsh
-sudo apt-get install git curl zsh -y
+sudo apt install git curl zsh -y
 
-## install oh my zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+## install oh my zsh (batch-mode)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 ## install autosuggestions plugin
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-## use .aliases config file
-echo "source ~/.aliases/oh-my-zsh/.zshrc" > ~/.zshrc
+## in this way, each user can get your own aliases too. edit file with: zc
+echo "source ~/.aliases/oh-my-zsh/.zshrc" > $HOME/.zshrc
 
-## use .aliases theme file
-echo "source ~/.aliases/oh-my-zsh/themes/x.zsh-theme" > ~/.oh-my-zsh/custom/themes/x.zsh-theme
+## custom theme
+ln -s $HOME/.aliases/oh-my-zsh/themes/x.zsh-theme $HOME/.oh-my-zsh/custom/themes/x.zsh-theme
+

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install git htop tree bc gnome-screenshot libnotify-bin at lm-sensors -y
+sudo apt install git zsh htop tree bc lm-sensors -y
 
 ## TODO: implements install by args
 ## ex.: ./install --utils --mail
@@ -17,9 +17,9 @@ sudo apt-get install git htop tree bc gnome-screenshot libnotify-bin at lm-senso
 ## install email server and email reader
 # sudo apt-get install postfix mutt -y
 
+# add aliases in bash
 echo "~/.aliases/aliases.sh" >> $HOME/.bashrc
 
-if command -v zsh &> /dev/null; then
-    echo "~/.aliases/aliases.sh" >> $HOME/.zsh
-fi
+# add aliases in zsh
+echo "~/.aliases/aliases.sh" >> $HOME/.zsh
 
