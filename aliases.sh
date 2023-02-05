@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.33    ##
+##    Aliases v1.34    ##
 #########################
 
 # add current directory on path
@@ -38,7 +38,6 @@ alias zc="vim ~/.zshrc"
 alias ic="vim ~/.aliases/i3/i3.conf"
 alias tmux="tmux -2"
 alias tl="tmux ls"
-alias cli="tmux new-session -s 'cli'"
 alias reload="source ~/.zshrc"
 alias dc="cd"
 alias UPDATE="alias_update; update; omz update;"
@@ -189,6 +188,17 @@ rememberme(){
 
 composer(){
     docker run --rm --interactive --tty --volume $PWD:/app --user $(id -u):$(id -g) composer $@
+}
+
+cli(){
+    session="cli"
+    tmux has-session -t $session 2>/dev/null
+
+    if [ $? != 0 ]; then
+        tmux new-session -s 'cli'
+    fi
+
+    tmux attach-session -t $session
 }
 
 tmux_dev(){
