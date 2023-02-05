@@ -47,7 +47,6 @@ active_tab_background           {COLOR_BLACK}
 inactive_tab_foreground         {COLOR_BLUE}
 inactive_tab_background         {BACKGROUND}
 tab_bar_background              {BACKGROUND}
-tab_bar_margin_color            none
 
 
 #: Colors for marks (marked text in the terminal)
