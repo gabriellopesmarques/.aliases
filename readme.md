@@ -2,30 +2,26 @@
 
 ## install
 
-### clone repository
-```
-cd ~
-git clone <repo>
-```
-
 ### using only aliases
 
 #### zsh
 ```
-echo "source ~/.aliases/aliases.sh" >> ~/.zshrc
+wget https://raw.githubusercontent.com/gabriellopesmarques/.aliases/main/aliases.sh -O $HOME/.aliases.sh
+echo "source ~/.aliases.sh" >> ~/.zshrc
 ```
 
 #### bash
 ```
-echo "source ~/.aliases/aliases.sh" >> ~/.bashrc
+wget https://raw.githubusercontent.com/gabriellopesmarques/.aliases/main/aliases.sh -O $HOME/.aliases.sh
+echo "source ~/.aliases.sh" >> ~/.bashrc
 ```
-
 
 ### all env
 
-#### the great packages installer **curl**
-sudo apt-get install curl -y
-
+#### clone repository
+```
+git clone https://github.com/gabriellopesmarques/.aliases.git $HOME/.aliases
+```
 
 #### i3wm
 ```
@@ -46,12 +42,9 @@ sudo apt-get install curl -y
 ```
 ./vim/install.sh
 ```
-### custom colors terminal
-./terminal/nord.sh
-./terminal/mono-red.sh
-./terminal/mono-green.sh
 
 ### custom fonts
+```
 ./fonts/install.sh
-
+```
 
