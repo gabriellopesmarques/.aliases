@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.34    ##
+##    Aliases v1.35    ##
 #########################
 
 # add current directory on path
@@ -9,6 +9,14 @@ HISTCONTROL=ignoreboth # ignore spaces and duplicated commands (ignorespace, ign
 # aliases for repo
 alias aliases="cd ~/.aliases"
 alias alias_update="cd ~/.aliases && git pull && cd -"
+
+update_aliases(){
+    if [[ -f $HOME/.aliases.sh ]]; then
+        wget https://raw.githubusercontent.com/gabriellopesmarques/.aliases/main/aliases.sh -O $HOME/.aliases.sh
+    else
+        git -C $HOME/.aliases pull
+    fi
+}
 
 # Utils Short Commands
 alias l='ls -lhF'
@@ -60,13 +68,6 @@ alias limpar=clear
 alias limpa=clear
 alias clea=clear
 alias rl="clear & ls -la"
-
-
-# check if bat is installed
-if command -v batcat &> /dev/null
-then
-    alias bat="batcat"
-fi
 
 calc () {
     # requires bc
