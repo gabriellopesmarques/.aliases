@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.35    ##
+##    Aliases v1.36    ##
 #########################
 
 # add current directory on path
@@ -23,6 +23,7 @@ alias l='ls -lhF'
 alias ll='ls -lAhF'
 alias lsa='ls -AF'
 alias lsat='ls -lhAFt' # sort by modification time, newest first
+alias less='less -I'
 alias s='git status'
 alias u="git fetch --all --prune && git pull --all"
 alias a='git add .'
@@ -196,7 +197,7 @@ cli(){
     tmux has-session -t $session 2>/dev/null
 
     if [ $? != 0 ]; then
-        tmux new-session -s 'cli'
+        tmux new-session -s 'cli' -d
     fi
 
     tmux attach-session -t $session
