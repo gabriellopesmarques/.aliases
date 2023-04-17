@@ -81,15 +81,6 @@ bureau_git_prompt() {
 }
 
 
-_PATH="%{$fg_bold[white]%}%~%{$reset_color%}"
-
-if [[ $EUID -eq 0 ]]; then
-  _LIBERTY="%{$fg[red]%}#"
-else
-  _LIBERTY="%{$fg[green]%}$"
-fi
-_LIBERTY="$_LIBERTY%{$reset_color%}"
-
 get_space () {
   local STR=$1$2
   local zero='%([BSUbfksu]|([FB]|){*})'
@@ -103,7 +94,7 @@ get_space () {
 bureau_precmd () { }
 
 setopt prompt_subst
-PROMPT='$_LIBERTY '
+PROMPT='%(?,%{%F{green}%},%{%F{red}%})$ %{$reset_color%}'
 RPROMPT='$(bureau_git_prompt)'
 
 autoload -U add-zsh-hook
