@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.36    ##
+##    Aliases v1.38    ##
 #########################
 
 # add current directory on path
@@ -35,9 +35,9 @@ alias clears='clear; git status'
 alias rank="sort | uniq -c | sort -nr"
 alias downloads="cd ~/Downloads; l"
 alias dl="downloads"
-alias workspace='cd ~/Projects/; l'
+alias workspace='cd ~/Projects/; clear; pwd; l'
 alias ws=workspace
-alias wd="cd $WORK_DIR"
+alias wd="cd $WORK_DIR; clear; pwd; l"
 alias :q="exit"
 alias :Q="exit"
 alias vimconfig="vim ~/.aliases/vim/vimrc"
@@ -209,6 +209,7 @@ tmux_dev(){
 
     # create session, windows and panels
     tmux new-session -s $SESSION_NAME -n editor -d 
+    tmux set-environment WORK_DIR $2
     tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; vim ." C-m
     tmux new-window -n zsh -t $SESSION_NAME
     tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; docker ps" C-m
