@@ -126,6 +126,7 @@ map <F9> gg=G
 
 "fzf shortcut
 nnoremap <silent> <C-p> :GFiles<CR>
+nnoremap <Leader>p :Files<CR>
 
 "vimrc edit shortcut
 nmap <Leader>vc :e $MYVIMRC<CR> 
