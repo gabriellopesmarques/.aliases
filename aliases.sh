@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.38    ##
+##    Aliases v1.44    ##
 #########################
 
 # add current directory on path
@@ -49,9 +49,12 @@ alias tmux="tmux -2"
 alias tl="tmux ls"
 alias reload="source ~/.zshrc"
 alias dc="cd"
+alias ping="ping -c 10"
+alias fd='cd $(find -type d 2>/dev/null | fzf); pwd'
 alias UPDATE="alias_update; update; omz update;"
 
 alias weather="curl https://wttr.in/\?format\=1"
+alias speedtest='docker run --rm --dns="1.1.1.1" -it gists/speedtest-cli'
 alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
 alias calendar="dialog --calendar 'calendar' 0 0"
 
@@ -70,7 +73,7 @@ alias limpa=clear
 alias clea=clear
 alias rl="clear & ls -la"
 
-calc () {
+calc(){
     # requires bc
     echo "scale=2; $1" | bc -q
 }
@@ -244,6 +247,9 @@ alias php56_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "
 alias php71_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.1-apache'
 alias php72_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.2-apache'
 alias php80_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.0-apache'
+alias php82_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.2-apache'
+alias php80_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.0-apache'
+alias php82_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.2-apache'
 
 ####
 # Gnome
