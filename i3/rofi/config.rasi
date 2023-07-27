@@ -1,5 +1,5 @@
 configuration {
-    font: "IBM Plex Mono 14";
+    font: "JetBrains Mono 14";
 }
 
 @theme "deep_blue"
