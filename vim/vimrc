@@ -125,6 +125,7 @@ vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
 map <F9> gg=G
 
 "fzf shortcut
+let $BAT_THEME='TokyoNordStorm'
 nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <Leader>p :Files<CR>
 
