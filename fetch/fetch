@@ -1,0 +1,77 @@
+#!/bin/sh
+
+#########################
+##    Aliases v0.1     ##
+#########################
+# a "fork" from [ufetch-debian](https://gitlab.com/jschx/ufetch)
+
+getUpdates(){
+	pkgs_to_update=$(apt list --upgradable 2>/dev/null | wc -l) 
+
+	if test $pkgs_to_update -gt 1
+	then
+		echo $(( $pkgs_to_update - 1 ))
+		return 0
+	fi
+
+	echo 0
+}
+
+
+## INFO
+host="$(hostname)"
+os=$(grep -E '^PRETTY_NAME=' /etc/*-release | cut -d= -f2- | tr -d '"') # or "$(lsb_release -d -s)"
+kernel="$(uname -sr)"
+uptime="$(uptime -p | sed 's/up //')"
+packages="$(dpkg-query -f '.\n' -W | wc -l)"
+upgradable="($(getUpdates) pkgs to update)"
+shell="$(basename ${SHELL})"
+ip="$(hostname -I | grep -Eo '^([0-9]{1,3}\.){3}[0-9]{1,3}')"
+
+free_output=$(free -mh)
+used_memory=$(echo "$free_output" | awk 'NR==2 {print $3}')
+total_memory=$(echo "$free_output" | awk 'NR==2 {print $2}')
+memory=${used_memory}/${total_memory}
+
+top_output=$(top -bn 1)
+cpu="$(echo "$top_output" | awk 'NR==3 {print $2}')%"
+
+storage="$(df -h --output=used,size,pcent / | awk 'NR > 1 { printf "%s/%s (%s) ", $1, $2, $3 }')"
+date="$(date --rfc-3339=seconds)"
+
+## DEFINE COLORS
+# probably don't change these
+bold="$(tput bold)"
+bg_blue="$(tput setab 4)"
+black="$(tput setaf 0)"
+red="$(tput setaf 1)"
+green="$(tput setaf 2)"
+yellow="$(tput setaf 3)"
+blue="$(tput setaf 4)"
+magenta="$(tput setaf 5)"
+cyan="$(tput setaf 6)"
+white="$(tput setaf 7)"
+reset="$(tput sgr0)"
+
+# you can change these
+header="${reset}${bold}${bg_blue}${black}"
+label="${reset}${bold}${blue}"
+info="${reset}${white}"
+
+## OUTPUT
+cat <<EOF
+
+${header}${USER}@${host}${reset}
+${label}os:        ${info}${os}${reset}
+${label}kernel:    ${info}${kernel}${reset}
+${label}uptime:    ${info}${uptime}${reset}
+${label}packages:  ${info}${packages} ${upgradable}${reset}
+${label}shell:     ${info}${shell}${reset}
+${label}ip:        ${info}${ip}${reset}
+${label}memory:    ${info}${memory}${reset}
+${label}cpu:       ${info}${cpu}${reset}
+${label}storage:   ${info}${storage}${reset}
+${label}date:      ${info}${date}${reset}
+
+EOF
+
