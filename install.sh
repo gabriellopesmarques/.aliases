@@ -41,6 +41,3 @@ sudo apt install git zsh htop tree bc lm-sensors \
 # add aliases in bash
 echo "source ~/.aliases/aliases.sh" >> $HOME/.bashrc
 
-# add aliases in zsh
-echo "source ~/.aliases/aliases.sh" >> $HOME/.zsh
-
