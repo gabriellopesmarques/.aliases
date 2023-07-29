@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 #########################
-##    Aliases v0.1     ##
+##    Aliases v0.2     ##
 #########################
 # a "fork" from [ufetch-debian](https://gitlab.com/jschx/ufetch)
 
@@ -58,20 +58,27 @@ header="${reset}${bold}${bg_blue}${black}"
 label="${reset}${bold}${blue}"
 info="${reset}${white}"
 
+
+banner_file=$HOME/.config/banner
+banner_content=""
+if test -r $banner_file ; then
+	banner_content=$(<$banner_file)
+fi
+
 ## OUTPUT
 cat <<EOF
-
-${header}${USER}@${host}${reset}
-${label}os:        ${info}${os}${reset}
-${label}kernel:    ${info}${kernel}${reset}
-${label}uptime:    ${info}${uptime}${reset}
-${label}packages:  ${info}${packages} ${upgradable}${reset}
-${label}shell:     ${info}${shell}${reset}
-${label}ip:        ${info}${ip}${reset}
-${label}memory:    ${info}${memory}${reset}
-${label}cpu:       ${info}${cpu}${reset}
-${label}storage:   ${info}${storage}${reset}
-${label}date:      ${info}${date}${reset}
+ ${label}${banner_content}${reset}
+ ${header}${USER}@${host}${reset}
+ ${label}os:        ${info}${os}${reset}
+ ${label}kernel:    ${info}${kernel}${reset}
+ ${label}uptime:    ${info}${uptime}${reset}
+ ${label}packages:  ${info}${packages} ${upgradable}${reset}
+ ${label}shell:     ${info}${shell}${reset}
+ ${label}ip:        ${info}${ip}${reset}
+ ${label}memory:    ${info}${memory}${reset}
+ ${label}cpu:       ${info}${cpu}${reset}
+ ${label}storage:   ${info}${storage}${reset}
+ ${label}date:      ${info}${date}${reset}
 
 EOF
 
