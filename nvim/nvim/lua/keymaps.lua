@@ -1,0 +1,22 @@
+vim.g.mapleader = "\\"
+vim.g.maplocalleader = "\\"
+local map = vim.api.nvim_set_keymap
+
+--"fzf shortcut
+map("n", "<C-p>", "<cmd>GFiles<cr>", { desc = "Fuzzy Finder Git files" })
+map("n", "<leader>p", "<cmd>Files<cr>", { desc = "Fuzzy Finder files" })
+
+--" toggle comments (ctrl + /)
+map("n", "<C-_>", "<cmd>CommentToggle<cr>", { desc = "Toggle Comment" })
+
+--"reindent
+map("n", "<F9>", "gg=G", { desc = "reindent" })
+
+--" fix typos
+vim.cmd([[ command Vsp vsp ]])
+vim.cmd([[ command WQ wq ]])
+vim.cmd([[ command Wq wq ]])
+vim.cmd([[ command W w ]])
+vim.cmd([[ command Q q ]])
+vim.cmd([[ command E e ]])
+
