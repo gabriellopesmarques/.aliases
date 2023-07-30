@@ -7,7 +7,7 @@ fi
 
 # install dependencies
 sudo apt update && \
-sudo apt install build-essential git wget curl tar gzip unzip -y
+sudo apt install build-essential fzf ripgrep git wget curl tar gzip unzip -y
 
 ## install nvm
 if [[ ! -d "$HOME/.nvm" ]]; then
