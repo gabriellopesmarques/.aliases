@@ -213,7 +213,7 @@ tmux_dev(){
     # create session, windows and panels
     tmux new-session -s $SESSION_NAME -n editor -d 
     tmux set-environment WORK_DIR $2
-    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; vim ." C-m
+    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; nvim ." C-m
     tmux new-window -n zsh -t $SESSION_NAME
     tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; docker ps" C-m
     tmux split-window -v -t $SESSION_NAME
