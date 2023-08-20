@@ -15,3 +15,6 @@ echo "source ~/.aliases/oh-my-zsh/.zshrc" > $HOME/.zshrc
 ## custom theme
 ln -s $HOME/.aliases/oh-my-zsh/themes/x.zsh-theme $HOME/.oh-my-zsh/custom/themes/x.zsh-theme
 
+## set zsh as default shell
+sudo chsh $USERNAME --shell $(which zsh)
+
