@@ -23,42 +23,8 @@ set encoding=utf-8
 "" za - toggle
 set foldmethod=indent
 
-" plugins
-call plug#begin()
-    " theme
-    Plug 'arcticicestudio/nord-vim'
-    Plug 'patstockwell/vim-monokai-tasty'
-
-    " customize editor
-    Plug 'preservim/nerdcommenter'
-    Plug 'Yggdroot/indentLine'
-    Plug 'vim-airline/vim-airline'
-    Plug 'editorconfig/editorconfig-vim'
-    Plug 'airblade/vim-gitgutter'
-    Plug 'zivyangll/git-blame.vim'
-    Plug 'mattn/emmet-vim'
-    Plug 'sheerun/vim-polyglot'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-
-    " lsp
-    Plug 'dense-analysis/ale'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'marlonfan/coc-phpls'
-    Plug 'clangd/coc-clangd'
- 
-call plug#end()
-
-" lsp
-let g:ale_linters = { 'php': ['php', 'psalm'] }
-
-filetype plugin on
-
 " enable clipboard share
 set clipboard=unnamedplus
-
-" theme
-silent! colorscheme nord "https://www.nordtheme.com/docs/ports/vim
 
 " editor config
 syntax enable
@@ -114,20 +80,8 @@ nnoremap <F12> :bp<cr>
 nnoremap <Leader><Tab> :tabnext<CR>
 nnoremap <Leader><S-Tab> :tabprevious<CR>
 
-" git blame
-nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
-
-" toggle comments (ctrl + /)
-nmap <C-_>   <Plug>NERDCommenterToggle
-vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
-
 "reindent
 map <F9> gg=G
-
-"fzf shortcut
-let $BAT_THEME='TokyoNordStorm'
-nnoremap <silent> <C-p> :GFiles<CR>
-nnoremap <Leader>p :Files<CR>
 
 "vimrc edit shortcut
 nmap <Leader>vc :e $MYVIMRC<CR> 
@@ -135,7 +89,6 @@ nmap <Leader>vc :e $MYVIMRC<CR>
 "# auto commands
 " auto 'reload' configs when save .vimrc
 autocmd BufWritePost .vimrc source %
-
 
 " fix typos
 command WQ wq
@@ -145,7 +98,4 @@ command Q q
 command QW wq
 command Vsp vsp
 command E e
-
-" load coc configs
-source ~/.aliases/vim/cocrc
 
