@@ -50,13 +50,11 @@ alias tl="tmux ls"
 alias reload="source ~/.zshrc"
 alias dc="cd"
 alias ping="ping -c 10"
-alias fd='cd $(find -type d 2>/dev/null | fzf); pwd'
 alias UPDATE="alias_update; update; omz update;"
 
 alias weather="curl https://wttr.in/\?format\=1"
 alias speedtest='docker run --rm --dns="1.1.1.1" -it gists/speedtest-cli'
 alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
-alias calendar="dialog --calendar 'calendar' 0 0"
 
 # dummy ways to write clear
 alias claer=clear
