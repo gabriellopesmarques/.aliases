@@ -155,7 +155,6 @@ do
             install_neovim
             install_docker
             install_i3wm
-            install_gitfiend
         ;;
         --help)
             usage
