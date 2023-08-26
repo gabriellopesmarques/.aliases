@@ -9,11 +9,12 @@ install_aliases () {
 
 install_utils () {
     echo "installing utils tools"
-    sudo apt install ncdu shellcheck exa fzf -y
+    sudo apt install ncdu shellcheck exa fzf jq -y
     #brightnessctl
 
     bash "$HOME"/.aliases/bat/install.sh     && \
     bash "$HOME"/.aliases/glow/install.sh    && \
+    bash "$HOME"/.aliases/gitui/install.sh   && \
     bash "$HOME"/.aliases/dialog/install.sh  && \
     sudo bash "$HOME"/.aliases/fetch/install.sh
 
@@ -29,8 +30,7 @@ install_docker () {
      sudo sh ./get-docker.sh && \
      sudo usermod -aG docker "$USER" && \
      rm ./get-docker.sh && \
-     newgrp docker && \
-     echo "try docker run hello-world"
+     echo "reboot or run 'newgrp docker'"
 }
 
 install_brave () {
@@ -54,6 +54,7 @@ install_i3wm () {
     bash "$HOME"/.aliases/terminal/kitty/install.sh
 
     install_brave
+    install_gitfiend
 }
 
 install_gitfiend() {
@@ -90,16 +91,15 @@ install_mail () {
 usage () {
     echo -e "
      options:
-      --aliases\tinstall aliases (shorthands and functions)
-      --mail\tinstall postfix (to recive mail) and mutt (to read)
-      --utils\tinstall utils tools (ncdu, shellcheck, exa, fzf, bat, glow, dialog, fetch) and add alias moderns tools to substitute classical tools
-      --tmux\tinstall tmux and configure
-      --vim\tinstall and set a simple config (without plugins)
-      --docker\tinstall docker-ce (using https://get.docker.com script)
-      --brave\tinstall add repo (release channel) and install brave-browser
-      --i3wm\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot and configure them
-      --neovim\tdownload, compile and install neovim and configure
       --omz\tinstall omz, add autosuggestions plugin and set a minimalist theme
+      --aliases\tinstall aliases (shorthands and functions)
+      --utils\tinstall utils tools (ncdu, shellcheck, exa, fzf, bat, glow, gitui, dialog, fetch) and add alias moderns tools to substitute classical tools
+      --vim\tinstall and set a simple config (without plugins)
+      --neovim\tdownload, compile and install neovim and configure
+      --tmux\tinstall tmux and configure
+      --docker\tinstall docker-ce (using https://get.docker.com script)
+      --mail\tinstall postfix (to recive mail) and mutt (to read)
+      --i3wm\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot, fonts, moc, kitty term, firefox, brave and configure them
       --gitfiend\tinstall gitfiend (git gui)
       --all_env\tinstall all (except mail)
 
@@ -114,23 +114,14 @@ usage () {
 while test $# -gt 0
 do
     case "$1" in
+        --omz)
+            install_omz
+        ;;
         --aliases)
             install_aliases
         ;;
-        --mail)
-            install_mail
-        ;;
         --utils)
             install_utils
-        ;;
-        --docker)
-            install_docker
-        ;;
-        --brave)
-            install_brave
-        ;;
-        --i3wm)
-            install_i3wm
         ;;
         --tmux)
             install_tmux
@@ -141,22 +132,27 @@ do
         --neovim)
             install_neovim
         ;;
-        --omz)
-            install_omz
+        --docker)
+            install_docker
+        ;;
+        --mail)
+            install_mail
+        ;;
+        --i3wm)
+            install_i3wm
         ;;
         --gitfiend)
             install_gitfiend
         ;;
         --all_env)
+            install_omz
             install_aliases
             install_utils
             install_tmux
             install_vim
-            install_docker
-            install_brave
-            install_i3wm
             install_neovim
-            install_omz
+            install_docker
+            install_i3wm
             install_gitfiend
         ;;
         --help)

@@ -16,35 +16,17 @@ wget https://raw.githubusercontent.com/gabriellopesmarques/.aliases/main/aliases
 echo "source ~/.aliases.sh" >> ~/.bashrc
 ```
 
-### all env
+### env
 
-#### clone repository
+clone the repository
 ```
-git clone https://github.com/gabriellopesmarques/.aliases.git $HOME/.aliases
-```
+git clone <repo>
 
-#### i3wm
-```
-./i3/install.sh
+cd <repo>
 ```
 
-#### zsh
+check avaliable installers scripts
 ```
-./oh-my-zsh/install.sh
-```
-
-#### tmux
-```
-./tmux/install.sh
-```
-
-#### vim
-```
-./vim/install.sh
-```
-
-### custom fonts
-```
-./fonts/install.sh
+./install.sh --help
 ```
 
