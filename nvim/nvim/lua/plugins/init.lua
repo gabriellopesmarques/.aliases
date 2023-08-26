@@ -24,6 +24,8 @@ local plugins = {
         end,
     },
 
+    'tpope/vim-fugitive',
+
     -- status bar
     'vim-airline/vim-airline',
 
