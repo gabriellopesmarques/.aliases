@@ -23,24 +23,25 @@ install_utils () {
 }
 
 install_docker () {
-     echo "install docker"
+     echo "installing docker"
+     sudo apt install curl -y
      curl -fsSL https://get.docker.com -o get-docker.sh && \
      sudo sh ./get-docker.sh && \
-     sudo usermod -aG docker $USER && \
+     sudo usermod -aG docker "$USER" && \
      rm ./get-docker.sh && \
      newgrp docker && \
      echo "try docker run hello-world"
 }
 
 install_brave () {
-    echo "install brave"
+    echo "installing brave"
     sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list && \
     sudo apt update && sudo apt install brave-browser -y
 }
 
 install_i3wm () {
-    echo "install i3"
+    echo "installing i3"
     bash "$HOME"/.aliases/i3/install.sh
 
     echo "install fonts"
@@ -55,29 +56,34 @@ install_i3wm () {
     install_brave
 }
 
+install_gitfiend() {
+    echo "installing git fiend"
+    bash "$HOME"/.aliases/gitfiend/install.sh
+}
+
 install_tmux() {
-    echo "install tmux"
+    echo "installing tmux"
     bash "$HOME"/.aliases/tmux/install.sh
 }
 
 install_vim () {
-    echo "install vim"
+    echo "installing vim"
     bash "$HOME"/.aliases/vim/install.sh
 }
 
 install_neovim () {
-    echo "install neovim"
+    echo "installing neovim"
     bash "$HOME"/.aliases/nvim/install.sh
 }
 
 install_omz () {
-    echo "install oh-my-zsh"
+    echo "installing oh-my-zsh"
     bash "$HOME"/.aliases/oh-my-zsh/install.sh
 }
 
 install_mail () {
     ## install email server and email reader
-    echo "install mail"
+    echo "installing mail"
     DEBIAN_FRONTEND=noninteractive sudo apt install postfix mutt -y
 }
 
@@ -94,6 +100,7 @@ usage () {
       --i3wm\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot and configure them
       --neovim\tdownload, compile and install neovim and configure
       --omz\tinstall omz, add autosuggestions plugin and set a minimalist theme
+      --gitfiend\tinstall gitfiend (git gui)
       --all_env\tinstall all (except mail)
 
       desktop use:
@@ -137,6 +144,9 @@ do
         --omz)
             install_omz
         ;;
+        --gitfiend)
+            install_gitfiend
+        ;;
         --all_env)
             install_aliases
             install_utils
@@ -147,6 +157,7 @@ do
             install_i3wm
             install_neovim
             install_omz
+            install_gitfiend
         ;;
         --help)
             usage
