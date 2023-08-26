@@ -152,14 +152,13 @@ ccd() {
 } 
 
 mkcd() {
-    if [ ! -d "$1" ]; then
-        mkdir $1; cd $1;
-        echo "directory created successfully, you are in $(pwd) now"
-        return true
+    if [ -d "$1" ]; then
+        echo "error to create directory \"$1\", directory already exists"
+        return 1
     fi
 
-    echo "error to create directory \"$1\", directory already exists"
-    return false
+    mkdir $1; cd $1;
+    return 0
 } 
 
 storage(){
