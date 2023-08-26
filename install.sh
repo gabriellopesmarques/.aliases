@@ -55,6 +55,8 @@ install_i3wm () {
 
     install_brave
     install_gitfiend
+
+    sudo apt purge xterm -y
 }
 
 install_gitfiend() {
