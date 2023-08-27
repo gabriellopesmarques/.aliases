@@ -55,16 +55,26 @@ install_i3wm () {
 
     install_brave
     install_gitfiend
+    install_wallpaper
 
     sudo apt purge xterm -y
 }
 
-install_gitfiend() {
+install_gitfiend () {
     echo "installing git fiend"
     bash "$HOME"/.aliases/gitfiend/install.sh
 }
 
-install_tmux() {
+install_wallpaper () {
+    sudo apt install feh -y
+    echo "installing wallpaper"
+    bash "$HOME"/.aliases/i3/wallpapers/install.sh
+
+    echo -e "#!/bin/sh\nfeh --no-fehbg --bg-fill $HOME/Pictures/Wallpapers/default/jeremy-bishop-DFJahLoBHK4-unsplash.jpg" > "$HOME"/.fehbg
+    sudo chmod 754 "$HOME"/.fehbg
+}
+
+install_tmux () {
     echo "installing tmux"
     bash "$HOME"/.aliases/tmux/install.sh
 }
