@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install i3 and utils
-sudo apt install xorg i3 i3status feh pulseaudio rofi \
+sudo apt install xorg i3 i3status feh pulseaudio pavucontrol rofi \
     gnome-screenshot firefox-esr libnotify-bin at -y
 
 # create i3 config directory
