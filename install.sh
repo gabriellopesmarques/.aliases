@@ -2,7 +2,7 @@
 
 install_aliases () {
     echo "installing aliases"
-    sudo apt install git zsh htop tree bc lm-sensors bc aria2 libnotify-bin at w3m -y  # aliases.sh dependencies
+    sudo apt install git zsh htop tree bc lm-sensors bc aria2 libnotify-bin at w3m xclip -y  # aliases.sh dependencies
     # add aliases in bash
     echo "source ~/.aliases/aliases.sh" >> "$HOME"/.bashrc
 }
@@ -101,26 +101,31 @@ install_mail () {
 }
 
 usage () {
-    echo -e "
+    echo -e '
+            ____  _ __     _  ___               _   _ __  ____ 
+      ____ |__  || |  \ __| ||_  \  ____  ____ (_) | |  \|_  _|
+     |____| _/ / | || ||__  | _|> ||  __||  __|    | || | _||_ 
+           |____|\__|_|   |_||___/ |_|   |_|       \__|_||____|
+
      options:
-      --omz\tinstall omz, add autosuggestions plugin and set a minimalist theme
-      --aliases\tinstall aliases (shorthands and functions)
-      --utils\tinstall utils tools (ncdu, shellcheck, exa, fzf, bat, glow, gitui, dialog, fetch) and add alias moderns tools to substitute classical tools
-      --vim\tinstall and set a simple config (without plugins)
-      --neovim\tdownload, compile and install neovim and configure
-      --tmux\tinstall tmux and configure
-      --docker\tinstall docker-ce (using https://get.docker.com script)
-      --mail\tinstall postfix (to recive mail) and mutt (to read)
-      --i3wm\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot, fonts, moc, kitty term, firefox, brave and configure them
+      --omz\t\tinstall omz, add autosuggestions plugin and set a minimalist theme
+      --aliases\t\tinstall aliases (shorthands and functions)
+      --utils\t\tinstall utils tools (ncdu, shellcheck, exa, fzf, bat, glow, gitui, dialog, fetch) and add alias moderns tools to substitute classical tools
+      --vim\t\tinstall and set a simple config (without plugins)
+      --neovim\t\tdownload, compile, install and configure neovim
+      --tmux\t\tinstall tmux and configure
+      --docker\t\tinstall docker-ce (using https://get.docker.com script)
+      --mail\t\tinstall postfix (to recive mail) and mutt (to read)
+      --i3wm\t\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot, fonts, moc, kitty term, firefox, brave and configure them
       --gitfiend\tinstall gitfiend (git gui)
-      --all_env\tinstall all (except mail)
+      --all_env\t\tinstall all (except mail)
 
       desktop use:
       ./install.sh --all_env
 
       without gui use:
       ./install.sh --aliases --utils --vim --mail --docker
-    "
+    '
 }
 
 while test $# -gt 0
