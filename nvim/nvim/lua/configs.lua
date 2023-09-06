@@ -25,4 +25,5 @@ vim.opt.wrap          = false         -- dont wrap lines
 
 -- set theme to bat (fzf preview)
 vim.cmd([[ let $BAT_THEME='TokyoNordStorm' ]])
+vim.g["airline#extensions#branch#enabled"] = 0
 

@@ -26,6 +26,8 @@ local plugins = {
 
     'tpope/vim-fugitive',
 
+    'jwalton512/vim-blade',
+
     -- status bar
     'vim-airline/vim-airline',
 
@@ -51,7 +53,6 @@ local plugins = {
             {'L3MON4D3/LuaSnip'},     -- Required
         }
     }
-
 }
 local opts = {}
 
