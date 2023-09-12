@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.44    ##
+##    Aliases v1.45    ##
 #########################
 
 # add current directory on path
@@ -180,6 +180,10 @@ pack(){
 
 unpack(){
     tar -xvzf $1
+}
+
+ip_info(){
+    curl -q http://ipwho.is/$1
 }
 
 rememberme(){
