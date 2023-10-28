@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.45    ##
+##    Aliases v1.48    ##
 #########################
 
 # add current directory on path
@@ -25,7 +25,7 @@ alias lsa='ls -AF'
 alias lsat='ls -lhAFt' # sort by modification time, newest first
 alias less='less -I'
 alias s='git status'
-alias u="git fetch --all --prune && git pull --all"
+alias u="git fetch --all --prune && git pull --recurse-submodules --all"
 alias a='git add .'
 alias c='git commit -m $1'
 alias ac='git commit -a -m $1'
@@ -192,6 +192,14 @@ rememberme(){
     echo "notify-send '» remember' \"$1\"" | at now + $INTERVAL
 }
 
+
+# usage: lorem {?int sentences}
+lorem() {
+    curl -s http://metaphorpsum.com/sentences/${1-3} | xclip -i -sel clipboard
+    echo "\e[0;34m"'the text below is in your clipboard:'"\e[m"
+    xclip -o -sel clip
+}
+
 composer(){
     docker run --rm --interactive --tty --volume $PWD:/app --user $(id -u):$(id -g) composer $@
 }
@@ -243,6 +251,7 @@ alias dv="docker volume ls"
 alias docker_images_size='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -r -k 2 -h'
 
 # fast services
+alias simple_server='python3 -m http.server 9000'
 alias static_server='docker run --name "$(basename $(pwd))_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'
 alias php56_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:5.6-apache'
 alias php71_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.1-apache'
