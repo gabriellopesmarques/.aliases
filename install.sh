@@ -40,6 +40,11 @@ install_brave () {
     sudo apt update && sudo apt install brave-browser -y
 }
 
+install_warpd () {
+    echo "installing warpd"
+    bash "$HOME"/.aliases/i3/warpd/install.sh
+}
+
 install_i3wm () {
     echo "installing i3"
     bash "$HOME"/.aliases/i3/install.sh
@@ -54,6 +59,7 @@ install_i3wm () {
     bash "$HOME"/.aliases/terminal/kitty/install.sh
 
     install_brave
+    install_warpd
     install_gitfiend
     install_wallpaper
 
