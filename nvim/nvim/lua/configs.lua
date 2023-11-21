@@ -9,7 +9,7 @@ vim.opt.termguicolors = false         -- true color support
 -- za - toggle
 vim.opt.foldmethod    = "indent"
 vim.opt.mouse         = ""            -- disable mouse
-vim.opt.clipboard     = "unnamedplus" -- Sync with system clipboard
+vim.opt.clipboard     = ""            -- disable shareable OS clipboard
 vim.opt.expandtab     = true          -- Use spaces instead of tabs
 vim.opt.shiftwidth    = 4             -- Size of an indent
 vim.opt.tabstop       = 4             -- Number of spaces tabs count for

@@ -12,6 +12,9 @@ map("n", "<C-_>", "<cmd>CommentToggle<cr>", { desc = "Toggle Comment" })
 --"reindent
 map("n", "<F9>", "gg=G", { desc = "reindent" })
 
+--"copy with OS clipboard
+vim.cmd([[ vnoremap <silent><Leader>y "yy <Bar> :call system('xclip -sel clip', @y)<CR> ]])
+
 --" fix typos
 vim.cmd([[ command Vsp vsp ]])
 vim.cmd([[ command WQ wq ]])
