@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.48    ##
+##    Aliases v1.50    ##
 #########################
 
 # add current directory on path
@@ -174,12 +174,24 @@ explain(){
     w3m "https://explainshell.com/explain?cmd=$1"
 }
 
+vim_card(){
+    curl https://aurelio.net/vim/vimcard.txt
+}
+
 pack(){
     tar -cvzf pack-$1-$(date '+%Y%m%d%H%M%S').tar.gz $1
 }
 
 unpack(){
     tar -xvzf $1
+}
+
+compress(){
+    tar --create --verbose --xz --file compressed-$1-$(date '+%Y%m%d%H%M%S').tar.xz $1
+}
+
+uncompress(){
+    tar --extract --verbose --xz --file $1
 }
 
 ip_info(){
