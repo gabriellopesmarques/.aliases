@@ -1,5 +1,4 @@
 local lsp = require('lsp-zero').preset({})
-
 local cmp = require('cmp')
 local cmp_select_opts = {behavior = cmp.SelectBehavior.Select}
 
@@ -57,25 +56,31 @@ cmp.setup({
     })
 
 lsp.on_attach(function(client, bufnr)
-    --see :help lsp-zero-keybindings
-    -- to learn the available actions
     lsp.default_keymaps({buffer = bufnr})
     vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', {buffer = true})
 end)
 
-lsp.ensure_installed({
-        'clangd',
-        'bashls',
-        'lua_ls',
-        'intelephense',
-        'dockerls',
-        'docker_compose_language_service',
-    })
 
 -- (Optional) Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 require('mason').setup()
-require('mason-lspconfig').setup()
+require('mason-lspconfig').setup({
+        ensure_installed = {
+            'clangd',
+            'bashls',
+            'lua_ls',
+            'intelephense',
+            'dockerls',
+            'docker_compose_language_service',
+        },
+
+        handlers = {
+            function(server_name)
+                require('lspconfig')[server_name].setup({})
+            end,
+        },
+
+    })
 lsp.setup()
 
