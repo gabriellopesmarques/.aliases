@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.50    ##
+##    Aliases v1.53    ##
 #########################
 
 # add current directory on path
@@ -49,7 +49,9 @@ alias tmux="tmux -2"
 alias tl="tmux ls"
 alias reload="source ~/.zshrc"
 alias dc="cd"
+alias cdf='cd $(find -type d 2>/dev/null | fzf)'
 alias ping="ping -c 10"
+alias rsync="rsync --progress"
 alias UPDATE="alias_update; update; omz update;"
 
 alias weather="curl https://wttr.in/\?format\=1"
@@ -279,6 +281,13 @@ alias php82_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 
 open() {
     nautilus --new-window $1 > /dev/null 2>&1 &
 }
+
+####
+# always tmux
+####################
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ "$TERM" = "xterm-256color" ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  cli
+fi
 
 echo "[ $(whoami) ]"
 
