@@ -10,11 +10,10 @@ install_aliases () {
 install_utils () {
     echo "installing utils tools"
     sudo apt install ncdu shellcheck exa fzf jq -y
-    #brightnessctl
 
     # if is a laptop install network manager
     if [[ -d "/proc/acpi/button/lid" ]]; then
-        sudo apt install network-manager -y
+        sudo apt install network-manager brightnessctl -y
     fi
 
     bash "$HOME"/.aliases/bat/install.sh     && \
