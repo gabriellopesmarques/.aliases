@@ -12,6 +12,11 @@ install_utils () {
     sudo apt install ncdu shellcheck exa fzf jq -y
     #brightnessctl
 
+    # if is a laptop install network manager
+    if [[ -d "/proc/acpi/button/lid" ]]; then
+        sudo apt install network-manager -y
+    fi
+
     bash "$HOME"/.aliases/bat/install.sh     && \
     bash "$HOME"/.aliases/glow/install.sh    && \
     bash "$HOME"/.aliases/gitui/install.sh   && \
