@@ -50,8 +50,8 @@
     selected-urgent-foreground: var(background);
 }
 element {
-    padding: 0px 0px 0px 7px;
-    spacing: 5px;
+    padding: 6px;
+    spacing: 6px;
     border:  0;
 }
 element normal.normal {
