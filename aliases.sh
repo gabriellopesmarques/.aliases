@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.53    ##
+##    Aliases v1.58    ##
 #########################
 
 # add current directory on path
@@ -24,13 +24,9 @@ alias ll='ls -lAhF'
 alias lsa='ls -AF'
 alias lsat='ls -lhAFt' # sort by modification time, newest first
 alias less='less -I'
-alias s='git status'
+alias s='git status -s'
 alias u="git fetch --all --prune && git pull --recurse-submodules --all"
-alias a='git add .'
-alias c='git commit -m $1'
-alias ac='git commit -a -m $1'
-alias b='git branch -a'
-alias co='git checkout $1'
+alias log="git log --oneline --graph"
 alias clears='clear; git status'
 alias rank="sort | uniq -c | sort -nr"
 alias downloads="cd ~/Downloads; l"
@@ -258,11 +254,12 @@ dps(){
 
 alias dcu="docker compose up -d"
 alias dcub="docker compose up -d --build"
-alias dcd="docker compose down"
+alias dcd="docker compose down --volumes"
 alias dpsa="docker ps -a"
 alias di="docker images"
 alias dv="docker volume ls"
 alias docker_images_size='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -r -k 2 -h'
+alias docker_kill_all="docker rm -f $(docker ps -q)"
 
 # fast services
 alias simple_server='python3 -m http.server 9000'
