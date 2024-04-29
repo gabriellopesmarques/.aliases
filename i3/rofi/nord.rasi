@@ -44,9 +44,9 @@
     selected-urgent-foreground: var(background);
 }
 element {
-    padding: 0px 0px 0px 7px;
-    spacing: 5px;
-    border:  0;
+    padding: 6px;
+    spacing: 6px;
+    border: 0;
 }
 element normal.normal {
     background-color: var(normal-background);
@@ -88,13 +88,11 @@ element-text {
     background-color: rgba(0, 0, 0, 0%);
     text-color: inherit;
     highlight: inherit;
-
 }
 element-icon {
     background-color: rgba(0, 0, 0, 0%);
     size: 1.0000em;
     text-color: inherit;
-
 }
 window {
     padding: 0;
@@ -137,12 +135,10 @@ inputbar {
     spacing: 0;
     text-color: var(normal-foreground);
     background-color: var(nord3);
-    children: [ entry ];
+    children: [entry];
 }
 entry {
     spacing: 0;
-
     text-color: var(normal-foreground);
     background-color: var(nord3);
 }
-

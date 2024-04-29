@@ -2,4 +2,4 @@ configuration {
     font: "JetBrains Mono 14";
 }
 
-@theme "deep_blue"
+@theme "nord"
