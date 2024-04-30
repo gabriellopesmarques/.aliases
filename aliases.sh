@@ -248,8 +248,12 @@ tmux_copy_buffer(){
 ####
 # Docker aliases
 ####################
-dps(){
+dps () {
     echo "NAME|IMAGE|PORTS" | cat - <(docker ps --format "{{.Names}}|{{.Image}}|{{.Ports}}\n") | column -t -s "|"
+}
+
+docker_kill_all () {
+    docker rm -f $(docker ps -q)
 }
 
 alias dcu="docker compose up -d"
@@ -259,7 +263,6 @@ alias dpsa="docker ps -a"
 alias di="docker images"
 alias dv="docker volume ls"
 alias docker_images_size='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -r -k 2 -h'
-alias docker_kill_all="docker rm -f $(docker ps -q)"
 
 # fast services
 alias simple_server='python3 -m http.server 9000'
