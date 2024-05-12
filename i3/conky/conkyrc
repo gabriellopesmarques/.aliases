@@ -38,7 +38,7 @@ conky.config = {
     draw_outline = false,
     draw_shades = false,
     extra_newline = false,
-    font = 'IBM Plex Mono :size=16',
+    font = 'Input Mono :size=16',
     gap_x = 0,
     gap_y = 90,
     minimum_height = 5,

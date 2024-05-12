@@ -5,7 +5,7 @@
  */
 
 * {
-    font: "IBM Plex Mono 14";
+    font: "Input Mono 14";
 
     color0: #000011;
     color1: #000011;
