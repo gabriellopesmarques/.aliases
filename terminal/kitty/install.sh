@@ -3,7 +3,7 @@
 kitty_conf=$HOME/.config/kitty/kitty.conf
 
 # install kitty
-sudo apt-get install kitty -y
+sudo apt install kitty -y
 
 # create kitt config directory
 mkdir -p $(dirname $kitty_conf)

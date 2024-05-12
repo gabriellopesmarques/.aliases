@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo apt-get install tmux -y
+sudo apt install tmux -y
 echo "source ~/.aliases/tmux/tmux.conf" > ~/.tmux.conf

@@ -84,7 +84,7 @@ cc(){
 }
 
 download_magnet(){
-    # sudo apt-get install aria2
+    # sudo apt install aria2
     if ! [[ $1 =~ "magnet" ]]; then
         echo "arg 1 should be a magnet link"
         return 1;
@@ -134,15 +134,15 @@ md5(){
 }
 
 install() {
-    sudo apt-get update && sudo apt-get install $1 -y
+    sudo apt update && sudo apt install $1 -y
 }
 
 update(){
-    sudo apt-get update && sudo apt-get upgrade
+    sudo apt update && sudo apt upgrade
 }
 
 uninstall() {
-    sudo apt-get purge $1
+    sudo apt purge $1
 }
 
 ccd() {
@@ -198,7 +198,7 @@ ip_info(){
 
 rememberme(){
     INTERVAL="${2:-1 minutes}"
-    # sudo apt-get install libnotify-bin at -y
+    # sudo apt install libnotify-bin at -y
     echo "notify-send '» remember' \"$1\"" | at now + $INTERVAL
 }
 

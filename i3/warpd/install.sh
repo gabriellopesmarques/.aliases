@@ -4,7 +4,7 @@ git clone https://github.com/rvaiya/warpd.git "$dir"
 cd "$dir" || echo "!! ERROR !! cd fails"
 
 echo "installing dependencies . . ."
-sudo apt-get install -y \
+sudo apt install -y \
     libxi-dev \
     libxinerama-dev \
     libxft-dev \

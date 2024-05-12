@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install conky
-sudo apt-get install conky-all
+sudo apt install conky-all
 
 # create conky config directory
 mkdir -p ~/.config/conky/
