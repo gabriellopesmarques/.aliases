@@ -27,6 +27,11 @@ install_utils () {
     echo "source ~/.aliases/aliases.utils.sh" >> "$HOME"/.zshrc
 }
 
+install_tldr () {
+    echo "installing tldr"
+    bash "$HOME"/.aliases/tldr/install.sh
+}
+
 install_docker () {
      echo "installing docker"
      sudo apt install curl -y
@@ -121,6 +126,7 @@ usage () {
       --omz\t\tinstall omz, add autosuggestions plugin and set a minimalist theme
       --aliases\t\tinstall aliases (shorthands and functions)
       --utils\t\tinstall utils tools (ncdu, shellcheck, exa, fzf, bat, glow, gitui, dialog, fetch) and add alias moderns tools to substitute classical tools
+      --tldr\t\tinstall tldr a collaborative cheatsheets for console commands
       --vim\t\tinstall and set a simple config (without plugins)
       --neovim\t\tdownload, compile, install and configure neovim
       --tmux\t\tinstall tmux and configure
@@ -146,6 +152,9 @@ do
         ;;
         --aliases)
             install_aliases
+        ;;
+        --tldr)
+            install_tldr
         ;;
         --utils)
             install_utils
@@ -175,6 +184,7 @@ do
             install_omz
             install_aliases
             install_utils
+            install_tldr
             install_tmux
             install_vim
             install_neovim
