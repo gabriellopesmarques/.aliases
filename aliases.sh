@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.58    ##
+##    Aliases v1.59    ##
 #########################
 
 # add current directory on path
@@ -212,6 +212,10 @@ lorem() {
 
 composer(){
     docker run --rm --interactive --tty --volume $PWD:/app --user $(id -u):$(id -g) composer $@
+}
+
+trans(){
+    docker run --rm --interactive --tty soimort/translate-shell $@
 }
 
 cli(){
