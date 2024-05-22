@@ -17,6 +17,7 @@ vim.cmd([[ vnoremap <silent><Leader>y "yy <Bar> :call system('xclip -sel clip', 
 
 --" fix typos
 vim.cmd([[ command Vsp vsp ]])
+vim.cmd([[ command Tabe tabe ]])
 vim.cmd([[ command WQ wq ]])
 vim.cmd([[ command Wq wq ]])
 vim.cmd([[ command W w ]])
