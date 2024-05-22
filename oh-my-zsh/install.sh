@@ -9,6 +9,9 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 ## install autosuggestions plugin
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
+## install zsh-syntax-highlighting autosuggestions plugin
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
 ## in this way, each user can get your own aliases too. edit file with: zc
 echo "source ~/.aliases/oh-my-zsh/.zshrc" > $HOME/.zshrc
 
