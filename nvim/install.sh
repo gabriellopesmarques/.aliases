@@ -6,13 +6,13 @@ sudo apt install build-essential fzf ripgrep git wget curl tar gzip unzip -y
 
 ## download source and compile
 if ! command -v nvim &> /dev/null; then
-    mkdir ~/.src && cd ~/.src
+    mkdir -p "$HOME/.src" && cd "$HOME/.src"
     git clone --branch stable https://github.com/neovim/neovim
 
     # unzip is a dependency
     sudo apt install cmake gettext -y
 
-    cd ~/.src/neovim
+    cd "$HOME/.src/neovim"
     make CMAKE_BUILD_TYPE=RelWithDebInfo
     sudo make install
 fi

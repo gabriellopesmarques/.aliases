@@ -165,6 +165,9 @@ do
         --vim)
             install_vim
         ;;
+        --nvim)
+            install_neovim
+        ;;
         --neovim)
             install_neovim
         ;;
