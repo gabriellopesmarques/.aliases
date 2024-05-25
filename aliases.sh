@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.59    ##
+##    Aliases v1.61    ##
 #########################
 
 # add current directory on path
@@ -229,6 +229,10 @@ cli(){
     tmux attach-session -t $session
 }
 
+search_file(){
+    fzf --preview 'batcat --style=numbers --theme="TokyoNordStorm" --color=always --line-range=:500 {}'
+}
+
 tmux_dev(){
     SESSION_NAME=$1
     export WORK_DIR=$2
@@ -278,13 +282,6 @@ alias php80_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "
 alias php82_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.2-apache'
 alias php80_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.0-apache'
 alias php82_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.2-apache'
-
-####
-# Gnome
-####################
-open() {
-    nautilus --new-window $1 > /dev/null 2>&1 &
-}
 
 ####
 # always tmux
