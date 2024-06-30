@@ -13,7 +13,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 ## in this way, each user can get your own aliases too. edit file with: zc
-echo "source ~/.aliases/oh-my-zsh/.zshrc" > $HOME/.zshrc
+echo "source ~/.aliases/oh-my-zsh/config" > $HOME/.zshrc
 
 ## custom theme
 ln -s $HOME/.aliases/oh-my-zsh/themes/x.zsh-theme $HOME/.oh-my-zsh/custom/themes/x.zsh-theme

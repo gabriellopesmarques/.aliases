@@ -6,10 +6,7 @@ install_aliases () {
 
     # add aliases in bash
     echo "source ~/.aliases/aliases.sh" >> "$HOME"/.bashrc
-    echo "source ~/.aliases/oh-my-zsh/config" >> "$HOME"/.bashrc
-
     echo "source ~/.aliases/aliases.sh" >> "$HOME"/.zshrc
-    echo "source ~/.aliases/oh-my-zsh/config" >> "$HOME"/.zshrc
 }
 
 install_utils () {
