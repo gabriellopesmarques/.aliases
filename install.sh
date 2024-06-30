@@ -3,8 +3,13 @@
 install_aliases () {
     echo "installing aliases"
     sudo apt install git zsh htop tree bc lm-sensors bc aria2 libnotify-bin at w3m xclip -y  # aliases.sh dependencies
+
     # add aliases in bash
     echo "source ~/.aliases/aliases.sh" >> "$HOME"/.bashrc
+    echo "source ~/.aliases/oh-my-zsh/config" >> "$HOME"/.bashrc
+
+    echo "source ~/.aliases/aliases.sh" >> "$HOME"/.zshrc
+    echo "source ~/.aliases/oh-my-zsh/config" >> "$HOME"/.zshrc
 }
 
 install_utils () {

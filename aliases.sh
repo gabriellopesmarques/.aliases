@@ -1,10 +1,17 @@
 #########################
-##    Aliases v1.61    ##
+##    Aliases v1.62    ##
 #########################
 
 # add current directory on path
 PATH=.:$PATH
 HISTCONTROL=ignoreboth # ignore spaces and duplicated commands (ignorespace, ignoredups)
+
+
+# load environment variables
+vars=$HOME/.aliases/env.sh
+if [ -f "$vars" ]; then
+    source "$vars"
+fi
 
 # aliases for repo
 alias aliases="cd ~/.aliases"

@@ -30,3 +30,12 @@ check avaliable installers scripts
 ./install.sh --help
 ```
 
+## load files sequence
+```
+$HOME/.zshrc:
+    - ~/.aliases/aliases.sh
+        - ~/.aliases/env.sh
+    - ~/.aliases/oh-my-zsh/config
+        - $ZSH/oh-my-zsh.sh
+    - ~/.aliases/aliases.utils.sh
+```
