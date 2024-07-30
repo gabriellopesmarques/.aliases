@@ -4,6 +4,7 @@ local map = vim.api.nvim_set_keymap
 
 --"fzf shortcut
 map("n", "<C-p>", "<cmd>GFiles<cr>", { desc = "Fuzzy Finder Git files" })
+map("n", "<C-g>", "<cmd>RG<cr>", { desc = "FZF rg search result; relaunch ripgrep on every keystroke" })
 map("n", "<leader>p", "<cmd>Files<cr>", { desc = "Fuzzy Finder files" })
 
 --" toggle comments (ctrl + /)
