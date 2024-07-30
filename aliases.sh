@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.62    ##
+##    Aliases v1.64    ##
 #########################
 
 # add current directory on path
@@ -55,6 +55,7 @@ alias dc="cd"
 alias cdf='cd $(find -type d 2>/dev/null | fzf)'
 alias ping="ping -c 10"
 alias rsync="rsync --progress"
+alias lsblk="lsblk -f"
 alias UPDATE="alias_update; update; omz update;"
 
 alias weather="curl https://wttr.in/\?format\=1"
@@ -264,7 +265,11 @@ tmux_copy_buffer(){
 # Docker aliases
 ####################
 dps () {
-    echo "NAME|IMAGE|PORTS" | cat - <(docker ps --format "{{.Names}}|{{.Image}}|{{.Ports}}\n") | column -t -s "|"
+    docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}'
+}
+
+dpsw () {
+    docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Label "com.docker.compose.project.working_dir"}}'
 }
 
 docker_kill_all () {
