@@ -1,7 +1,7 @@
 alias cat='batcat --style="changes" --theme="TokyoNordStorm"'
-alias l='exa -lhF --icons'
-alias ll='exa -lhaF --icons'
-alias ls='exa --icons'
+alias l='exa -lhF'
+alias ll='exa -lhaF'
+alias ls='exa'
 alias lsa='exa -a'
 alias glow="glow -s ~/.config/glow/nord.json"
 alias fd='cd $(find -type d 2>/dev/null | fzf); pwd'
