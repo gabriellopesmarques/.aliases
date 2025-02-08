@@ -48,6 +48,7 @@ alias vc=vimconfig
 alias ac="vim ~/.aliases/aliases.sh"
 alias zc="vim ~/.zshrc"
 alias ic="vim ~/.aliases/i3/i3.conf"
+alias ec="vim ~/.aliases/env.sh"
 alias tmux="tmux -2"
 alias tl="tmux ls"
 alias reload="source ~/.zshrc"
@@ -216,6 +217,11 @@ lorem() {
     curl -s http://metaphorpsum.com/sentences/${1-3} | xclip -i -sel clipboard
     echo "\e[0;34m"'the text below is in your clipboard:'"\e[m"
     xclip -o -sel clip
+}
+
+php(){
+    #docker run -it --rm --name php-script -v "$PWD":/app -w /app php:8.3-cli $@
+    docker run --rm --interactive --tty --volume $PWD:/app --workdir /app --user $(id -u):$(id -g) php:8.3-cli php $@
 }
 
 composer(){

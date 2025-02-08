@@ -1,4 +1,4 @@
-alias cat='batcat --style="changes" --theme="TokyoNordStorm"'
+alias bat='batcat --style="changes" --theme="TokyoNordStorm"'
 alias l='exa -lhF'
 alias ll='exa -lhaF'
 alias ls='exa'
@@ -8,9 +8,9 @@ alias fd='cd $(find -type d 2>/dev/null | fzf); pwd'
 alias calendar="dialog --calendar 'calendar' 0 0"
 
 ai(){
-    if ! declare -p GROQ_API_KEY &> /dev/null; then
+    if [[ -z "$GROQ_API_KEY" ]]; then
         echo "declare GROQ_API_KEY to use this function"
-        return 1
+        return 64
     fi
 
     echo -n "how can i help you?: "
