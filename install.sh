@@ -11,9 +11,9 @@ install_aliases () {
 
 install_utils () {
     echo "installing utils tools"
-    sudo apt install ncdu shellcheck exa fzf jq -y
+    sudo apt install ncdu shellcheck exa fzf jq exfat-fuse smartmontools fio -y
 
-    # if is a laptop install network manager
+    # if is a laptop, install laptop things
     if [[ -d "/proc/acpi/button/lid" ]]; then
         sudo apt install network-manager brightnessctl -y
     fi
@@ -106,6 +106,11 @@ install_neovim () {
     bash "$HOME"/.aliases/nvim/install.sh
 }
 
+install_emacs () {
+    echo "installing emacs"
+    bash "$HOME"/.aliases/emacs/install.sh
+}
+
 install_omz () {
     echo "installing oh-my-zsh"
     bash "$HOME"/.aliases/oh-my-zsh/install.sh
@@ -131,12 +136,13 @@ usage () {
       --tldr\t\tinstall tldr a collaborative cheatsheets for console commands
       --vim\t\tinstall and set a simple config (without plugins)
       --neovim\t\tdownload, compile, install and configure neovim
+      --emacs\t\tinstall and configure emacs
       --tmux\t\tinstall tmux and configure
       --docker\t\tinstall docker-ce (using https://get.docker.com script)
       --mail\t\tinstall postfix (to recive mail) and mutt (to read)
       --i3wm\t\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot, fonts, moc, kitty term, firefox, brave and configure them
       --gitfiend\tinstall gitfiend (git gui)
-      --all_env\t\tinstall all (except mail)
+      --all_env\t\tinstall all (except mail and neovim)
 
       desktop use:
       ./install.sh --all_env
@@ -192,7 +198,7 @@ do
             install_tldr
             install_tmux
             install_vim
-            install_neovim
+            install_emacs
             install_docker
             install_i3wm
         ;;

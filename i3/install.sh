@@ -31,3 +31,5 @@ ln -s ~/.aliases/i3/dunstrc  ~/.config/dunst/dunstrc
 # link rofi config
 ln -s ~/.aliases/i3/rofi ~/.config/rofi
 
+# link startup file
+ln -s ~/.aliases/i3/startup.sh ~/.config/i3status/startup.sh
