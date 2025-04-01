@@ -86,9 +86,26 @@ map <F9> gg=G
 "vimrc edit shortcut
 nmap <Leader>vc :e $MYVIMRC<CR> 
 
+" shortcut to save as
+nnoremap <leader>sa :call SaveAsAndOpen()<CR>
+
 "# auto commands
 " auto 'reload' configs when save .vimrc
 autocmd BufWritePost .vimrc source %
+
+
+" functions
+function! SaveAsAndOpen()
+  let current_file = expand('%:p') " Get the full path of the current file
+  let new_file = input("Save as: ", current_file)
+
+  if new_file != "" && new_file != current_file
+    execute "w " . fnameescape(new_file)
+    execute "edit " . fnameescape(new_file)
+  elseif new_file != ""
+    echo "New file name is the same as the current file."
+  endif
+endfunction
 
 " fix typos
 command WQ wq
