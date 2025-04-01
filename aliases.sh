@@ -32,6 +32,7 @@ alias lsa='ls -AF'
 alias lsat='ls -lhAFt' # sort by modification time, newest first
 alias less='less -I'
 alias s='git status -s'
+alias d='git diff'
 alias u="git fetch --all --prune && git pull --recurse-submodules --all"
 alias log="git log --oneline --graph"
 alias clears='clear; git status'
