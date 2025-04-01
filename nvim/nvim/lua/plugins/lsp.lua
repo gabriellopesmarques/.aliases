@@ -71,6 +71,7 @@ require('mason-lspconfig').setup({
             'bashls',
             'lua_ls',
             'intelephense',
+            'pyright',
             'dockerls',
             'docker_compose_language_service',
         },
