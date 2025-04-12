@@ -71,15 +71,9 @@ install_i3wm () {
 
     install_brave
     install_warpd
-    install_gitfiend
     install_wallpaper
 
     sudo apt purge xterm -y
-}
-
-install_gitfiend () {
-    echo "installing git fiend"
-    bash "$HOME"/.aliases/gitfiend/install.sh
 }
 
 install_wallpaper () {
@@ -141,7 +135,6 @@ usage () {
       --docker\t\tinstall docker-ce (using https://get.docker.com script)
       --mail\t\tinstall postfix (to recive mail) and mutt (to read)
       --i3wm\t\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot, fonts, moc, kitty term, firefox, brave and configure them
-      --gitfiend\tinstall gitfiend (git gui)
       --all_env\t\tinstall all (except mail and neovim)
 
       desktop use:
@@ -188,8 +181,6 @@ do
         --i3wm)
             install_i3wm
         ;;
-        --gitfiend)
-            install_gitfiend
         ;;
         --all_env)
             install_omz
