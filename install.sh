@@ -135,7 +135,7 @@ usage () {
       --docker\t\tinstall docker-ce (using https://get.docker.com script)
       --mail\t\tinstall postfix (to recive mail) and mutt (to read)
       --i3wm\t\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot, fonts, moc, kitty term, firefox, brave and configure them
-      --all_env\t\tinstall all (except mail and neovim)
+      --all_env\t\tinstall all (except mail and emacs)
 
       desktop use:
       ./install.sh --all_env
@@ -181,7 +181,6 @@ do
         --i3wm)
             install_i3wm
         ;;
-        ;;
         --all_env)
             install_omz
             install_aliases
@@ -189,7 +188,7 @@ do
             install_tldr
             install_tmux
             install_vim
-            install_emacs
+            install_neovim
             install_docker
             install_i3wm
         ;;
