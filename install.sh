@@ -136,6 +136,7 @@ usage () {
       --mail\t\tinstall postfix (to recive mail) and mutt (to read)
       --i3wm\t\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, gnome-screenshot, fonts, moc, kitty term, firefox, brave and configure them
       --all_env\t\tinstall all (except mail and emacs)
+      --light\t\tinstall omz, aliases, utils, tldr, vim, neovim, tmux
 
       desktop use:
       ./install.sh --all_env
@@ -191,6 +192,14 @@ do
             install_neovim
             install_docker
             install_i3wm
+        ;;
+        --light)
+            install_omz
+            install_aliases
+            install_utils
+            install_tldr
+            install_vim
+            install_neovim
         ;;
         --help)
             usage
