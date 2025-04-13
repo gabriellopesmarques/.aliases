@@ -9,7 +9,7 @@ if ! command -v tldr &> /dev/null; then
     mkdir "$HOME/.src"
     git clone https://github.com/tldr-pages/tldr-c-client.git "$HOME/.src/tldr"
 
-    sudo apt install build-essential 
+    sudo apt install build-essential -y
 
     cd "$HOME/.src/tldr"
     sudo ./deps.sh
