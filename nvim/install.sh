@@ -33,3 +33,11 @@ mkdir -p $HOME/.config/
 # nvim config 
 ln -s $HOME/.aliases/nvim/nvim $HOME/.config/nvim
 
+# set up nvm to install plugins now
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# install plugins
+nvim --headless "+Lazy! sync" +qa
+
