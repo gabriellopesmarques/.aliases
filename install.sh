@@ -2,7 +2,7 @@
 
 install_aliases () {
     echo "installing aliases"
-    sudo apt install git zsh htop tree bc lm-sensors bc aria2 libnotify-bin at w3m xclip -y  # aliases.sh dependencies
+    sudo apt install git zsh htop tree bc lm-sensors aria2 libnotify-bin at w3m xclip -y  # aliases.sh dependencies
 
     # add aliases in bash
     echo "source ~/.aliases/aliases.sh" >> "$HOME"/.bashrc
