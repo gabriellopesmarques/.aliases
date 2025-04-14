@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.64    ##
+##    Aliases v1.69    ##
 #########################
 
 # add current directory on path
@@ -79,14 +79,87 @@ alias limpa=clear
 alias clea=clear
 alias rl="clear & ls -la"
 
+####
+# git topcoat
+####################
+
+git() {
+  if [[ "$1" == "push" && "$2" == "-f" ]]; then
+    command git push --force-with-lease "${@:3}"
+  else
+    command git "$@"
+  fi
+}
+
+git_update(){
+  echo " executing: git fetch origin && git reset --hard FETCH_HEAD" && \
+  git fetch origin && git reset --hard FETCH_HEAD
+}
+
+git_clean_branches() {
+  echo "fetching and pruning remotes..."
+  git fetch -p
+
+  # Capture local branches marked as ': gone]'
+  local branches_to_delete
+  branches_to_delete=$(git branch -vv | grep '\[.*: gone]' | awk '{print $1}')
+
+  if [ -z "$branches_to_delete" ]; then
+    echo "no obsolete branches found"
+    return
+  fi
+
+  echo "the following branches will be deleted:"
+  for branch in $branches_to_delete; do
+    echo "  git branch -D $branch"
+  done
+
+  echo
+  read -p "do you want to proceed with deleting these branches? [y/N]: " confirm
+
+  if [[ "$confirm" =~ ^[yY](es)?$ ]]; then
+    echo "deleting branches..."
+    for branch in $branches_to_delete; do
+      git branch -D "$branch"
+    done
+    echo "cleanup completed"
+  fi
+}
+
+git_sync_branches() {
+  local branches=("$@")
+  if [ ${#branches[@]} -eq 0 ]; then
+    branches=("master" "develop")
+  fi
+
+  local current_branch
+  current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+  echo "fetching and pruning remotes..."
+  git fetch --all --prune
+
+  # Atualiza cada branch com reset --hard
+  for branch in "${branches[@]}"; do
+    if git show-ref --verify --quiet "refs/heads/$branch"; then
+      echo "updating $branch with reset --hard from origin/$branch..."
+      git checkout "$branch" && git reset --hard "origin/$branch"
+    else
+      echo "branch $branch doesnt exists local, skipping..."
+    fi
+  done
+
+  echo "backing to $current_branch..."
+  git checkout "$current_branch"
+}
+
+git_delete_branch(){
+    git branch -d $1 && \
+    git push origin --delete $1
+}
+
 calc(){
     # requires bc
     echo "scale=2; $1" | bc -q
-}
-
-delete_branch(){
-    git branch -d $1 && \
-    git push origin --delete $1
 }
 
 cc(){
