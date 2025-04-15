@@ -84,11 +84,39 @@ alias rl="clear & ls -la"
 ####################
 
 git() {
-  if [[ "$1" == "push" && "$2" == "-f" ]]; then
-    command git push --force-with-lease "${@:3}"
-  else
+  if [[ "$1" != "push" ]]; then
     command git "$@"
+    return
   fi
+
+  local args=()
+  local force_detected=false
+
+  for arg in "${@:2}"; do
+    case "$arg" in
+      --force-with-lease)
+        command git "$@"
+        return
+        ;;
+      -f|--force)
+        force_detected=true
+        ;;
+      *)
+        args+=("$arg")
+        ;;
+    esac
+  done
+
+  if $force_detected; then
+    echo "\n -- !! intercepted command !! -- \n"
+    echo "hey, easy there!"
+    echo "push force, really?! and without a leash? let's play it safe"
+    echo "running: git push --force-with-lease ${args[@]} \n"
+    command git push --force-with-lease "${args[@]}"
+    return
+  fi
+
+  command git "$@"
 }
 
 git_update(){
