@@ -128,57 +128,64 @@ git_clean_branches() {
   echo "fetching and pruning remotes..."
   git fetch -p
 
-  # Capture local branches marked as ': gone]'
+  # capture local branches marked as ': gone]'
   local branches_to_delete
-  branches_to_delete=$(git branch -vv | grep '\[.*: gone]' | awk '{print $1}')
+  branches_to_delete=$(git branch -vv | grep '\[.*: gone]' | awk '{if ($1 == "*") print $2; else print $1}')
 
-  if [ -z "$branches_to_delete" ]; then
+  if [[ -z "$branches_to_delete" ]]; then
     echo "no obsolete branches found"
     return
   fi
 
   echo "the following branches will be deleted:"
-  for branch in $branches_to_delete; do
-    echo "  git branch -D $branch"
-  done
+  echo "$branches_to_delete"
 
-  echo
-  read -p "do you want to proceed with deleting these branches? [y/N]: " confirm
+  printf "\ndo you want to proceed with deleting these branches? [y/N]: "
+  read confirm
 
   if [[ "$confirm" =~ ^[yY](es)?$ ]]; then
     echo "deleting branches..."
-    for branch in $branches_to_delete; do
-      git branch -D "$branch"
+    printf "%s\n" "$branches_to_delete" | while IFS= read -r branch; do
+        git branch -D "$branch"
     done
     echo "cleanup completed"
   fi
 }
 
 git_sync_branches() {
-  local branches=("$@")
-  if [ ${#branches[@]} -eq 0 ]; then
-    branches=("master" "develop")
+  # use default branches if none are provided
+  if [[ $# -eq 0 ]]; then
+    set -- master develop
   fi
 
+  # check for uncommitted changes (both staged and unstaged)
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "working directory is not clean. please commit or stash your changes before syncing."
+    return 1
+  fi
+
+  # save the current branch to return to it later
   local current_branch
   current_branch=$(git rev-parse --abbrev-ref HEAD)
 
   echo "fetching and pruning remotes..."
   git fetch --all --prune
 
-  # Atualiza cada branch com reset --hard
-  for branch in "${branches[@]}"; do
+  # sync each specified branch with its corresponding origin branch
+  for branch in "$@"; do
     if git show-ref --verify --quiet "refs/heads/$branch"; then
       echo "updating $branch with reset --hard from origin/$branch..."
       git checkout "$branch" && git reset --hard "origin/$branch"
     else
-      echo "branch $branch doesnt exists local, skipping..."
+      echo "branch $branch does not exist locally, skipping..."
     fi
   done
 
-  echo "backing to $current_branch..."
+  echo "returning to $current_branch..."
   git checkout "$current_branch"
 }
+
+
 
 git_delete_branch(){
     git branch -d $1 && \
