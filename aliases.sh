@@ -119,7 +119,19 @@ git() {
   command git "$@"
 }
 
+__git_is_clean() {
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "working directory is not clean. please commit or stash your changes before proceeding."
+    return 1
+  fi
+
+  return 0
+}
+
 git_update(){
+  # abort if working directory is not clean
+  __git_is_clean || return 1
+
   echo " executing: git fetch origin && git reset --hard FETCH_HEAD" && \
   git fetch origin && git reset --hard FETCH_HEAD
 }
@@ -158,11 +170,8 @@ git_sync_branches() {
     set -- master develop
   fi
 
-  # check for uncommitted changes (both staged and unstaged)
-  if ! git diff --quiet || ! git diff --cached --quiet; then
-    echo "working directory is not clean. please commit or stash your changes before syncing."
-    return 1
-  fi
+  # abort if working directory is not clean
+  __git_is_clean || return 1
 
   # save the current branch to return to it later
   local current_branch
