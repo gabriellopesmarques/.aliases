@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.69    ##
+##    Aliases v1.72    ##
 #########################
 
 # add current directory on path
@@ -37,6 +37,7 @@ alias u="git fetch --all --prune && git pull --recurse-submodules --all"
 alias log="git log --oneline --graph"
 alias clears='clear; git status'
 alias rank="sort | uniq -c | sort -nr"
+alias du_by_size="du -sh ./* | sort -rh"
 alias downloads="cd ~/Downloads; l"
 alias dl="downloads"
 alias workspace='cd ~/Projects/; clear; pwd; l'
@@ -193,8 +194,6 @@ git_sync_branches() {
   echo "returning to $current_branch..."
   git checkout "$current_branch"
 }
-
-
 
 git_delete_branch(){
     git branch -d $1 && \
@@ -406,6 +405,8 @@ alias dcd="docker compose down --volumes"
 alias dpsa="docker ps -a"
 alias di="docker images"
 alias dv="docker volume ls"
+alias dsdf='docker system df'
+alias docker_prune='docker system prune'
 alias docker_images_size='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -r -k 2 -h'
 
 # fast services
