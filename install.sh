@@ -15,7 +15,7 @@ install_utils () {
 
     # if is a laptop, install laptop things
     if [[ -d "/proc/acpi/button/lid" ]]; then
-        sudo apt install network-manager brightnessctl -y
+        sudo apt install network-manager acpi brightnessctl -y
     fi
 
     bash "$HOME"/.aliases/bat/install.sh     && \
