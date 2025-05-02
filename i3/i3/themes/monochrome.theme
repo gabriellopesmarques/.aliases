@@ -1,0 +1,32 @@
+set $bg      #000000
+set $fg      #eeeeee
+set $black   #000000
+set $blue    #eeeeee
+set $red     #eeeeee
+
+# i3 colors
+client.focused          $blue   $blue   $bg     $blue   $blue
+client.unfocused        $bg     $bg     $fg     $bg     $bg
+
+font pango:Recursive Monospace 12
+
+bar {
+    position top
+    status_command ~/.config/i3status/i3script.sh
+    tray_padding 1
+    strip_workspace_numbers yes
+
+    colors {
+        separator  $bg
+        background $bg
+        statusline $fg
+
+        #                   border  background text
+        focused_workspace   $bg     $fg        $bg
+        active_workspace    $bg     $fg        $bg
+        inactive_workspace  $bg     $bg        $fg
+        urgent_workspace    $bg     $bg        $fg
+        binding_mode        $bg     $bg        $fg
+    }
+}
+

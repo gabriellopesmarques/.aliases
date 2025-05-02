@@ -1,0 +1,141 @@
+/*
+background-foreground-color0...color7
+https://colorswall.com/palette/generate/121212-a0a0a0-1b1d1e-f92672-a6e22e-fd971f-66d9ef-9e6ffe-5e7175-ccccc6
+
+selection_background-selection_foreground-color8...color15
+https://colorswall.com/palette/generate/453a39-121212-505354-ff669d-beed5f-e6db74-66d9ef-9e6ffe-a3babf-f8f8f2
+*/
+
+* {
+    font: "IBM Plex Mono 12";
+
+    background:                      #121212;
+	bordercolor:                     #121212;
+	separatorcolor:                  #121212;
+	normal-background:               #1b1d1e;
+	normal-foreground:               #a0a0a0;
+	alternate-normal-foreground:     #121212;
+	selected-normal-background:      #66d9ef;
+	selected-normal-foreground:      #1b1d1e;
+	active-background:               #121212;
+	active-foreground:               #a0a0a0;
+	alternate-active-background:     #121212;
+	selected-active-background:      #66d9ef;
+	selected-active-foreground:      #121212;
+	urgent-background:               #1b1d1e;
+	urgent-foreground:               #fd971f;
+	alternate-urgent-background:     #1b1d1e;
+	selected-urgent-background:      #fd971f;
+	selected-urgent-foreground:      #121212;
+	alternate-normal-foreground:     @normal-foreground;
+	alternate-urgent-foreground:     @urgent-foreground;
+	alternate-active-foreground:     @active-foreground;
+	foreground:                      @normal-foreground;
+
+    spacing: 2;
+    background-color: var(background);
+}
+
+element {
+    padding: 0px 0px 0px 7px;
+    spacing: 5px;
+    border:  0;
+}
+
+element normal.normal {
+    background-color: var(background);
+    text-color: var(normal-foreground);
+}
+element normal.urgent {
+    background-color: var(urgent-background);
+    text-color: var(urgent-foreground);
+}
+element normal.active {
+    background-color: var(active-background);
+    text-color: var(active-foreground);
+}
+element selected.normal {
+    background-color: var(selected-normal-background);
+    text-color: var(selected-normal-foreground);
+}
+element selected.urgent {
+    background-color: var(selected-urgent-background);
+    text-color: var(selected-urgent-foreground);
+}
+element selected.active {
+    background-color: var(selected-active-background);
+    text-color: var(selected-active-foreground);
+}
+element alternate.normal {
+    background-color: var(alternate-normal-background);
+    text-color: var(alternate-normal-foreground);
+}
+element alternate.urgent {
+    background-color: var(alternate-urgent-background);
+    text-color: var(alternate-urgent-foreground);
+}
+element alternate.active {
+    background-color: var(alternate-active-background);
+    text-color: var(alternate-active-foreground);
+}
+element-text {
+    background-color: rgba(0, 0, 0, 0%);
+    text-color: inherit;
+    highlight: inherit;
+
+}
+element-icon {
+    background-color: rgba(0, 0, 0, 0%);
+    size: 1.0000em;
+    text-color: inherit;
+
+}
+window {
+    padding: 0;
+    border: 0;
+    background-color: var(background);
+}
+mainbox {
+    padding: 0;
+    border: 0;
+}
+message {
+    margin: 0px 7px;
+}
+textbox {
+    text-color: var(foreground);
+}
+listview {
+    margin: 0px 0px 5px;
+    scrollbar: true;
+    spacing: 2px;
+    fixed-height: 0;
+}
+scrollbar {
+    padding: 0;
+    handle-width: 14px;
+    border: 0;
+    handle-color: var(color3);
+}
+button {
+    spacing: 0;
+    text-color: var(normal-foreground);
+}
+button selected {
+    background-color: var(selected-normal-background);
+    text-color: var(selected-normal-foreground);
+}
+inputbar {
+    padding: 7px;
+    margin: 7px;
+    spacing: 0;
+    text-color: var(normal-foreground);
+    background-color: var(color3);
+    children: [ entry ];
+}
+entry {
+    spacing: 0;
+    text-color: var(normal-foreground);
+    background-color: var(color3);
+}
+

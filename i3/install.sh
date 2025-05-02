@@ -4,11 +4,9 @@
 sudo apt install xorg i3 i3status feh pulseaudio pavucontrol rofi \
     gnome-screenshot firefox-esr libnotify-bin at -y
 
-# create i3 config directory
-mkdir -p ~/.config/i3
 
 # link config file
-ln -s ~/.aliases/i3/i3.conf ~/.config/i3/config
+ln -s "$HOME/.aliases/i3/i3" "$HOME/.config/i3"
 
 # create i3status config directory
 mkdir -p ~/.config/i3status

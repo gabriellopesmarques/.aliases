@@ -1,0 +1,45 @@
+set $color0  #2E3440
+set $color1  #3B4252
+set $color2  #434C5E
+set $color3  #4C566A
+set $color4  #D8DEE9
+set $color5  #E5E9F0
+set $color6  #ECEFF4
+set $color7  #8FBCBB
+set $color8  #88C0D0
+set $color9  #81A1C1
+set $color10 #5E81AC
+set $color11 #BF616A
+set $color12 #D08770
+set $color13 #EBCB8B
+set $color14 #A3BE8C
+set $color15 #B48EAD
+
+client.focused          $color10 $color10 $color6   $color10
+client.focused_inactive $color1  $color1  $color4   $color1
+client.unfocused        $color0  $color0  $color4   $color0
+client.urgent           $color11 $color11 $color6   $color11
+client.placeholder      $color3  $color3  $color4   $color3
+
+font pango:Input Mono 12
+
+bar {
+    position top
+    status_command ~/.config/i3status/i3script.sh
+    tray_padding 1
+    strip_workspace_numbers yes
+
+    colors {
+        background $color0
+        statusline $color4
+        separator  $color3
+
+        #                  border  background text
+        focused_workspace  $color10 $color10 $color6
+        active_workspace   $color2  $color2  $color6
+        inactive_workspace $color1  $color1  $color4
+        urgent_workspace   $color11 $color11 $color6
+        binding_mode       $color12 $color12 $color6
+    }
+}
+

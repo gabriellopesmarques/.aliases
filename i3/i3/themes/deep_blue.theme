@@ -1,0 +1,32 @@
+set $bg      #2E3440
+set $fg      #D8DEE9
+set $black   #3B4252
+set $blue    #81A1C1
+set $red     #BF616A
+
+# i3 colors
+client.focused          $blue   $blue   $fg     $blue   $blue
+client.unfocused        $bg     $bg     $fg     $bg     $bg
+
+font pango:Input Mono 12
+
+bar {
+    position top
+    status_command ~/.config/i3status/i3script.sh
+    tray_padding 1
+    strip_workspace_numbers yes
+
+    colors {
+        separator  #000011
+        background #000011
+        statusline #7AA2F7
+
+        #                   border  background text
+        focused_workspace  #000011 #81a1c1    #000011
+        active_workspace   #000011 #7AA2F7    #000011
+        inactive_workspace #000011 #000011    #7AA2F7
+        urgent_workspace   #000011 #000011    #F7768E
+        binding_mode       #000011 #7AA2F7    #404040
+    }
+}
+
