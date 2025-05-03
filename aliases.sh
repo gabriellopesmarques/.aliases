@@ -291,7 +291,7 @@ storage(){
 }
 
 help(){
-    wget -qO- http://cheat.sh/$1 | less
+    curl --silent http://cheat.sh/"$1" | less
 }
 
 explain(){
