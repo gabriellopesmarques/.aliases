@@ -11,7 +11,7 @@ if [[ ! "$last_release" == http* ]]; then
     exit 1
 fi
 
-curl -L -o "${dir}/gitui.tar.gz" "$last_release" && \
+curl -fsSL -o "${dir}/gitui.tar.gz" "$last_release" && \
 tar -xzf "$dir"/*.tar.gz -C "$dir" && \
 sudo mv "$dir"/gitui /usr/local/bin/ && \
 rm -rf "$dir"/*.tar.gz && \
