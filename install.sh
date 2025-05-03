@@ -71,18 +71,22 @@ install_i3wm () {
 
     install_brave
     install_warpd
-    install_wallpaper
+    install_feh
+    set_default_theme
 
     sudo apt purge xterm -y
 }
 
-install_wallpaper () {
+install_feh () {
     sudo apt install feh -y
-    echo "installing wallpaper"
+    echo "installing feh"
     bash "$HOME"/.aliases/i3/wallpapers/install.sh
-
-    echo -e "#!/bin/sh\nfeh --no-fehbg --bg-fill $HOME/Pictures/Wallpapers/default/jeremy-bishop-DFJahLoBHK4-unsplash.jpg" > "$HOME"/.fehbg
+    echo -e "#!/bin/sh\nfeh --no-fehbg --bg-fill $HOME/Pictures/Wallpapers/default/deep_blue-jeremy-bishop-DFJahLoBHK4-unsplash.jpg" > "$HOME/.fehbg"
     sudo chmod 754 "$HOME"/.fehbg
+}
+
+set_default_theme () {
+    bash "$HOME"/.aliases/set_theme.sh --deep_blue
 }
 
 install_tmux () {

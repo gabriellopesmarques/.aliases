@@ -1,0 +1,49 @@
+set $bg           #121212
+set $fg           #a0a0a0
+set $cursor       #bbbbbb
+set $accent       #f92672
+set $selection    #453a39
+set $color0       #1b1d1e
+set $color8       #505354
+set $color1       #f92672
+set $color9       #ff669d
+set $color2       #a6e22e
+set $color10      #beed5f
+set $color3       #fd971f
+set $color11      #e6db74
+set $color4       #66d9ef
+set $color12      #66d9ef
+set $color5       #9e6ffe
+set $color13      #9e6ffe
+set $color6       #5e7175
+set $color14      #a3babf
+set $color7       #ccccc6
+set $color15      #f8f8f2
+
+font pango:IBM Plex Mono 12
+
+client.focused          $color4 $color4 $fg     $color4 $color4
+client.unfocused        $bg     $bg     $fg     $bg      $bg
+client.focused_inactive $bg     $bg     $fg     $bg      $bg
+client.urgent           $color1 $color1 $bg     $color1  $color1
+client.placeholder      $bg     $bg     $fg     $bg      $bg
+
+bar {
+    position top
+    status_command ~/.config/i3status/i3script.sh
+    tray_padding 1
+    strip_workspace_numbers yes
+
+    colors {
+        background $bg
+        statusline $fg
+        separator  $color8
+
+        focused_workspace  $color4 $color4 $bg
+        active_workspace   $color6 $color6 $bg
+        inactive_workspace $bg     $bg     $fg
+        urgent_workspace   $color1 $color1 $bg
+        binding_mode       $color3 $color3 $bg
+    }
+}
+
