@@ -89,6 +89,17 @@ set_default_theme () {
     bash "$HOME"/.aliases/set_theme.sh --deep_blue
 }
 
+set_vim_editor () {
+    sudo update-alternatives --set editor /usr/bin/vim.basic
+}
+
+set_no_passwd_when_sudo () {
+    user=$(logname)
+    sudoers_file="/etc/sudoers.d/$user"
+    echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo tee "$sudoers_file" > /dev/null
+    sudo chmod 0440 "$sudoers_file"
+}
+
 install_tmux () {
     echo "installing tmux"
     bash "$HOME"/.aliases/tmux/install.sh
@@ -189,6 +200,8 @@ do
         --all_env)
             install_omz
             install_aliases
+            set_vim_editor
+            set_no_passwd_when_sudo
             install_utils
             install_tldr
             install_tmux
@@ -200,6 +213,8 @@ do
         --light)
             install_omz
             install_aliases
+            set_vim_editor
+            set_no_passwd_when_sudo
             install_utils
             install_tldr
             install_vim
