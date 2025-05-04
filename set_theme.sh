@@ -41,10 +41,9 @@ usage () {
       --hardcore
       --nord
       --catppuccin
-      --mono
+      --monochrome
       --vt220
       --help\t\tgive this help list
-
     '
 }
 
