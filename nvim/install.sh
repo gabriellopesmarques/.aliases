@@ -39,5 +39,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # install plugins
-nvim --headless "+Lazy! sync" +qa
+nvim --headless "+Lazy! sync" +qa && \
+nvim --headless -c 'MasonInstall clangd' -c "qall" && \
+nvim --headless -c 'MasonInstall bash-language-server' -c "qall" && \
+nvim --headless -c 'MasonInstall lua-language-server' -c "qall" && \
+nvim --headless -c 'MasonInstall intelephense' -c "qall" && \
+nvim --headless -c 'MasonInstall pyright' -c "qall" && \
+nvim --headless -c 'MasonInstall dockerfile-language-server' -c "qall" && \
+nvim --headless -c 'MasonInstall docker-compose-language-service' -c "qall"
 
