@@ -11,7 +11,7 @@ set_theme () {
     wallpapers['nord']="--bg-fill $HOME/Pictures/Wallpapers/default/nord-city-lights.jpg"
     wallpapers['catppuccin_mocha']="--bg-fill $HOME/Pictures/Wallpapers/default/catppuccin-mocha-abstract-swirls.jpg"
     wallpapers['monochrome']="--bg-fill $HOME/Pictures/Wallpapers/default/monochrome-black-mountain.jpg"
-    wallpapers['vt220']="--bg-center $HOME/Pictures/Wallpapers/default/vt220-minimalism-nature-moon-night.jpg"
+    wallpapers['vt220']="--bg-center $HOME/Pictures/Wallpapers/default/vt220-specs.jpg"
 
     themes_dir="$HOME/.aliases/terminal/kitty"
     kitty_conf="$HOME/.config/kitty/kitty.conf"
