@@ -55,7 +55,7 @@ alias vimconfig="vim ~/.aliases/vim/vimrc"
 alias vc=vimconfig
 alias ac="vim ~/.aliases/aliases.sh"
 alias zc="vim ~/.zshrc"
-alias ic="vim ~/.aliases/i3/i3.conf"
+alias ic="vim ~/.aliases/i3/i3/config"
 alias ec="vim ~/.aliases/env.sh"
 
 ####
