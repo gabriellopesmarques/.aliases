@@ -29,13 +29,15 @@ $HOME/.zshrc:
 
 ### Package Management
 
-| Command           | Action                                             |
-| ----------------- | -------------------------------------------------- |
-| `install`         | Install package via apt                            |
-| `update`          | Update packages via apt                            |
-| `uninstall`       | Uninstall package via apt                          |
-| `alias_update`    | Updates the alias repository                       |
-| `UPDATE`          | Update: aliases repo, ohmyzsh, OS packages         |
+| Command              | Action                                             |
+| -------------------- | -------------------------------------------------- |
+| `install`            | Install package via apt                            |
+| `update`             | Update packages via apt                            |
+| `uninstall`          | Uninstall package via apt                          |
+| `alias_update`       | Updates the alias repository                       |
+| `UPDATE`             | Update: aliases repo, ohmyzsh, OS packages         |
+| `pkg_command`        | Show binaries installed by package                 |
+| `command_comes_from` | Show package where binary comes from               |
 
 ### Navigation Shortcuts
 

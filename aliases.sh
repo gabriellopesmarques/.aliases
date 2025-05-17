@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.73    ##
+##    Aliases v1.75    ##
 #########################
 
 # add current directory on path
@@ -28,6 +28,25 @@ update(){
 uninstall() {
     sudo apt purge $1
 }
+
+# the command does not always have the same package name
+# this help find
+pkg_command() {
+    dpkg -L "$1" | grep 'bin/'
+}
+
+command_comes_from() {
+    local real_cmd
+    real_cmd=$(command -v "$1")
+
+    if [[ ! -x $real_cmd || ! -f $real_cmd ]]; then
+        type "$1"
+        return 1
+    fi
+
+    dpkg -S "$real_cmd"
+}
+
 
 alias UPDATE="alias_update; update; omz update;"
 
@@ -339,10 +358,12 @@ cli(){
 }
 
 # always tmux
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ "$TERM" = "xterm-256color" ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+if command -v tmux &> /dev/null && \
+    [[ -n "$PS1" ]] && \
+    [[ -z "$TMUX" ]] && \
+    [[ "$TERM" = "xterm-256color" ]]; then
   cli
 fi
-
 
 ####
 # Docker aliases
