@@ -12,5 +12,16 @@ function M.save_as_and_open()
   end
 end
 
+
+function M.tabnew_current_file()
+  local current_file = vim.fn.expand('%:p')
+  if current_file ~= '' then
+    vim.cmd('tabnew ' .. vim.fn.fnameescape(current_file))
+  else
+    vim.cmd('tabnew')
+  end
+end
+
+
 return M
 

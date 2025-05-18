@@ -18,6 +18,9 @@ map("n", "<F9>", "gg=G", { desc = "reindent" })
 --" save as
 map('n', '<leader>sa', '<cmd>lua require("my_functions").save_as_and_open()<CR>', { noremap = true, silent = true })
 
+--" open current buffer in new tab
+map('n', '<leader>tn', '<cmd>lua require("my_functions").tabnew_current_file()<CR>', { noremap = true, silent = true })
+
 --"copy with OS clipboard
 vim.cmd([[ vnoremap <silent><Leader>y "yy <Bar> :call system('xclip -sel clip', @y)<CR> ]])
 

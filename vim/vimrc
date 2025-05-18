@@ -107,6 +107,18 @@ function! SaveAsAndOpen()
   endif
 endfunction
 
+function! TabNewCurrentFile()
+  if expand('%') != ''
+    execute 'tabnew ' . expand('%:p')
+  else
+    tabnew
+  endif
+endfunction
+
+command! TabNewCurrent call TabNewCurrentFile()
+nnoremap <leader>tn :TabNewCurrent<CR>
+
+
 " fix typos
 command WQ wq
 command Wq wq
