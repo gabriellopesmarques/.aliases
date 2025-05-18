@@ -19,6 +19,7 @@ install_utils () {
     fi
 
     bash "$HOME"/.aliases/bat/install.sh     && \
+    bash "$HOME"/.aliases/sdcv/install.sh    && \
     bash "$HOME"/.aliases/glow/install.sh    && \
     bash "$HOME"/.aliases/gitui/install.sh   && \
     bash "$HOME"/.aliases/dialog/install.sh  && \
