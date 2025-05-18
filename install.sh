@@ -11,7 +11,7 @@ install_aliases () {
 
 install_utils () {
     echo "installing utils tools"
-    sudo apt install ncdu shellcheck exa fzf jq exfat-fuse smartmontools fio -y
+    sudo apt install ncdu fdupes shellcheck exa fzf jq exfat-fuse smartmontools fio -y
 
     # if is a laptop, install laptop things
     if [[ -d "/proc/acpi/button/lid" ]]; then
