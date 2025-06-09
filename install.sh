@@ -18,6 +18,7 @@ install_utils () {
         sudo apt install network-manager acpi brightnessctl -y
     fi
 
+    bash "$HOME"/.aliases/fx/install.sh      && \
     bash "$HOME"/.aliases/bat/install.sh     && \
     bash "$HOME"/.aliases/sdcv/install.sh    && \
     bash "$HOME"/.aliases/glow/install.sh    && \
