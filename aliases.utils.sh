@@ -8,6 +8,16 @@ alias glow="glow -s ~/.config/glow/nord.json"
 alias fd='cd $(find -type d 2>/dev/null | fzf); pwd'
 alias calendar="dialog --calendar 'calendar' 0 0"
 
+
+# zsh fzf history widget (ctrl+r)
+fzf-history-widget() {
+  local selected
+  selected=$(history | sed 's/^[ ]*[0-9]\+[ ]*//' | awk '!seen[$0]++' | fzf --tac --no-sort --height=20%)
+  LBUFFER="$selected"
+}
+zle -N fzf-history-widget
+bindkey '^R' fzf-history-widget
+
 # improve less settings
 if [[ -n "$PS1" ]] && [[ "$TERM" != "dumb" ]]; then
   export MANPAGER="less -R"
