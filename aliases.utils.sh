@@ -12,7 +12,8 @@ alias calendar="dialog --calendar 'calendar' 0 0"
 # zsh fzf history widget (ctrl+r)
 fzf-history-widget() {
   local selected
-  selected=$(history | sed 's/^[ ]*[0-9]\+[ ]*//' | awk '!seen[$0]++' | fzf --tac --no-sort --height=20%)
+  selected=$(history | sed -E 's/^[[:space:]]*[0-9]+\*?[[:space:]]*//' | awk '!seen[$0]++' | fzf --exact --tac --no-sort --height=20%)
+
   LBUFFER="$selected"
 }
 zle -N fzf-history-widget
