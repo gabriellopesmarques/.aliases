@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.75    ##
+##    Aliases v1.77    ##
 #########################
 
 # add current directory on path
@@ -90,6 +90,10 @@ alias find_directory=cdf
 
 find_file(){
     fzf --preview 'batcat --style=numbers --theme="TokyoNordStorm" --color=always --line-range=:500 {}'
+}
+
+find_package(){
+    apt-cache search $1 | fzf --exact
 }
 
 ccd() {
@@ -401,6 +405,7 @@ alias php82_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "
 alias php80_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.0-apache'
 alias php82_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.2-apache'
 alias speedtest='docker run --rm --dns="1.1.1.1" -it gists/speedtest-cli'
+alias psysh='docker run --rm --interactive --tty --volume $PWD:/app psysh:latest'
 
 php(){
     #docker run -it --rm --name php-script -v "$PWD":/app -w /app php:8.3-cli $@
