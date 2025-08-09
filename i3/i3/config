@@ -66,7 +66,15 @@ bindsym $super+space exec --no-startup-id rofi -show drun -run-command "i3-msg e
 
 bindsym $super+f exec firefox
 bindsym $super+w exec brave-browser --incognito --password-store=basic
-bindsym $super+s exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://www.google.com/search?q={}\&btnI
+
+#@TODO: set search engine from env
+bindsym $super+s exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://search.brave.com/search?q={}
+# https://baresearch.org/search?q={} # searXNG instance (metasearch engine)
+# https://www.google.com/search?q={}
+# https://www.google.com/search?q={}\&btnI # feeling lucky
+# https://www.startpage.com/do/search?query={}
+# https://leta.mullvad.net/search?q={}
+# https://marginalia-search.com/search?query={}
 bindsym $super+a exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} firefox https://chat.openai.com/?q={}
 bindsym $super+y exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://youtube.com/results?search_query={}
 bindsym $super+t exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://translate.google.com/?sl=en\&tl=pt\&op=translate\&text={}

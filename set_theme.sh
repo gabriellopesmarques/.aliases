@@ -22,6 +22,8 @@ set_theme () {
 
     # change rofi theme
     echo '@theme "'"$theme"'"' > "$HOME/.config/rofi/config.rasi"
+    cat "$HOME/.config/rofi/common_settings.rasi" >> "$HOME/.config/rofi/config.rasi"
+
 
     # change kitty term theme
     rm -f "$kitty_conf"
