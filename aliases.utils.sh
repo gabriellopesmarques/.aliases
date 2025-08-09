@@ -8,16 +8,17 @@ alias glow="glow -s ~/.config/glow/nord.json"
 alias fd='cd $(find -type d 2>/dev/null | fzf); pwd'
 alias calendar="dialog --calendar 'calendar' 0 0"
 
-
 # zsh fzf history widget (ctrl+r)
-fzf-history-widget() {
-  local selected
-  selected=$(history | sed -E 's/^[[:space:]]*[0-9]+\*?[[:space:]]*//' | awk '!seen[$0]++' | fzf --exact --tac --no-sort --height=20%)
+if [[ -n "$ZSH_VERSION" ]]; then
+    fzf-history-widget() {
+    local selected
+    selected=$(history | sed -E 's/^[[:space:]]*[0-9]+[[:space:]]*\*?[[:space:]]*//' | awk '!seen[$0]++' | fzf --exact --tac --no-sort --height=20%)
 
-  LBUFFER="$selected"
-}
-zle -N fzf-history-widget
-bindkey '^R' fzf-history-widget
+    LBUFFER="$selected"
+    }
+    zle -N fzf-history-widget
+    bindkey '^R' fzf-history-widget
+fi
 
 # improve less settings
 if [[ -n "$PS1" ]] && [[ "$TERM" != "dumb" ]]; then

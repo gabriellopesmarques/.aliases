@@ -5,6 +5,11 @@ ZSH_THEME="x"
 # vim mode
 bindkey -v
 
+# disable annoying message to update
+DISABLE_AUTO_UPDATE=true
+DISABLE_UPDATE_PROMPT=true
+zstyle ':omz:update' mode disabled
+
 plugins=(
     git
     zsh-autosuggestions
@@ -14,9 +19,6 @@ plugins=(
 
 # imports
 source $ZSH/oh-my-zsh.sh
-
-# disable annoying message to update
-zstyle ':omz:update' mode disabled
 
 # nvm config 
 export NVM_DIR="$HOME/.nvm"
