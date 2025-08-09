@@ -1,6 +1,6 @@
 dir="$HOME"/.aliases/i3/warpd/warpd-repo
 
-git clone https://github.com/rvaiya/warpd.git "$dir"
+git clone --branch 'v1.3.5' https://github.com/rvaiya/warpd.git "$dir"
 cd "$dir" || echo "!! ERROR !! cd fails"
 
 echo "installing dependencies . . ."
