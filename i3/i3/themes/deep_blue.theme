@@ -1,12 +1,12 @@
-set $bg      #2E3440
-set $fg      #D8DEE9
-set $black   #3B4252
-set $blue    #81A1C1
-set $red     #BF616A
+set $bg         #000011
+set $fg         #D8DEE9
+set $blue       #0F1B51
+set $l_blue     #7AA2F7
+set $red        #770E08
 
 # i3 colors
-client.focused          $blue   $blue   $fg     $blue   $blue
-client.unfocused        $bg     $bg     $fg     $bg     $bg
+client.focused          $l_blue $l_blue $blue   $l_blue $l_blue
+client.unfocused        $bg     $bg     $blue   $bg     $bg
 
 font pango:Input Mono 12
 
@@ -17,16 +17,16 @@ bar {
     strip_workspace_numbers yes
 
     colors {
-        separator  #000011
-        background #000011
-        statusline #7AA2F7
+        separator  $bg
+        background $bg
+        statusline $l_blue
 
-        #                   border  background text
-        focused_workspace  #000011 #81a1c1    #000011
-        active_workspace   #000011 #7AA2F7    #000011
-        inactive_workspace #000011 #000011    #7AA2F7
-        urgent_workspace   #000011 #000011    #F7768E
-        binding_mode       #000011 #7AA2F7    #404040
+        #                  border       background      text
+        focused_workspace  $bg          $l_blue         $bg
+        active_workspace   $bg          $l_blue         $bg
+        inactive_workspace $bg	        $bg	            $l_blue
+        urgent_workspace   $bg	        $bg	            $red
+        binding_mode       $l_blue      $l_blue         $bg
     }
 }
 
