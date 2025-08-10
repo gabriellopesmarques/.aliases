@@ -2,8 +2,7 @@
 
 # install i3 and utils
 sudo apt install xorg i3 i3status feh pulseaudio pavucontrol rofi \
-    gnome-screenshot firefox-esr libnotify-bin at -y
-
+    scrot firefox-esr libnotify-bin at -y
 
 # link config file
 ln -s "$HOME/.aliases/i3/i3" "$HOME/.config/i3"
