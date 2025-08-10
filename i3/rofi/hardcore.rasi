@@ -14,6 +14,7 @@ https://colorswall.com/palette/generate/453a39-121212-505354-ff669d-beed5f-e6db7
 	separatorcolor:                  #121212;
 	normal-background:               #1b1d1e;
 	normal-foreground:               #a0a0a0;
+	alternate-normal-background:     #121212;
 	alternate-normal-foreground:     #121212;
 	selected-normal-background:      #66d9ef;
 	selected-normal-foreground:      #1b1d1e;
@@ -115,7 +116,7 @@ scrollbar {
     padding: 0;
     handle-width: 14px;
     border: 0;
-    handle-color: var(color3);
+    handle-color: var(normal-background);
 }
 button {
     spacing: 0;
@@ -130,12 +131,12 @@ inputbar {
     margin: 7px;
     spacing: 0;
     text-color: var(normal-foreground);
-    background-color: var(color3);
+    background-color: var(normal-background);
     children: [ entry ];
 }
 entry {
     spacing: 0;
     text-color: var(normal-foreground);
-    background-color: var(color3);
+    background-color: var(normal-background);
 }
 
