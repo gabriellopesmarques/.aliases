@@ -48,3 +48,17 @@ ai(){
          -d '{"messages": [{"role": "user", "content": "'"$question"'"}], "model": "llama3-8b-8192"}' | jq -r '.choices[0].message.content' | glow -
 }
 
+gemini(){
+    if [[ -z "$gemini_api_key" ]]; then
+        echo "declare gemini_api_key to use this function"
+        return 64
+    fi
+
+    echo -n "how can i help you?: "
+    read question
+
+    curl --silent "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$gemini_api_key}" \
+      -H 'Content-Type: application/json' \
+      -X POST \
+      -d '{"contents": [{"parts": [{"text": "'"$question"'"}]}] }' | jq -r '.candidates[0].content.parts[0].text' | glow -
+}
