@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
-cd "$HOME/.src/tldr/" && sudo make uninstall
-rm -rf "$HOME/.src/tldr/"
-rm -rf "$HOME/.tldrc/"
+sudo apt purge tealdeer && \
+rm -rf "$HOME/.config/tealdeer/" "$HOME/.cache/tealdeer/"
 
