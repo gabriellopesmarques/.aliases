@@ -1,8 +1,9 @@
+# https://colorswall.com/palette/generate/000011-d8dee9-0f1b51-7aa2f7-e54b4b
 set $bg         #000011
 set $fg         #D8DEE9
 set $blue       #0F1B51
 set $l_blue     #7AA2F7
-set $red        #770E08
+set $red        #D64550
 
 # i3 colors
 client.focused          $l_blue $l_blue $blue   $l_blue $l_blue
@@ -24,8 +25,8 @@ bar {
         #                  border       background      text
         focused_workspace  $bg          $l_blue         $bg
         active_workspace   $bg          $l_blue         $bg
-        inactive_workspace $bg	        $bg	            $l_blue
-        urgent_workspace   $bg	        $bg	            $red
+        inactive_workspace $bg          $bg             $l_blue
+        urgent_workspace   $red         $red            $bg
         binding_mode       $l_blue      $l_blue         $bg
     }
 }
