@@ -408,8 +408,7 @@ alias speedtest='docker run --rm --dns="1.1.1.1" -it gists/speedtest-cli'
 alias psysh='docker run --rm --interactive --tty --volume $PWD:/app psysh:latest'
 
 php(){
-    #docker run -it --rm --name php-script -v "$PWD":/app -w /app php:8.3-cli $@
-    docker run --rm --interactive --tty --volume $PWD:/app --workdir /app --user $(id -u):$(id -g) php:8.3-cli php $@
+    docker run --rm --interactive --tty --name php-script --volume $PWD:/app --workdir /app --user $(id -u):$(id -g) php:8.4-cli php $@
 }
 
 composer(){
