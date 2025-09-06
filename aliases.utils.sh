@@ -45,7 +45,7 @@ ai(){
     curl --silent -X POST "https://api.groq.com/openai/v1/chat/completions" \
          -H "Authorization: Bearer $GROQ_API_KEY" \
          -H "Content-Type: application/json" \
-         -d '{"messages": [{"role": "user", "content": "'"$question"'"}], "model": "llama3-8b-8192"}' | jq -r '.choices[0].message.content' | glow -
+         -d '{"messages": [{"role": "user", "content": "'"$question"'"}], "model": "llama-3.1-8b-instant"}' | jq -r '.choices[0].message.content' | glow -
 }
 
 gemini(){
