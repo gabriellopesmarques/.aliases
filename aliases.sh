@@ -419,5 +419,23 @@ trans(){
     docker run --rm --interactive --tty soimort/translate-shell $@
 }
 
+restore_permissions(){
+    if [ $# -ne 1 ]; then
+        echo "use: restore_permissions <directory>"
+        return 1
+    fi
+
+    dir=$1
+
+    if [ ! -d "$dir" ]; then
+        echo "Erro: '$dir' is not a valid directory"
+        return 1
+    fi
+
+    sudo find "$dir" -type d -exec chmod 755 {} \;
+    sudo find "$dir" -type f -exec chmod 644 {} \;
+    echo "done"
+}
+
 echo "[ $(whoami) ]"
 
