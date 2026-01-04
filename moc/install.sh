@@ -17,3 +17,6 @@ if [ -f $dir/keymap ]; then
 fi
 
 ln -s ~/.aliases/moc/keymap $dir/keymap
+
+sudo chmod 600 ~/.moc/config ~/.moc/keymap
+
