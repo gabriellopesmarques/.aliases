@@ -45,7 +45,12 @@ local plugins = {
 
     'lewis6991/gitsigns.nvim',
     'terrortylor/nvim-comment',
-    'nvim-treesitter/nvim-treesitter',
+
+    {
+        'nvim-treesitter/nvim-treesitter',
+        lazy = false,
+        build = ':TSUpdate'
+    },
 
     {
         'VonHeikemen/lsp-zero.nvim',
@@ -67,6 +72,5 @@ local opts = {}
 require("lazy").setup(plugins, opts)
 require('nvim_comment').setup()
 require("plugins.gitsigns")
-require("plugins.treesitter")
 require("plugins.lsp")
 

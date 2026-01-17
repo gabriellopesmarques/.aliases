@@ -62,7 +62,8 @@ end)
 
 
 -- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+vim.lsp.config("lua_ls", lsp.nvim_lua_ls())
+vim.lsp.enable("lua_ls")
 
 require('mason').setup()
 require('mason-lspconfig').setup({
