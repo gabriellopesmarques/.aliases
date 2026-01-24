@@ -53,6 +53,11 @@ install_brave () {
     sudo apt update && sudo apt install brave-browser -y
 }
 
+install_dbcli () {
+    echo "installing mycli and pgcli"
+    bash "$HOME"/.aliases/db-client/install.sh
+}
+
 install_warpd () {
     echo "installing warpd"
     bash "$HOME"/.aliases/i3/warpd/install.sh
@@ -177,6 +182,9 @@ do
         ;;
         --utils)
             install_utils
+        ;;
+        --dbcli)
+            install_dbcli
         ;;
         --tmux)
             install_tmux
