@@ -23,6 +23,12 @@ install() {
 
 update(){
     sudo apt update && sudo apt upgrade
+
+    dry_output=$(sudo apt autoremove --dry-run 2>/dev/null)
+
+    if grep -q "packages will be REMOVED" <<<"$dry_output"; then
+        sudo apt autoremove
+    fi
 }
 
 uninstall() {
