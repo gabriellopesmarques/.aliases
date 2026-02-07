@@ -157,4 +157,22 @@ $HOME/.zshrc:
 | `php80_dev_server` | PHP 8.0 development server.                                 |
 | `php82_dev_server` | PHP 8.2 development server.                                 |
 
+---
+
+## Best Practices
+
+### check format
+```sh
+shfmt -d -i 2 <file>
+```
+
+if is not valid, format using:
+```sh
+shfmt -i 2 -w <file>
+```
+
+### check script
+```sh
+shellcheck -e SC2028,SC2148 <file>
+```
 

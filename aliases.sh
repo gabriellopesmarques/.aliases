@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.77    ##
+##    Aliases v1.78    ##
 #########################
 
 # add current directory on path
@@ -7,55 +7,53 @@ PATH=.:$PATH
 HISTCONTROL=ignoreboth # ignore spaces and duplicated commands (ignorespace, ignoredups)
 
 # load environment variables
-vars=$HOME/.aliases/env.sh
+vars="$HOME/.aliases/env.sh"
 if [[ -f "$vars" ]]; then
-    source "$vars"
+  # shellcheck source=/dev/null
+  source "$vars"
 fi
-
 
 # packages management
 
 alias alias_update="cd ~/.aliases && git_update && cd -"
 
 install() {
-    sudo apt update && sudo apt install $1 -y
+  sudo apt update && sudo apt install "$1" -y
 }
 
-update(){
-    sudo apt update && sudo apt upgrade
+update() {
+  sudo apt update && sudo apt upgrade
 
-    dry_output=$(sudo apt autoremove --dry-run 2>/dev/null)
+  dry_output="$(sudo apt autoremove --dry-run 2>/dev/null)"
 
-    if grep -q "packages will be REMOVED" <<< "$dry_output"; then
-        sudo apt autoremove
-    fi
+  if grep -q "packages will be REMOVED" <<<"$dry_output"; then
+    sudo apt autoremove
+  fi
 }
 
 uninstall() {
-    sudo apt purge $1
+  sudo apt purge "$1"
 }
 
 # the command does not always have the same package name
 # this help find
 pkg_command() {
-    dpkg -L "$1" | grep 'bin/'
+  dpkg -L "$1" | grep 'bin/'
 }
 
 command_comes_from() {
-    local real_cmd
-    real_cmd=$(command -v "$1")
+  local real_cmd
+  real_cmd="$(command -v "$1")"
 
-    if [[ ! -x $real_cmd || ! -f $real_cmd ]]; then
-        type "$1"
-        return 1
-    fi
+  if [[ ! -x "$real_cmd" || ! -f "$real_cmd" ]]; then
+    type "$1"
+    return 1
+  fi
 
-    dpkg -S "$real_cmd"
+  dpkg -S "$real_cmd"
 }
 
-
 alias UPDATE="alias_update; update; omz update;"
-
 
 # default args
 alias l='ls -lhF'
@@ -72,7 +70,7 @@ alias downloads="cd ~/Downloads; l"
 alias dl="downloads"
 alias workspace='cd ~/Projects/; clear; pwd; l'
 alias ws=workspace
-alias wd="cd $WORK_DIR; clear; pwd; l"
+alias wd='cd $WORK_DIR; clear; pwd; l'
 alias aliases="cd ~/.aliases"
 
 ## config files
@@ -94,98 +92,100 @@ alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
 alias cdf='cd $(find -type d 2>/dev/null | fzf)'
 alias find_directory=cdf
 
-find_file(){
-    fzf --preview 'batcat --style=numbers --theme="TokyoNordStorm" --color=always --line-range=:500 {}'
+find_file() {
+  fzf --preview 'batcat --style=numbers --theme="TokyoNordStorm" --color=always --line-range=:500 {}'
 }
 
-find_package(){
-    apt-cache search $1 | fzf --exact
+find_package() {
+  apt-cache search "$1" | fzf --exact
 }
 
 ccd() {
-    cd $1 && clear && ls -lA;
+  cd "$1" && clear && ls -lA
 }
 
 mkcd() {
-    if [ -d "$1" ]; then
-        echo "error to create directory \"$1\", directory already exists"
-        return 1
-    fi
+  if [ -d "$1" ]; then
+    echo "error to create directory \"$1\", directory already exists"
+    return 1
+  fi
 
-    mkdir $1; cd $1;
-    return 0
+  mkdir "$1"
+  cd "$1" || exit
+
+  return 0
 }
 
-cc(){
-    xclip -sel clip $1
+cc() {
+  xclip -sel clip "$1"
 }
 
-calc(){
-    # requires bc
-    echo "scale=2; $1" | bc -q
+calc() {
+  # requires bc
+  echo "scale=2; $1" | bc -q
 }
 
-str2md5(){
-    echo -n $1 | md5sum
+str2md5() {
+  echo -n "$1" | md5sum
 }
 
-ip_info(){
-    curl -q "http://ipwho.is/$1"
+ip_info() {
+  curl -q "http://ipwho.is/$1"
 }
 
 # usage: lorem {?int sentences}
 lorem() {
-    curl -s http://metaphorpsum.com/sentences/${1-3} | xclip -i -sel clipboard
-    echo "\e[0;34m"'the text below is in your clipboard:'"\e[m"
-    xclip -o -sel clip
+  curl -s "http://metaphorpsum.com/sentences/${1-3}" | xclip -i -sel clipboard
+  echo 'the text below is in your clipboard:'
+  xclip -o -sel clip
 }
 
-explain(){
-    w3m "https://explainshell.com/explain?cmd=$1"
+explain() {
+  w3m "https://explainshell.com/explain?cmd=$1"
 }
 
-help(){
-    curl --silent http://cheat.sh/"$1" | less
+help() {
+  curl --silent http://cheat.sh/"$1" | less
 }
 
-vim_card(){
-    curl https://aurelio.net/vim/vimcard.txt
+vim_card() {
+  curl https://aurelio.net/vim/vimcard.txt
 }
 
-rememberme(){
-    INTERVAL="${2:-1 minutes}"
-    # sudo apt install libnotify-bin at -y
-    echo "notify-send '» remember' \"$1\"" | at now + $INTERVAL
+rememberme() {
+  INTERVAL="${2:-1 minutes}"
+  # sudo apt install libnotify-bin at -y
+  echo "notify-send '» remember' \"$1\"" | at now + "$INTERVAL"
 }
 
-pack(){
-    tar -cvzf pack-$1-$(date '+%Y%m%d%H%M%S').tar.gz $1
+pack() {
+  tar -cvzf "pack-$1-$(date '+%Y%m%d%H%M%S').tar.gz" "$1"
 }
 
-unpack(){
-    tar -xvzf $1
+unpack() {
+  tar -xvzf "$1"
 }
 
-compress(){
-    tar --create --verbose --xz --file compressed-$1-$(date '+%Y%m%d%H%M%S').tar.xz $1
+compress() {
+  tar --create --verbose --xz --file "compressed-$1-$(date '+%Y%m%d%H%M%S').tar.xz" "$1"
 }
 
-uncompress(){
-    tar --extract --verbose --xz --file $1
+uncompress() {
+  tar --extract --verbose --xz --file "$1"
 }
 
-download_magnet(){
-    # sudo apt install aria2
-    if ! [[ $1 =~ "magnet" ]]; then
-        echo "arg 1 should be a magnet link"
-        return 1;
-    fi
+download_magnet() {
+  # sudo apt install aria2
+  if ! [[ $1 =~ "magnet" ]]; then
+    echo "arg 1 should be a magnet link"
+    return 1
+  fi
 
-    aria2c -d ~/Downloads --seed-ratio="2.0" $1
+  aria2c -d ~/Downloads --seed-ratio="2.0" "$1"
 }
 
-download_torrent(){
-    aria2c -d ~/Downloads --seed-ratio="2.0" --torrent-file=$1
+download_torrent() {
+  aria2c -d ~/Downloads --seed-ratio="2.0" --torrent-file="$1"
 }
 
 ## auto fixing typos
@@ -225,16 +225,16 @@ git() {
 
   for arg in "${@:2}"; do
     case "$arg" in
-      --force-with-lease)
-        command git "$@"
-        return
-        ;;
-      -f|--force)
-        force_detected=true
-        ;;
-      *)
-        args+=("$arg")
-        ;;
+    --force-with-lease)
+      command git "$@"
+      return
+      ;;
+    -f | --force)
+      force_detected=true
+      ;;
+    *)
+      args+=("$arg")
+      ;;
     esac
   done
 
@@ -242,7 +242,7 @@ git() {
     echo "\n -- !! intercepted command !! -- \n"
     echo "hey, easy there!"
     echo "push force, really?! and without a leash? let's play it safe"
-    echo "running: git push --force-with-lease ${args[@]} \n"
+    echo "running: git push --force-with-lease ${args[*]} \n"
     command git push --force-with-lease "${args[@]}"
     return
   fi
@@ -259,12 +259,12 @@ __git_is_clean() {
   return 0
 }
 
-git_update(){
+git_update() {
   # abort if working directory is not clean
   __git_is_clean || return 1
 
-  echo " executing: git fetch origin && git reset --hard FETCH_HEAD" && \
-  git fetch origin && git reset --hard FETCH_HEAD
+  echo " executing: git fetch origin && git reset --hard FETCH_HEAD" &&
+    git fetch origin && git reset --hard FETCH_HEAD
 }
 
 git_clean_branches() {
@@ -284,12 +284,12 @@ git_clean_branches() {
   echo "$branches_to_delete"
 
   printf "\ndo you want to proceed with deleting these branches? [y/N]: "
-  read confirm
+  read -r confirm
 
   if [[ "$confirm" =~ ^[yY](es)?$ ]]; then
     echo "deleting branches..."
     printf "%s\n" "$branches_to_delete" | while IFS= read -r branch; do
-        git branch -D "$branch"
+      git branch -D "$branch"
     done
     echo "cleanup completed"
   fi
@@ -325,9 +325,9 @@ git_sync_branches() {
   git checkout "$current_branch"
 }
 
-git_delete_branch(){
-    git branch -d $1 && \
-    git push origin --delete $1
+git_delete_branch() {
+  git branch -d "$1" &&
+    git push origin --delete "$1"
 }
 
 ####
@@ -336,42 +336,41 @@ git_delete_branch(){
 alias tmux="tmux -2"
 alias tl="tmux ls"
 
-tmux_dev(){
-    SESSION_NAME=$1
-    export WORK_DIR=$2
+tmux_dev() {
+  SESSION_NAME="$1"
+  export WORK_DIR="$2"
 
-    # create session, windows and panels
-    tmux new-session -s $SESSION_NAME -n editor -d 
-    tmux set-environment WORK_DIR $2
-    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; nvim ." C-m
-    tmux new-window -n zsh -t $SESSION_NAME
-    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; docker ps" C-m
-    tmux split-window -v -t $SESSION_NAME
-    tmux send-keys -t $SESSION_NAME "     cd $WORK_DIR; clear; git status" C-m
+  # create session, windows and panels
+  tmux new-session -s "$SESSION_NAME" -n editor -d
+  tmux set-environment WORK_DIR "$2"
+  tmux send-keys -t "$SESSION_NAME" "     cd $WORK_DIR; clear; nvim ." C-m
+  tmux new-window -n zsh -t "$SESSION_NAME"
+  tmux send-keys -t "$SESSION_NAME" "     cd $WORK_DIR; clear; docker ps" C-m
+  tmux split-window -v -t "$SESSION_NAME"
+  tmux send-keys -t "$SESSION_NAME" "     cd $WORK_DIR; clear; git status" C-m
 
-    tmux attach -t $1
+  tmux attach -t "$1"
 }
 
-tmux_copy_buffer(){
-    tmux save-buffer - | xclip -i -sel clipboard
+tmux_copy_buffer() {
+  tmux save-buffer - | xclip -i -sel clipboard
 }
 
-cli(){
-    session="cli"
-    tmux has-session -t $session 2>/dev/null
+cli() {
+  session="cli"
 
-    if [ $? != 0 ]; then
-        tmux new-session -s 'cli' -d
-    fi
+  if ! tmux has-session -t "$session" 2>/dev/null; then
+    tmux new-session -s "$session" -d
+  fi
 
-    tmux attach-session -t $session
+  tmux attach-session -t "$session"
 }
 
 # always tmux
-if command -v tmux &> /dev/null && \
-    [[ -n "$PS1" ]] && \
-    [[ -z "$TMUX" ]] && \
-    [[ "$TERM" = "xterm-256color" ]]; then
+if command -v tmux &>/dev/null &&
+  [[ -n "$PS1" ]] &&
+  [[ -z "$TMUX" ]] &&
+  [[ "$TERM" = "xterm-256color" ]]; then
   cli
 fi
 
@@ -388,90 +387,89 @@ alias dsdf='docker system df'
 alias docker_prune='docker system prune'
 alias docker_images_size='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -r -k 2 -h'
 
-dps () {
-    docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}'
+dps() {
+  docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}'
 }
 
-dpsw () {
-    docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Label "com.docker.compose.project.working_dir"}}'
+dpsw() {
+  docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Label "com.docker.compose.project.working_dir"}}'
 }
 
-docker_kill_all () {
-    docker rm -f $(docker ps -q)
+docker_kill_all() {
+  docker rm -f "$(docker ps -q)"
 }
 
 ## containered services
 alias simple_server='python3 -m http.server 9000'
-alias static_server='docker run --name "$(basename $(pwd))_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'
-alias php56_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:5.6-apache'
-alias php71_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.1-apache'
-alias php72_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.2-apache'
-alias php80_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.0-apache'
-alias php82_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.2-apache'
-alias php80_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.0-apache'
-alias php82_dev_server='docker run --name "$(basename $(pwd))_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.2-apache'
+alias static_server='docker run --name "$(basename "$(pwd)")_static_server" -p 80:80 -v "$(pwd):/usr/share/nginx/html" -d nginx'
+alias php56_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:5.6-apache'
+alias php71_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.1-apache'
+alias php72_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:7.2-apache'
+alias php80_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.0-apache'
+alias php82_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.2-apache'
+alias php80_dev_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.0-apache'
+alias php82_dev_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.2-apache'
 alias speedtest='docker run --rm --dns="1.1.1.1" -it gists/speedtest-cli'
 alias psysh='docker run --rm --interactive --tty --volume $PWD:/app psysh:latest'
 
-php(){
-    docker run --rm --interactive --tty --name php-script --volume $PWD:/app --workdir /app --user $(id -u):$(id -g) php:8.4-cli php $@
+php() {
+  docker run --rm --interactive --tty --name php-script --volume "$PWD":/app --workdir /app --user "$(id -u):$(id -g)" php:8.4-cli php "$@"
 }
 
-composer(){
-    docker run --rm --interactive --tty --volume $PWD:/app --user $(id -u):$(id -g) composer $@
+composer() {
+  docker run --rm --interactive --tty --volume "$PWD":/app --user "$(id -u):$(id -g)" composer "$@"
 }
 
-trans(){
-    docker run --rm --interactive --tty soimort/translate-shell $@
+trans() {
+  docker run --rm --interactive --tty soimort/translate-shell "$@"
 }
 
-restore_permissions(){
-    if [ $# -ne 1 ]; then
-        echo "use: restore_permissions <directory>"
-        return 1
-    fi
+restore_permissions() {
+  if [ $# -ne 1 ]; then
+    echo "use: restore_permissions <directory>"
+    return 1
+  fi
 
-    dir=$1
+  dir=$1
 
-    if [ ! -d "$dir" ]; then
-        echo "Erro: '$dir' is not a valid directory"
-        return 1
-    fi
+  if [ ! -d "$dir" ]; then
+    echo "Erro: '$dir' is not a valid directory"
+    return 1
+  fi
 
-    sudo find "$dir" -type d -exec chmod 755 {} \;
-    sudo find "$dir" -type f -exec chmod 644 {} \;
-    echo "done"
+  sudo find "$dir" -type d -exec chmod 755 {} \;
+  sudo find "$dir" -type f -exec chmod 644 {} \;
+  echo "done"
 }
 
 cat_from_url() {
-    if [[ $# -ne 1 ]]; then
-        echo "use: cat_from_url <url>"
-        return 1
-    fi
+  if [[ $# -ne 1 ]]; then
+    echo "use: cat_from_url <url>"
+    return 1
+  fi
 
-    local url="$1"
+  local url="$1"
 
-    local hasWget=0
-    local hasCurl=0
+  local has_wget=0
+  local has_curl=0
 
-    command -v wget &>/dev/null && hasWget=1
-    command -v curl &>/dev/null && hasCurl=1
+  command -v wget &>/dev/null && has_wget=1
+  command -v curl &>/dev/null && has_curl=1
 
-    if (( !hasWget && !hasCurl )); then
-        echo "ERROR: curl or wget is required"
-        return 127
-    fi
+  if ((!has_wget && !has_curl)); then
+    echo "ERROR: curl or wget is required"
+    return 127
+  fi
 
-    if (( hasWget )); then
-        wget -qO - "$url"
-        return $?
-    fi
+  if ((has_wget)); then
+    wget -qO - "$url"
+    return $?
+  fi
 
-    if (( hasCurl )); then
-        curl -sL "$url"
-        return $?
-    fi
+  if ((has_curl)); then
+    curl -sL "$url"
+    return $?
+  fi
 }
 
 echo "[ $(whoami) ]"
-
