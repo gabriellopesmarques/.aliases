@@ -26,7 +26,7 @@ update(){
 
     dry_output=$(sudo apt autoremove --dry-run 2>/dev/null)
 
-    if grep -q "packages will be REMOVED" <<<"$dry_output"; then
+    if grep -q "packages will be REMOVED" <<< "$dry_output"; then
         sudo apt autoremove
     fi
 }
@@ -441,6 +441,36 @@ restore_permissions(){
     sudo find "$dir" -type d -exec chmod 755 {} \;
     sudo find "$dir" -type f -exec chmod 644 {} \;
     echo "done"
+}
+
+cat_from_url() {
+    if [[ $# -ne 1 ]]; then
+        echo "use: cat_from_url <url>"
+        return 1
+    fi
+
+    local url="$1"
+
+    local hasWget=0
+    local hasCurl=0
+
+    command -v wget &>/dev/null && hasWget=1
+    command -v curl &>/dev/null && hasCurl=1
+
+    if (( !hasWget && !hasCurl )); then
+        echo "ERROR: curl or wget is required"
+        return 127
+    fi
+
+    if (( hasWget )); then
+        wget -qO - "$url"
+        return $?
+    fi
+
+    if (( hasCurl )); then
+        curl -sL "$url"
+        return $?
+    fi
 }
 
 echo "[ $(whoami) ]"

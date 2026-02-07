@@ -34,6 +34,7 @@ $HOME/.zshrc:
 | `install`            | Install package via apt                            |
 | `update`             | Update packages via apt                            |
 | `uninstall`          | Uninstall package via apt                          |
+| `find_package`       | Use fzf to navigate in package list (apt-cache)    |
 | `alias_update`       | Updates the alias repository                       |
 | `UPDATE`             | Update: aliases repo, ohmyzsh, OS packages         |
 | `pkg_command`        | Show binaries installed by package                 |
@@ -80,6 +81,7 @@ $HOME/.zshrc:
 | `help <cmd>`                | Uses `cheat.sh` to show command help.                   |
 | `vim_card`                  | Displays the Vim cheat sheet.                           |
 | `rememberme "msg" 5 minutes`| Sends a notification after a delay using `at`.          |
+| `cat_from_url`              | Uses wget or curl and output response.                  |
 
 
 ### Compression and Archives
