@@ -27,7 +27,7 @@ install() {
 __autoremove() {
   dry_output="$(sudo apt autoremove --dry-run 2>/dev/null)"
 
-  if grep -q "packages will be REMOVED" <<<"$dry_output"; then
+  if grep -q '^Remv' <<<"$dry_output"; then
     echo "${BG_BRIGHT_YELLOW}${BLACK} auto-running: ${NC} apt autoremove"
     sudo apt autoremove
   fi
