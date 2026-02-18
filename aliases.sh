@@ -6,6 +6,9 @@
 PATH=.:$PATH
 HISTCONTROL=ignoreboth # ignore spaces and duplicated commands (ignorespace, ignoredups)
 
+# shellcheck source=/dev/null
+source "$HOME/.aliases/colors.sh"
+
 # load environment variables
 vars="$HOME/.aliases/env.sh"
 if [[ -f "$vars" ]]; then
@@ -21,18 +24,21 @@ install() {
   sudo apt update && sudo apt install "$1" -y
 }
 
-update() {
-  sudo apt update && sudo apt upgrade
-
+__autoremove() {
   dry_output="$(sudo apt autoremove --dry-run 2>/dev/null)"
 
   if grep -q "packages will be REMOVED" <<<"$dry_output"; then
+    echo "${BG_BRIGHT_YELLOW}${BLACK} auto-running: ${NC} apt autoremove"
     sudo apt autoremove
   fi
 }
 
+update() {
+  sudo apt update && sudo apt upgrade && __autoremove
+}
+
 uninstall() {
-  sudo apt purge "$1"
+  sudo apt purge "$1" && __autoremove
 }
 
 # the command does not always have the same package name
@@ -408,6 +414,7 @@ alias php72_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v
 alias php80_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.0-apache'
 alias php82_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php:8.2-apache'
 alias php80_dev_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.0-apache'
+alias php84_dev_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.4-apache'
 alias php82_dev_server='docker run --name "$(basename "$(pwd)")_chialab" -p 80:80 -v "$PWD":/var/www/html/ -d chialab/php-dev:8.2-apache'
 alias speedtest='docker run --rm --dns="1.1.1.1" -it gists/speedtest-cli'
 alias psysh='docker run --rm --interactive --tty --volume $PWD:/app psysh:latest'

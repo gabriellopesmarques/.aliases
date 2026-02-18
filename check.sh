@@ -15,3 +15,6 @@ file_name="$1"
 shfmt -d -i 2 "$file_name" && \
     shellcheck -e SC2028,SC2148 "$file_name"
 
+# @TODO:
+# find . -type f -name "*.sh" -exec ./check.sh {} \;
+

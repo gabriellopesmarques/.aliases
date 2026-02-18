@@ -19,6 +19,7 @@ Check available installer scripts:
 ```sh
 $HOME/.zshrc:
     - ~/.aliases/aliases.sh
+        - ~/.aliases/colors.sh
         - ~/.aliases/env.sh
     - ~/.aliases/oh-my-zsh/config
         - $ZSH/oh-my-zsh.sh
