@@ -75,6 +75,7 @@ $HOME/.zshrc:
 | `mkcd <dir>`                | Creates and enters the directory if it doesn’t exist.   |
 | `cc <file>`                 | Copies file contents to the clipboard.                  |
 | `calc`                      | Calculator using `bc`.                                  |
+| `cat_csv`                   | Format and show csv file.                               |
 | `str2md5`                   | Generates a md5 from string.                            |
 | `ip_info <ip>`              | Shows IP information using `ipwho.is`.                  |
 | `lorem <num>`               | Copies Lorem Ipsum text (5 sentences) to the clipboard. |

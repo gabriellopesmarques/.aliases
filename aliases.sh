@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.78    ##
+##    Aliases v1.79    ##
 #########################
 
 # add current directory on path
@@ -447,6 +447,27 @@ restore_permissions() {
   sudo find "$dir" -type d -exec chmod 755 {} \;
   sudo find "$dir" -type f -exec chmod 644 {} \;
   echo "done"
+}
+
+cat_csv() {
+  local separator=","
+
+  if [[ "$*" == *"--separator "* ]]; then
+    separator="${*#*--separator }"
+    separator="${separator%% *}"
+  fi
+
+  if [[ -z "$1" ]]; then
+    echo "Usage: cat_csv <file> [--separator <char>]" >&2
+    return 1
+  fi
+
+  if [[ ! -f "$1" ]]; then
+    echo "Error: File '$1' not found." >&2
+    return 1
+  fi
+
+  column -t -s "$separator" "$1"
 }
 
 cat_from_url() {
