@@ -24,6 +24,11 @@ map('n', '<leader>tn', '<cmd>lua require("my_functions").tabnew_current_file()<C
 --"copy with OS clipboard
 vim.cmd([[ vnoremap <silent><Leader>y "yy <Bar> :call system('xclip -sel clip', @y)<CR> ]])
 
+--" lsp diagnostic navigation
+map("n", "]d", ":lua vim.diagnostic.goto_next()<CR>", { noremap = true, silent = true, desc = "Next diagnostic" })
+map("n", "[d", ":lua vim.diagnostic.goto_prev()<CR>", { noremap = true, silent = true, desc = "Previous diagnostic" })
+map("n", "<leader>d", ":lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true, desc = "Show diagnostic" })
+
 --" fix typos
 vim.cmd([[ command Vsp vsp ]])
 vim.cmd([[ command Tabe tabe ]])
