@@ -77,6 +77,8 @@ $HOME/.zshrc:
 | `calc`                      | Calculator using `bc`.                                  |
 | `cat_csv`                   | Format and show csv file.                               |
 | `str2md5`                   | Generates a md5 from string.                            |
+| `hash_dir`                  | Calculate directory (recursive) hash.                   |
+| `unixtimestamp2date`        | Format unix timestamp to iso 8601.                      |
 | `ip_info <ip>`              | Shows IP information using `ipwho.is`.                  |
 | `lorem <num>`               | Copies Lorem Ipsum text (5 sentences) to the clipboard. |
 | `explain <cmd>`             | Opens `explainshell.com` in `w3m`.                      |

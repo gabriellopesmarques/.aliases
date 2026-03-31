@@ -1,5 +1,5 @@
 #########################
-##    Aliases v1.79    ##
+##    Aliases v1.81    ##
 #########################
 
 # add current directory on path
@@ -133,6 +133,14 @@ calc() {
 
 str2md5() {
   echo -n "$1" | md5sum
+}
+
+hash_dir() {
+  find "$1" -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum
+}
+
+unixtimestamp2date() {
+  date -d "@$1" --iso-8601=seconds
 }
 
 ip_info() {
