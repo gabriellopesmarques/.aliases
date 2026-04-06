@@ -21,6 +21,7 @@ getUpdates(){
 ## INFO
 host="$(hostname)"
 os=$(grep -E '^PRETTY_NAME=' /etc/*-release | cut -d= -f2- | tr -d '"') # or "$(lsb_release -d -s)"
+cpu=$(grep "model name" /proc/cpuinfo | head -n 1 | cut -d':' -f2 | xargs)
 kernel="$(uname -sr)"
 uptime="$(uptime -p | sed 's/up //')"
 packages="$(dpkg-query -f '.\n' -W | wc -l)"
@@ -34,7 +35,7 @@ total_memory=$(echo "$free_output" | awk 'NR==2 {print $2}')
 memory=${used_memory}/${total_memory}
 
 top_output=$(top -bn 1)
-cpu="$(echo "$top_output" | awk 'NR==3 {print $2}')%"
+#cpu="$(echo "$top_output" | awk 'NR==3 {print $2}')%"
 
 storage="$(df -h --output=used,size,pcent / | awk 'NR > 1 { printf "%s/%s (%s) ", $1, $2, $3 }')"
 date="$(date --rfc-3339=seconds)"
@@ -69,15 +70,15 @@ fi
 cat <<EOF
  ${label}${banner_content}${reset}
  ${header}${USER}@${host}${reset}
+ ${label}cpu:       ${info}${cpu}${reset}
+ ${label}memory:    ${info}${memory}${reset}
+ ${label}storage:   ${info}${storage}${reset}
  ${label}os:        ${info}${os}${reset}
  ${label}kernel:    ${info}${kernel}${reset}
  ${label}uptime:    ${info}${uptime}${reset}
  ${label}packages:  ${info}${packages} ${upgradable}${reset}
  ${label}shell:     ${info}${shell}${reset}
  ${label}ip:        ${info}${ip}${reset}
- ${label}memory:    ${info}${memory}${reset}
- ${label}cpu:       ${info}${cpu}${reset}
- ${label}storage:   ${info}${storage}${reset}
  ${label}date:      ${info}${date}${reset}
 
 EOF
