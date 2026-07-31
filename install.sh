@@ -18,12 +18,13 @@ install_utils () {
         sudo apt install network-manager acpi brightnessctl -y
     fi
 
-    bash "$HOME"/.aliases/fx/install.sh      && \
-    bash "$HOME"/.aliases/bat/install.sh     && \
-    bash "$HOME"/.aliases/sdcv/install.sh    && \
-    bash "$HOME"/.aliases/glow/install.sh    && \
-    bash "$HOME"/.aliases/gitui/install.sh   && \
-    bash "$HOME"/.aliases/dialog/install.sh  && \
+    bash "$HOME"/.aliases/fx/install.sh       && \
+    bash "$HOME"/.aliases/bat/install.sh      && \
+    bash "$HOME"/.aliases/sdcv/install.sh     && \
+    bash "$HOME"/.aliases/glow/install.sh     && \
+    bash "$HOME"/.aliases/gitui/install.sh    && \
+    bash "$HOME"/.aliases/gitdelta/install.sh && \
+    bash "$HOME"/.aliases/dialog/install.sh   && \
     sudo bash "$HOME"/.aliases/fetch/install.sh
 
     ## load utils aliases
@@ -148,7 +149,7 @@ usage () {
      options:
       --omz\t\tinstall omz, add autosuggestions plugin and set a minimalist theme
       --aliases\t\tinstall aliases (shorthands and functions)
-      --utils\t\tinstall utils tools (ncdu, shellcheck, exa, fzf, bat, glow, gitui, dialog, fetch) and add alias moderns tools to substitute classical tools
+      --utils\t\tinstall utils tools (ncdu, shellcheck, exa, fzf, bat, glow, gitui, gitdelta, dialog, fetch) and add alias moderns tools to substitute classical tools
       --tldr\t\tinstall tldr a collaborative cheatsheets for console commands
       --vim\t\tinstall and set a simple config (without plugins)
       --neovim\t\tdownload, compile, install and configure neovim
