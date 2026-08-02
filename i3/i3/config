@@ -64,7 +64,7 @@ bindsym $alt+q kill
 # start dmenu (a program launcher)
 bindsym $super+space exec --no-startup-id rofi -show drun -run-command "i3-msg exec '{cmd}'"
 
-bindsym $super+f exec firefox
+bindsym $super+b exec firefox
 bindsym $super+w exec brave-browser --incognito --password-store=basic
 
 #@TODO: set search engine from env
@@ -75,7 +75,7 @@ bindsym $super+s exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brav
 # https://www.startpage.com/do/search?query={}
 # https://leta.mullvad.net/search?q={}
 # https://marginalia-search.com/search?query={}
-bindsym $super+a exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} firefox https://chat.openai.com/?q={}
+bindsym $super+a exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://lumo.proton.me/guest?q={}
 bindsym $super+y exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://youtube.com/results?search_query={}
 bindsym $super+t exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://translate.google.com/?sl=en\&tl=pt\&op=translate\&text={}
 bindsym $super+l exec i3lock --image ~/.aliases/i3/wallpapers/default/black-clouds.png
