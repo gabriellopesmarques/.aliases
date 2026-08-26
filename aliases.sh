@@ -356,6 +356,12 @@ alias tl="tmux ls"
 
 tmux_dev() {
   SESSION_NAME="$1"
+
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "Session '$SESSION_NAME' is already running."
+    return 1;
+  fi
+
   export WORK_DIR="$2"
 
   # create session, windows and panels
