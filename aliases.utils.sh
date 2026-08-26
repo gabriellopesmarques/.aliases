@@ -7,6 +7,7 @@ alias dict='sdcv'
 alias glow="glow -s ~/.config/glow/nord.json"
 alias fd='cd $(find -type d 2>/dev/null | fzf); pwd'
 alias calendar="dialog --calendar 'calendar' 0 0"
+alias aws='docker run --rm -ti -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
 
 # zsh fzf history widget (ctrl+r)
 if [[ -n "$ZSH_VERSION" ]]; then

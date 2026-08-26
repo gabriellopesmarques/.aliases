@@ -161,6 +161,7 @@ $HOME/.zshrc:
 | `php82_server`     | PHP 8.2 server.                                             |
 | `php80_dev_server` | PHP 8.0 development server.                                 |
 | `php82_dev_server` | PHP 8.2 development server.                                 |
+| `aws`              | Runs Universal CLI for Amazon Web Services (utils)          |
 
 ---
 
