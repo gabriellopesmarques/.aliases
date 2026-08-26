@@ -144,7 +144,11 @@ unixtimestamp2date() {
 }
 
 ip_info() {
-  curl -q "http://ipwho.is/$1"
+  curl --silent "http://ipwho.is/$1"
+}
+
+apex_info(){
+  curl --silent "https://crt.name/v1/search?apex=$1"
 }
 
 # usage: lorem {?int sentences}

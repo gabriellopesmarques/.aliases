@@ -80,6 +80,7 @@ $HOME/.zshrc:
 | `hash_dir`                  | Calculate directory (recursive) hash.                   |
 | `unixtimestamp2date`        | Format unix timestamp to iso 8601.                      |
 | `ip_info <ip>`              | Shows IP information using `ipwho.is`.                  |
+| `apex_info <domain>`        | Shows subdomains information using `crt.name`.          |
 | `lorem <num>`               | Copies Lorem Ipsum text (5 sentences) to the clipboard. |
 | `explain <cmd>`             | Opens `explainshell.com` in `w3m`.                      |
 | `help <cmd>`                | Uses `cheat.sh` to show command help.                   |
