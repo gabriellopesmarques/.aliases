@@ -13,9 +13,9 @@ fi
 
 tar_gz='gitdelta.tar.gz'
 curl -fsSL -o "${dir}/${tar_gz}" "$last_release" &&
-  tar -xvzf "${dir}/${tar_gz}" --strip-components=1 &&
+  tar -xvzf "${dir}/${tar_gz}" -C "${dir}" --strip-components=1 &&
   sudo mv "${dir}/delta" /usr/local/bin/ &&
-  rm "${dir}/${tar_gz}" "${dir}/LICENSE" "${dir}/README.md"
+  rm -f "${dir}/${tar_gz}" "${dir}/LICENSE" "${dir}/README.md"
 
 git config --global core.pager delta &&
   git config --global interactive.diffFilter 'delta --color-only' &&
