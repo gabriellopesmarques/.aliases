@@ -27,7 +27,7 @@ install() {
 __autoremove() {
   dry_output="$(sudo apt autoremove --dry-run 2>/dev/null)"
 
-  if grep -q '^Remv' <<<"$dry_output"; then
+  if echo "$dry_output" | grep -q '^Remv'; then
     echo "${BG_BRIGHT_YELLOW}${BLACK} auto-running: ${NC} apt autoremove"
     sudo apt autoremove
   fi
@@ -359,7 +359,8 @@ tmux_dev() {
 
   if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
     echo "Session '$SESSION_NAME' is already running."
-    return 1;
+    tmux attach-session -t "$SESSION_NAME"
+    return 0;
   fi
 
   export WORK_DIR="$2"
