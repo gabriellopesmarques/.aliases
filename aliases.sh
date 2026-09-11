@@ -356,6 +356,14 @@ alias tl="tmux ls"
 
 tmux_dev() {
   SESSION_NAME="$1"
+  directory="$2"
+
+  if [[ ! -d "$directory" ]]; then
+    echo "Directory '$directory' does not exists."
+    return 1;
+  fi
+
+  export WORK_DIR="$directory"
 
   if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
     echo "Session '$SESSION_NAME' is already running."
