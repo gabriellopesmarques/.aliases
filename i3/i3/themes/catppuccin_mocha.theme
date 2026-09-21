@@ -28,7 +28,7 @@ set $base #1e1e2e
 set $mantle #181825
 set $crust #11111b
 
-font pango:JetBrains Mono 12
+font pango:Google Sans Code 12
 
 # target                 title     bg    text   indicator  border
 client.focused           $lavender $base $text  $rosewater $lavender
