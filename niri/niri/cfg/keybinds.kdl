@@ -10,8 +10,7 @@ binds {
     Mod+Return                          hotkey-overlay-title="Open Terminal: Kitty" { spawn "kitty"; }
     Mod+Space                           hotkey-overlay-title="Run an Application" { spawn "fuzzel"; }
     Mod+CTRL+Space                      hotkey-overlay-title="Toggle keyboard variant alt-intl" { spawn-sh "bash ~/.config/niri/scripts/toogle-kb.sh"; }
-    Mod+B                               hotkey-overlay-title="Open Browser: Firefox" { spawn "firefox"; }
-    Mod+W                               hotkey-overlay-title="Open Browser: Brave" { spawn-sh "brave-browser --incognito"; }
+    Mod+B                               hotkey-overlay-title="Open Browser: Brave" { spawn "brave-browser"; }
     Mod+A                               hotkey-overlay-title="AI Prompt" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" AI"; }
     Mod+Y                               hotkey-overlay-title="YouTube Search" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" YouTube"; }
     Mod+S                               hotkey-overlay-title="Google Search" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" Google"; }
@@ -90,9 +89,7 @@ binds {
     Mod+C                               { center-column; }
     Mod+CTRL+C                          { center-visible-columns; }
     Mod+Minus                           { set-column-width "-10%"; }
-    Mod+Equal                           { set-column-width "+10%"; }
-    Mod+Shift+Minus                     { set-window-height "-10%"; }
-    Mod+Shift+Equal                     { set-window-height "+10%"; }
+    Mod+Shift+Equal                     { set-column-width "+10%"; }
 
     // ─── Modes ───
     Mod+Shift+T                         { toggle-window-floating; }

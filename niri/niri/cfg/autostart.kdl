@@ -1,8 +1,25 @@
 // ────────────── Startup Applications ──────────────
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous#spawn-sh-at-startup
+    workspace "1"
+    workspace "2"
 
     spawn-at-startup "waybar"
     spawn-at-startup "mako"
     spawn-sh-at-startup "$HOME/.config/niri/scripts/wallpaper.sh"
     spawn-at-startup "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.4"
+
+    window-rule {
+        match app-id=r#"^brave$"#
+        open-on-workspace "1"
+        open-maximized true
+    }
+
+    window-rule {
+        match app-id=r#"^kitty$"#
+        open-on-workspace "2"
+        open-maximized true
+    }
+
+    spawn-at-startup "brave-browser"
+    spawn-at-startup "kitty"
 

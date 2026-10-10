@@ -1,7 +1,7 @@
 {
     "layer": "top",
     "modules-left": ["niri/workspaces", "niri/mode"],
-    "modules-center": ["niri/window"],
+    "modules-center": [],
     "modules-right": ["niri/language", "custom/sep", "pulseaudio", "custom/sep", "clock"],
     "niri/window": {
         "max-length": 50
