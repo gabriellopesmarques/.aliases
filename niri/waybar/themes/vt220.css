@@ -1,0 +1,37 @@
+/* Theme: vt220 */
+* {
+    font-family: "Glass TTY VT220";
+    font-size: 20px;
+}
+
+window#waybar {
+    background: #000000;
+    color: #FFA800;
+    border-radius: 0;
+}
+
+#workspaces button {
+    background: transparent;
+    color: #FFA800;
+    padding: 0 6px;
+    border-radius: 0;
+}
+
+#workspaces button.active {
+    background: #FFA800;
+    color: #000000;
+}
+
+#workspaces button.urgent {
+    background: #8A5F0C;
+    color: #000000;
+}
+
+#window {
+    color: #FFA800;
+}
+
+#clock {
+    color: #FFA800;
+    padding: 0 8px;
+}

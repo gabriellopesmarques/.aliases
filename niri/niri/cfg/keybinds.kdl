@@ -3,9 +3,6 @@ binds {
     // ────────────── Keybindings ──────────────
     // https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
 
-    // ─── noctalia-shell keybinds ───
-    // https://docs.noctalia.dev/getting-started/keybinds/
-
     // Super + ?
     Mod+Shift+Slash                      { show-hotkey-overlay; }
 
@@ -14,13 +11,13 @@ binds {
     Mod+Space                           hotkey-overlay-title="Run an Application" { spawn "fuzzel"; }
     Mod+CTRL+Space                      hotkey-overlay-title="Toggle keyboard variant alt-intl" { spawn-sh "bash ~/.config/niri/scripts/toogle-kb.sh"; }
     Mod+B                               hotkey-overlay-title="Open Browser: Firefox" { spawn "firefox"; }
-    Mod+W                               hotkey-overlay-title="Open Browser: Brave" { spawn-sh "brave --incognito"; }
-    Mod+A                               hotkey-overlay-title="AI Prompt" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave --new-window\" AI"; }
-    Mod+Y                               hotkey-overlay-title="YouTube Search" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave --new-window\" YouTube"; }
-    Mod+S                               hotkey-overlay-title="Google Search" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave --new-window\" Google"; }
-    Mod+T                               hotkey-overlay-title="Translate En/Pt" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave --new-window\" Translate"; }
+    Mod+W                               hotkey-overlay-title="Open Browser: Brave" { spawn-sh "brave-browser --incognito"; }
+    Mod+A                               hotkey-overlay-title="AI Prompt" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" AI"; }
+    Mod+Y                               hotkey-overlay-title="YouTube Search" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" YouTube"; }
+    Mod+S                               hotkey-overlay-title="Google Search" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" Google"; }
+    Mod+T                               hotkey-overlay-title="Translate En/Pt" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" Translate"; }
     Mod+Shift+P                         hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-    Mod+ESCAPE                          hotkey-overlay-title="Session Menu: noctalia sessionMenu" { quit; }
+    Mod+ESCAPE                          hotkey-overlay-title="Exit Niri" { quit; }
     //Mod+Shift+ESCAPE                    hotkey-overlay-title="Poweroff" { spawn-sh "systemctl poweroff"; }
 
     // Mod+E                               hotkey-overlay-title="File Manager: Nautilus" { spawn "nautilus"; }
@@ -36,8 +33,8 @@ binds {
     XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
 
     // ─── Brightness Controls ───
-    XF86MonBrightnessUp                 allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call brightness increase"; }
-    XF86MonBrightnessDown               allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call brightness decrease"; }
+    XF86MonBrightnessUp                 allow-when-locked=true { spawn-sh "brightnessctl set +10%"; }
+    XF86MonBrightnessDown               allow-when-locked=true { spawn-sh "brightnessctl set 10%-"; }
 
     // ─── Window Movement and Focus ───
     Mod+Q                               { close-window; }

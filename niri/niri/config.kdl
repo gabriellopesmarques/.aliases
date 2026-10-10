@@ -6,3 +6,7 @@ include "./cfg/display.kdl"
 include "./cfg/layout.kdl"
 include "./cfg/rules.kdl"
 include "./cfg/misc.kdl"
+// theme.kdl é um symlink para ./themes/<tema>.kdl (trocado por set_theme.sh).
+// Precisa vir DEPOIS de layout.kdl para sobrescrever background-color e cores.
+// optional=true evita erro caso o symlink ainda não tenha sido criado.
+include optional=true "./cfg/theme.kdl"

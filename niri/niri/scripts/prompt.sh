@@ -2,7 +2,7 @@
 
 browser=$1
 prompt=$2
-query=$(echo "" | fuzzel --dmenu --prompt="$prompt: ")
+query=$(fuzzel --dmenu --prompt-only="$prompt: " --width=64)
 
 if [[ -z "$query" ]]; then
     exit 1

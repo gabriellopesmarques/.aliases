@@ -1,0 +1,23 @@
+// Theme: monochrome
+// Cores derivadas de i3/i3/themes/monochrome.theme e rofi/monochrome.rasi
+layout {
+    background-color "#000000"
+
+    focus-ring {
+        off
+    }
+
+    border {
+        on
+        width 2
+        active-color "#eeeeee"
+        inactive-color "#424242"
+        urgent-color "#eeeeee"
+    }
+}
+
+// monochrome: cantos retos (sem arredondamento)
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+}

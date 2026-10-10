@@ -1,0 +1,23 @@
+// Theme: nord
+// Cores derivadas de i3/i3/themes/nord.theme e rofi/nord.rasi
+layout {
+    background-color "#2E3440"
+
+    focus-ring {
+        off
+    }
+
+    border {
+        on
+        width 2
+        active-color "#5E81AC"
+        inactive-color "#3B4252"
+        urgent-color "#BF616A"
+    }
+}
+
+// nord: cantos arredondados
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
