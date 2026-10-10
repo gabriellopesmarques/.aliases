@@ -1,0 +1,37 @@
+/* Theme: deep_blue */
+* {
+    font-family: "Input Mono";
+    font-size: 12px;
+}
+
+window#waybar {
+    background: #000011;
+    color: #C0CAF5;
+    border-radius: 0;
+}
+
+#workspaces button {
+    background: transparent;
+    color: #7AA2F7;
+    padding: 0 6px;
+    border-radius: 0;
+}
+
+#workspaces button.active {
+    background: #7AA2F7;
+    color: #000011;
+}
+
+#workspaces button.urgent {
+    background: #D64550;
+    color: #000011;
+}
+
+#window {
+    color: #C0CAF5;
+}
+
+#clock {
+    color: #7AA2F7;
+    padding: 0 8px;
+}

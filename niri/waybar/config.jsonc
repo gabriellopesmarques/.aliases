@@ -1,0 +1,27 @@
+{
+    "layer": "top",
+    "modules-left": ["niri/workspaces", "niri/mode"],
+    "modules-center": [],
+    "modules-right": ["niri/language", "custom/sep", "pulseaudio", "custom/sep", "clock"],
+    "niri/window": {
+        "max-length": 50
+    },
+    "custom/sep": {
+        "format": " | ",
+        "tooltip": false
+    },
+    "niri/language": {
+        "format": "{}"
+    },
+    "pulseaudio": {
+        "format": "{volume}%",
+        "format-muted": "mute",
+        "scroll-step": 5,
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%d/%m/%Y %H:%M}",
+        "interval": 60
+    }
+}

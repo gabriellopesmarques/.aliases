@@ -1,0 +1,23 @@
+// Theme: hardcore (monokai-ish)
+// Cores derivadas de i3/i3/themes/hardcore.theme e rofi/hardcore.rasi
+layout {
+    background-color "#121212"
+
+    focus-ring {
+        off
+    }
+
+    border {
+        on
+        width 2
+        active-color "#66d9ef"
+        inactive-color "#1b1d1e"
+        urgent-color "#f92672"
+    }
+}
+
+// hardcore: cantos retos (sem arredondamento)
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+}

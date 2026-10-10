@@ -1,0 +1,37 @@
+/* Theme: catppuccin_mocha */
+* {
+    font-family: "Google Sans Code";
+    font-size: 12px;
+}
+
+window#waybar {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+}
+
+#workspaces button {
+    background: transparent;
+    color: #cdd6f4;
+    padding: 0 6px;
+    border-radius: 8px;
+}
+
+#workspaces button.active {
+    background: #cba6f7;
+    color: #11111b;
+}
+
+#workspaces button.urgent {
+    background: #f38ba8;
+    color: #11111b;
+}
+
+#window {
+    color: #cdd6f4;
+}
+
+#clock {
+    color: #cba6f7;
+    padding: 0 8px;
+}

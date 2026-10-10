@@ -1,0 +1,37 @@
+/* Theme: nord */
+* {
+    font-family: "Input Mono";
+    font-size: 12px;
+}
+
+window#waybar {
+    background: #2E3440;
+    color: #D8DEE9;
+    border-radius: 8px;
+}
+
+#workspaces button {
+    background: transparent;
+    color: #D8DEE9;
+    padding: 0 6px;
+    border-radius: 8px;
+}
+
+#workspaces button.active {
+    background: #5E81AC;
+    color: #ECEFF4;
+}
+
+#workspaces button.urgent {
+    background: #BF616A;
+    color: #ECEFF4;
+}
+
+#window {
+    color: #D8DEE9;
+}
+
+#clock {
+    color: #88C0D0;
+    padding: 0 8px;
+}

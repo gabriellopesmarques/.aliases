@@ -78,7 +78,7 @@ bindsym $super+s exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brav
 bindsym $super+a exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://lumo.proton.me/guest?q={}
 bindsym $super+y exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://youtube.com/results?search_query={}
 bindsym $super+t exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://translate.google.com/?sl=en\&tl=pt\&op=translate\&text={}
-bindsym $super+l exec i3lock --image ~/.aliases/i3/wallpapers/default/black-clouds.png
+bindsym $super+l exec i3lock --image ~/Pictures/Wallpapers/default/black-clouds.png
 
 
 # A more modern dmenu replacement is rofi:
