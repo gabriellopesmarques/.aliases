@@ -1,0 +1,23 @@
+// Theme: deep_blue (tokyo night storm + dark blue bg)
+// Cores derivadas de i3/i3/themes/deep_blue.theme e rofi/deep_blue.rasi
+layout {
+    background-color "#000011"
+
+    focus-ring {
+        off
+    }
+
+    border {
+        on
+        width 2
+        active-color "#7AA2F7"
+        inactive-color "#0F1B51"
+        urgent-color "#D64550"
+    }
+}
+
+// deep_blue: cantos retos (sem arredondamento)
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+}

@@ -1,6 +1,6 @@
-#########################
-##    Aliases v1.81    ##
-#########################
+###########################
+##    Aliases v1.82.1    ##
+###########################
 
 # add current directory on path
 PATH=.:$PATH
@@ -84,7 +84,6 @@ alias vimconfig="vim ~/.aliases/vim/vimrc"
 alias vc=vimconfig
 alias ac="vim ~/.aliases/aliases.sh"
 alias zc="vim ~/.zshrc"
-alias ic="vim ~/.aliases/i3/i3/config"
 alias ec="vim ~/.aliases/env.sh"
 
 ####
@@ -94,7 +93,6 @@ alias reload="source ~/.zshrc"
 alias rank="sort | uniq -c | sort -nr"
 alias du_by_size="du -sh ./* | sort -rh"
 alias weather="curl https://wttr.in/\?format\=1"
-alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
 alias cdf='cd $(find -type d 2>/dev/null | fzf)'
 alias find_directory=cdf
 
@@ -116,14 +114,10 @@ mkcd() {
     return 1
   fi
 
-  mkdir "$1"
-  cd "$1" || exit
+  mkdir -p "$1"
+  cd "$1" || return 1
 
   return 0
-}
-
-cc() {
-  xclip -sel clip "$1"
 }
 
 calc() {
@@ -147,15 +141,8 @@ ip_info() {
   curl --silent "http://ipwho.is/$1"
 }
 
-apex_info(){
+apex_info() {
   curl --silent "https://crt.name/v1/search?apex=$1"
-}
-
-# usage: lorem {?int sentences}
-lorem() {
-  curl -s "http://metaphorpsum.com/sentences/${1-3}" | xclip -i -sel clipboard
-  echo 'the text below is in your clipboard:'
-  xclip -o -sel clip
 }
 
 explain() {
@@ -168,12 +155,6 @@ help() {
 
 vim_card() {
   curl https://aurelio.net/vim/vimcard.txt
-}
-
-rememberme() {
-  INTERVAL="${2:-1 minutes}"
-  # sudo apt install libnotify-bin at -y
-  echo "notify-send '» remember' \"$1\"" | at now + "$INTERVAL"
 }
 
 pack() {
@@ -257,10 +238,10 @@ git() {
   done
 
   if $force_detected; then
-    echo "\n -- !! intercepted command !! -- \n"
+    printf "\n -- !! intercepted command !! -- \n"
     echo "hey, easy there!"
     echo "push force, really?! and without a leash? let's play it safe"
-    echo "running: git push --force-with-lease ${args[*]} \n"
+    printf "running: git push --force-with-lease %s \n" "${args[*]}"
     command git push --force-with-lease "${args[@]}"
     return
   fi
@@ -360,7 +341,7 @@ tmux_dev() {
 
   if [[ ! -d "$directory" ]]; then
     echo "Directory '$directory' does not exists."
-    return 1;
+    return 1
   fi
 
   export WORK_DIR="$directory"
@@ -368,7 +349,7 @@ tmux_dev() {
   if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
     echo "Session '$SESSION_NAME' is already running."
     tmux attach-session -t "$SESSION_NAME"
-    return 0;
+    return 0
   fi
 
   export WORK_DIR="$2"
@@ -383,10 +364,6 @@ tmux_dev() {
   tmux send-keys -t "$SESSION_NAME" "     cd $WORK_DIR; clear; git status" C-m
 
   tmux attach -t "$1"
-}
-
-tmux_copy_buffer() {
-  tmux save-buffer - | xclip -i -sel clipboard
 }
 
 cli() {

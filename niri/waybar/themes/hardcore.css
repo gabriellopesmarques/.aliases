@@ -1,0 +1,37 @@
+/* Theme: hardcore */
+* {
+    font-family: "IBM Plex Mono";
+    font-size: 12px;
+}
+
+window#waybar {
+    background: #121212;
+    color: #a0a0a0;
+    border-radius: 0;
+}
+
+#workspaces button {
+    background: transparent;
+    color: #a0a0a0;
+    padding: 0 6px;
+    border-radius: 0;
+}
+
+#workspaces button.active {
+    background: #66d9ef;
+    color: #121212;
+}
+
+#workspaces button.urgent {
+    background: #f92672;
+    color: #121212;
+}
+
+#window {
+    color: #a0a0a0;
+}
+
+#clock {
+    color: #66d9ef;
+    padding: 0 8px;
+}

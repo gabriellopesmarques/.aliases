@@ -1,0 +1,37 @@
+/* Theme: monochrome */
+* {
+    font-family: "Recursive Monospace";
+    font-size: 12px;
+}
+
+window#waybar {
+    background: #000000;
+    color: #eeeeee;
+    border-radius: 0;
+}
+
+#workspaces button {
+    background: transparent;
+    color: #eeeeee;
+    padding: 0 6px;
+    border-radius: 0;
+}
+
+#workspaces button.active {
+    background: #eeeeee;
+    color: #000000;
+}
+
+#workspaces button.urgent {
+    background: #424242;
+    color: #eeeeee;
+}
+
+#window {
+    color: #eeeeee;
+}
+
+#clock {
+    color: #eeeeee;
+    padding: 0 8px;
+}

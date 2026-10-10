@@ -1,0 +1,31 @@
+// Theme: catppuccin_mocha
+// Cores derivadas de i3/i3/themes/catppuccin_mocha.theme e rofi/catppuccin_mocha.rasi
+layout {
+    background-color "#1e1e2e"
+
+    focus-ring {
+        off
+    }
+
+    border {
+        on
+        width 2
+        active-color "#b4befe"
+        inactive-color "#6c7086"
+        urgent-color "#f38ba8"
+    }
+}
+
+// catppuccin_mocha: cantos arredondados
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id="^kitty$"
+    background-effect {
+        blur true
+        noise 0.4
+    }
+}

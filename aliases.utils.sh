@@ -11,14 +11,14 @@ alias aws='docker run --rm -ti -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cl
 
 # zsh fzf history widget (ctrl+r)
 if [[ -n "$ZSH_VERSION" ]]; then
-    fzf-history-widget() {
+  fzf-history-widget() {
     local selected
     selected=$(history | sed -E 's/^[[:space:]]*[0-9]+[[:space:]]*\*?[[:space:]]*//' | awk '!seen[$0]++' | fzf --exact --tac --no-sort --height=20%)
 
     LBUFFER="$selected"
-    }
-    zle -N fzf-history-widget
-    bindkey '^R' fzf-history-widget
+  }
+  zle -N fzf-history-widget
+  bindkey '^R' fzf-history-widget
 fi
 
 # improve less settings
@@ -34,32 +34,51 @@ if [[ -n "$PS1" ]] && [[ "$TERM" != "dumb" ]]; then
   export LESS_TERMCAP_us=$'\E[01;32m'
 fi
 
-ai(){
-    if [[ -z "$GROQ_API_KEY" ]]; then
-        echo "declare GROQ_API_KEY to use this function"
-        return 64
-    fi
+ai() {
+  if [[ -z "$GROQ_API_KEY" ]]; then
+    echo "declare GROQ_API_KEY to use this function"
+    return 64
+  fi
 
-    echo -n "how can i help you?: "
-    read question
+  echo -n "how can i help you?: "
+  read question
 
-    curl --silent -X POST "https://api.groq.com/openai/v1/chat/completions" \
-         -H "Authorization: Bearer $GROQ_API_KEY" \
-         -H "Content-Type: application/json" \
-         -d '{"messages": [{"role": "user", "content": "'"$question"'"}], "model": "openai/gpt-oss-20b"}' | tee /tmp/response-ai.md | jq -r '.choices[0].message.content' | glow - | less
+  curl --silent -X POST "https://api.groq.com/openai/v1/chat/completions" \
+    -H "Authorization: Bearer $GROQ_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{"messages": [{"role": "user", "content": "'"$question"'"}], "model": "openai/gpt-oss-20b"}' | tee /tmp/response-ai.md | jq -r '.choices[0].message.content' | glow - | less
 }
 
-gemini(){
-    if [[ -z "$gemini_api_key" ]]; then
-        echo "declare gemini_api_key to use this function"
-        return 64
-    fi
+explain() {
+  if [[ -z "$GROQ_API_KEY" ]]; then
+    echo "declare GROQ_API_KEY to use this function"
+    return 64
+  fi
 
-    echo -n "how can i help you?: "
-    read question
+  if [[ -z "$1" ]]; then
+    echo "explain what?! use: explain 'command'"
+    exit 1
+  fi
 
-    curl --silent "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$gemini_api_key}" \
-      -H 'Content-Type: application/json' \
-      -X POST \
-      -d '{"contents": [{"parts": [{"text": "'"$question"'"}]}] }' | jq -r '.candidates[0].content.parts[0].text' | glow -
+  question="explain $1"
+
+  curl --silent -X POST "https://api.groq.com/openai/v1/chat/completions" \
+    -H "Authorization: Bearer $GROQ_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{"messages": [{"role": "user", "content": "'"$question"'"}], "model": "openai/gpt-oss-20b"}' | tee /tmp/response-ai.md | jq -r '.choices[0].message.content' | glow - | less
+}
+
+gemini() {
+  if [[ -z "$gemini_api_key" ]]; then
+    echo "declare gemini_api_key to use this function"
+    return 64
+  fi
+
+  echo -n "how can i help you?: "
+  read question
+
+  curl --silent "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$gemini_api_key}" \
+    -H 'Content-Type: application/json' \
+    -X POST \
+    -d '{"contents": [{"parts": [{"text": "'"$question"'"}]}] }' | jq -r '.candidates[0].content.parts[0].text' | glow -
 }
