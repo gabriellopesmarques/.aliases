@@ -16,7 +16,7 @@ binds {
     Mod+Y                               hotkey-overlay-title="YouTube Search" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" YouTube"; }
     Mod+S                               hotkey-overlay-title="Google Search" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" Google"; }
     Mod+T                               hotkey-overlay-title="Translate En/Pt" { spawn-sh "bash ~/.config/niri/scripts/prompt.sh \"brave-browser --new-window\" Translate"; }
-    Mod+Shift+P                         hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Mod+Shift+P                         hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock" "-i" "~/.aliases/i3/wallpapers/default/black-clouds.png" "-s" "fill"; }
     Mod+ESCAPE                          hotkey-overlay-title="Exit Niri" { quit; }
     //Mod+Shift+ESCAPE                    hotkey-overlay-title="Poweroff" { spawn-sh "systemctl poweroff"; }
 
