@@ -4,13 +4,12 @@ set -Eeuo pipefail
 
 # Minimal Niri installation for Debian 13 (Trixie).
 # Debian packages are used for dependencies; Niri and xwayland-satellite
-# are compiled from pinned upstream tags and installed under /usr/local.
+# are compiled from pinned upstream tags in a Docker container and installed under /usr/local.
+# Build tools (Rust, C/C++, Cargo cache) stay in Docker volumes, not on the host.
 
 niri_version="v26.04"
 xwayland_satellite_version="v0.8.2"
-source_root="${HOME}/.local/src"
-niri_source="${source_root}/niri"
-xwayland_satellite_source="${source_root}/xwayland-satellite"
+cargo_volume="niri-cargo-cache"
 
 log() {
     printf '\n==> %s\n' "$*"
@@ -33,6 +32,7 @@ need_command sudo
 need_command git
 need_command apt-cache
 need_command dpkg-query
+need_command docker
 
 if [[ ! -r /etc/os-release ]]; then
     fail "Cannot identify the operating system: /etc/os-release is missing."
@@ -47,7 +47,7 @@ fi
 printf '%s\n' \
     'This script installs Niri on Debian 13 using official Debian packages' \
     'for dependencies, and builds pinned upstream source releases for Niri' \
-    'and xwayland-satellite. It does not install a display manager or GNOME.'
+    'and xwayland-satellite in a Docker container. It does not install a display manager or GNOME.'
 printf '\nNiri: %s\nxwayland-satellite: %s\n' \
     "$niri_version" "$xwayland_satellite_version"
 
@@ -58,30 +58,6 @@ fi
 
 log 'Refreshing Debian package metadata'
 sudo apt-get update
-
-build_packages=(
-    build-essential
-    ca-certificates
-    clang
-    cargo
-    git
-    pkg-config
-    rustc
-    libdbus-1-dev
-    libdisplay-info-dev
-    libegl1-mesa-dev
-    libgbm-dev
-    libinput-dev
-    libpango1.0-dev
-    libpipewire-0.3-dev
-    libseat-dev
-    libsystemd-dev
-    libudev-dev
-    libwayland-dev
-    libxcb-cursor-dev
-    libxcb1-dev
-    libxkbcommon-dev
-)
 
 runtime_packages=(
     dbus-user-session
@@ -104,7 +80,7 @@ runtime_packages=(
 
 log 'Checking every requested package exists in the configured Debian repositories'
 missing_packages=()
-for package in "${build_packages[@]}" "${runtime_packages[@]}"; do
+for package in "${runtime_packages[@]}"; do
     if ! apt-cache show "$package" 2>/dev/null | grep '^Package:' >/dev/null; then
         missing_packages+=("$package")
     fi
@@ -117,75 +93,71 @@ if ((${#missing_packages[@]} > 0)); then
     exit 1
 fi
 
-log 'Installing build dependencies and minimal Wayland session packages'
+log 'Installing minimal Wayland session packages (runtime dependencies only)'
 sudo apt-get install --no-install-recommends \
-    "${build_packages[@]}" \
     "${runtime_packages[@]}"
 
-need_command cargo
-need_command rustc
+# Build niri and xwayland-satellite in Docker container
+log 'Building Niri and xwayland-satellite in Docker container'
 
-rust_version="$(rustc --version | awk '{print $2}')"
-if [[ "$(printf '%s\n' 1.85.0 "$rust_version" | sort -V | head -n1)" != "1.85.0" ]]; then
-    fail "Rust 1.85.0 or newer is required; detected rustc ${rust_version}. No source build was started."
+# Create named volume for Cargo cache (persists between builds, easy to clean up)
+if ! docker volume inspect "$cargo_volume" >/dev/null 2>&1; then
+    log "Creating Docker volume '$cargo_volume' for Cargo cache"
+    docker volume create "$cargo_volume" >/dev/null
 fi
 
-mkdir -p "$source_root"
+# Build the Docker image
+log "Building Docker image for niri ${niri_version} and xwayland-satellite ${xwayland_satellite_version}"
+docker build \
+    --build-arg NIRI_VERSION="${niri_version}" \
+    --build-arg XWAYLAND_SATELLITE_VERSION="${xwayland_satellite_version}" \
+    -t niri-builder \
+    -f "${HOME}/.aliases/niri/Dockerfile.build" \
+    "${HOME}/.aliases/niri"
 
-checkout_tag() {
-    local repository_url="$1"
-    local checkout_dir="$2"
-    local tag="$3"
+# Run the container with Cargo cache volume mounted
+log 'Running build container (this can take a while)'
+container_id=$(docker run -d \
+    -v "${cargo_volume}:/root/.cargo" \
+    niri-builder)
 
-    if [[ ! -d "$checkout_dir/.git" ]]; then
-        if [[ -e "$checkout_dir" ]]; then
-            fail "Source path exists but is not a Git repository: $checkout_dir"
-        fi
-        git clone --depth 1 --branch "$tag" "$repository_url" "$checkout_dir"
-    else
-        local current_remote
-        current_remote="$(git -C "$checkout_dir" remote get-url origin)"
-        [[ "$current_remote" == "$repository_url" ]] || fail "Unexpected origin in $checkout_dir: $current_remote"
-        if [[ -n "$(git -C "$checkout_dir" status --porcelain)" ]]; then
-            fail "Source tree has local changes: $checkout_dir. Review or clean it before running this script again."
-        fi
-        git -C "$checkout_dir" fetch --depth 1 origin "refs/tags/${tag}:refs/tags/${tag}"
-        git -C "$checkout_dir" checkout --detach "$tag"
-    fi
-}
+# Wait for container to finish and check exit code
+if ! docker wait "$container_id" | grep -q '^0$'; then
+    docker logs "$container_id"
+    docker rm "$container_id"
+    fail 'Docker build failed. Check logs above.'
+fi
 
-log "Downloading Niri ${niri_version} source"
-checkout_tag "https://github.com/niri-wm/niri.git" "$niri_source" "$niri_version"
+# Copy artifacts from container to a temporary directory on host
+log 'Copying built artifacts from container'
+tmp_dir=$(mktemp -d -t niri-build-XXXXXX)
+trap 'rm -rf "$tmp_dir"' EXIT
 
-log 'Building Niri (this can take a while)'
-(
-    cd "$niri_source"
-    cargo build --locked --release
-)
+docker cp "${container_id}:/out/niri" "${tmp_dir}/niri"
+docker cp "${container_id}:/out/niri-session" "${tmp_dir}/niri-session"
+docker cp "${container_id}:/out/niri.service" "${tmp_dir}/niri.service"
+docker cp "${container_id}:/out/niri-shutdown.target" "${tmp_dir}/niri-shutdown.target"
+docker cp "${container_id}:/out/niri.desktop" "${tmp_dir}/niri.desktop"
+docker cp "${container_id}:/out/xwayland-satellite" "${tmp_dir}/xwayland-satellite"
 
-[[ -x "$niri_source/target/release/niri" ]] || fail 'Niri build completed without producing target/release/niri.'
-[[ -f "$niri_source/resources/niri-session" ]] || fail 'Expected upstream resource resources/niri-session was not found.'
-[[ -f "$niri_source/resources/niri.service" ]] || fail 'Expected upstream resource resources/niri.service was not found.'
-[[ -f "$niri_source/resources/niri-shutdown.target" ]] || fail 'Expected upstream resource resources/niri-shutdown.target was not found.'
+# Clean up container
+docker rm "$container_id"
 
-log "Downloading xwayland-satellite ${xwayland_satellite_version} source"
-checkout_tag "https://github.com/Supreeeme/xwayland-satellite.git" "$xwayland_satellite_source" "$xwayland_satellite_version"
-
-log 'Building xwayland-satellite (this can take a while)'
-(
-    cd "$xwayland_satellite_source"
-    cargo build --locked --release
-)
-
-[[ -x "$xwayland_satellite_source/target/release/xwayland-satellite" ]] || fail 'xwayland-satellite build completed without producing target/release/xwayland-satellite.'
+# Verify artifacts exist
+[[ -x "${tmp_dir}/niri" ]] || fail 'Niri binary not found after docker cp.'
+[[ -f "${tmp_dir}/niri-session" ]] || fail 'niri-session not found after docker cp.'
+[[ -f "${tmp_dir}/niri.service" ]] || fail 'niri.service not found after docker cp.'
+[[ -f "${tmp_dir}/niri-shutdown.target" ]] || fail 'niri-shutdown.target not found after docker cp.'
+[[ -f "${tmp_dir}/niri.desktop" ]] || fail 'niri.desktop not found after docker cp.'
+[[ -x "${tmp_dir}/xwayland-satellite" ]] || fail 'xwayland-satellite binary not found after docker cp.'
 
 log 'Installing locally built binaries and upstream Niri session files'
-sudo install -D -m 0755 "$niri_source/target/release/niri" /usr/local/bin/niri
-sudo install -D -m 0755 "$niri_source/resources/niri-session" /usr/local/bin/niri-session
-sudo install -D -m 0755 "$xwayland_satellite_source/target/release/xwayland-satellite" /usr/local/bin/xwayland-satellite
-sudo install -D -m 0644 "$niri_source/resources/niri.service" /etc/systemd/user/niri.service
-sudo install -D -m 0644 "$niri_source/resources/niri-shutdown.target" /etc/systemd/user/niri-shutdown.target
-sudo install -D -m 0644 "$niri_source/resources/niri.desktop" /usr/local/share/wayland-sessions/niri.desktop
+sudo install -D -m 0755 "${tmp_dir}/niri" /usr/local/bin/niri
+sudo install -D -m 0755 "${tmp_dir}/niri-session" /usr/local/bin/niri-session
+sudo install -D -m 0755 "${tmp_dir}/xwayland-satellite" /usr/local/bin/xwayland-satellite
+sudo install -D -m 0644 "${tmp_dir}/niri.service" /etc/systemd/user/niri.service
+sudo install -D -m 0644 "${tmp_dir}/niri-shutdown.target" /etc/systemd/user/niri-shutdown.target
+sudo install -D -m 0644 "${tmp_dir}/niri.desktop" /usr/local/share/wayland-sessions/niri.desktop
 
 # Select GTK for the basic portals without installing the GNOME portal backend.
 # GNOME-specific screencasting will not be available with this minimal setup.
@@ -239,3 +211,20 @@ This script intentionally does not install xdg-desktop-portal-gnome, GDM, GNOME 
 or a full desktop environment. GNOME-specific screen-sharing portal support is therefore
 not included; it can be added separately if you later need it.
 NEXT_STEPS
+
+# Prompt for cleanup
+printf '\n'
+read -p "Remove Docker image 'niri-builder' and Cargo cache volume ('$cargo_volume')? [y/N] " -n 1 -r
+printf '\n'
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    log 'Removing Docker image niri-builder...'
+    docker rmi niri-builder 2>/dev/null || true
+    log 'Removing Cargo cache volume...'
+    docker volume rm "$cargo_volume" 2>/dev/null || true
+    log 'Cleanup complete.'
+else
+    log 'Image and volume kept.'
+    log "  To remove later: docker rmi niri-builder && docker volume rm $cargo_volume"
+    log "  To list volumes: docker volume ls"
+    log "  To list images: docker images"
+fi
