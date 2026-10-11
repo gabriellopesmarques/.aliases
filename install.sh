@@ -258,7 +258,7 @@ do
         --brave)
             install_brave
         ;;
-        --env_i3)
+        --env_i3wm)
             install_omz
             install_aliases
             set_no_passwd_when_sudo
