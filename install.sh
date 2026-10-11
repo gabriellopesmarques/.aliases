@@ -1,12 +1,22 @@
 #!/bin/bash
 
+install_omz () {
+    echo "installing oh-my-zsh"
+    bash "$HOME"/.aliases/oh-my-zsh/install.sh
+}
+
 install_aliases () {
     echo "installing aliases"
-    sudo apt install git zsh htop tree bc lm-sensors aria2 libnotify-bin at w3m xclip -y  # aliases.sh dependencies
+    sudo apt install git zsh htop tree bc lm-sensors aria2 at w3m -y  # aliases.sh dependencies
 
     # add aliases in bash
     echo "source ~/.aliases/aliases.sh" >> "$HOME"/.bashrc
     echo "source ~/.aliases/aliases.sh" >> "$HOME"/.zshrc
+}
+
+install_tldr () {
+    echo "installing tldr"
+    bash "$HOME"/.aliases/tldr/install.sh
 }
 
 install_utils () {
@@ -32,80 +42,9 @@ install_utils () {
     echo "source ~/.aliases/aliases.utils.sh" >> "$HOME"/.zshrc
 }
 
-install_tldr () {
-    echo "installing tldr"
-    bash "$HOME"/.aliases/tldr/install.sh
-}
-
-install_docker () {
-     echo "installing docker"
-     sudo apt install curl -y
-     curl -fsSL https://get.docker.com -o get-docker.sh && \
-     sudo sh ./get-docker.sh && \
-     sudo usermod -aG docker "$USER" && \
-     rm ./get-docker.sh && \
-     echo "reboot or run 'newgrp docker'"
-}
-
-install_brave () {
-    echo "installing brave"
-    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list && \
-    sudo apt update && sudo apt install brave-browser -y
-}
-
 install_dbcli () {
     echo "installing mycli and pgcli"
     bash "$HOME"/.aliases/db-client/install.sh
-}
-
-install_warpd () {
-    echo "installing warpd"
-    bash "$HOME"/.aliases/i3/warpd/install.sh
-}
-
-install_i3wm () {
-    echo "installing i3"
-    bash "$HOME"/.aliases/i3/install.sh
-
-    echo "install fonts"
-    bash "$HOME"/.aliases/fonts/install.sh
-
-    echo "install moc (music on console)"
-    bash "$HOME"/.aliases/moc/install.sh
-
-    echo "install kitty"
-    bash "$HOME"/.aliases/terminal/kitty/install.sh
-
-    install_brave
-    install_warpd
-    install_feh
-    set_default_theme
-
-    sudo apt purge xterm -y
-}
-
-install_feh () {
-    sudo apt install feh -y
-    echo "installing feh"
-    bash "$HOME"/.aliases/i3/wallpapers/install.sh
-    echo -e "#!/bin/sh\nfeh --no-fehbg --bg-fill $HOME/Pictures/Wallpapers/default/deep_blue-jeremy-bishop-DFJahLoBHK4-unsplash.jpg" > "$HOME/.fehbg"
-    sudo chmod 754 "$HOME"/.fehbg
-}
-
-set_default_theme () {
-    bash "$HOME"/.aliases/set_theme.sh --deep_blue
-}
-
-set_vim_editor () {
-    sudo update-alternatives --set editor /usr/bin/vim.basic
-}
-
-set_no_passwd_when_sudo () {
-    user=$(logname)
-    sudoers_file="/etc/sudoers.d/$user"
-    echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo tee "$sudoers_file" > /dev/null
-    sudo chmod 0440 "$sudoers_file"
 }
 
 install_tmux () {
@@ -118,9 +57,41 @@ install_vim () {
     bash "$HOME"/.aliases/vim/install.sh
 }
 
+set_vim_editor () {
+    sudo update-alternatives --set editor /usr/bin/vim.basic
+}
+
 install_neovim () {
     echo "installing neovim"
     bash "$HOME"/.aliases/nvim/install.sh
+}
+
+install_docker () {
+     echo "installing docker"
+     sudo apt install curl -y
+     curl -fsSL https://get.docker.com -o get-docker.sh && \
+     sudo sh ./get-docker.sh && \
+     sudo usermod -aG docker "$USER" && \
+     rm ./get-docker.sh && \
+     echo "reboot or run 'newgrp docker'"
+}
+
+install_mail () {
+    ## install email server and email reader
+    echo "installing mail"
+    DEBIAN_FRONTEND=noninteractive sudo apt install postfix mutt -y
+}
+
+install_moc () {
+    echo "install moc (music on console)"
+    bash "$HOME"/.aliases/moc/install.sh
+}
+
+install_brave () {
+    echo "installing brave"
+    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list && \
+    sudo apt update && sudo apt install brave-browser -y
 }
 
 install_emacs () {
@@ -128,15 +99,85 @@ install_emacs () {
     bash "$HOME"/.aliases/emacs/install.sh
 }
 
-install_omz () {
-    echo "installing oh-my-zsh"
-    bash "$HOME"/.aliases/oh-my-zsh/install.sh
+set_no_passwd_when_sudo () {
+    user=$(logname)
+    sudoers_file="/etc/sudoers.d/$user"
+    echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo tee "$sudoers_file" > /dev/null
+    sudo chmod 0440 "$sudoers_file"
 }
 
-install_mail () {
-    ## install email server and email reader
-    echo "installing mail"
-    DEBIAN_FRONTEND=noninteractive sudo apt install postfix mutt -y
+## - i3wm things
+
+install_warpd () {
+    echo "installing warpd"
+    bash "$HOME"/.aliases/i3/warpd/install.sh
+}
+
+install_feh () {
+    sudo apt install feh -y
+    echo "installing feh"
+    bash "$HOME"/.aliases/i3/wallpapers/install.sh
+    echo -e "#!/bin/sh\nfeh --no-fehbg --bg-fill $HOME/Pictures/Wallpapers/default/deep_blue-jeremy-bishop-DFJahLoBHK4-unsplash.jpg" > "$HOME/.fehbg"
+    sudo chmod 754 "$HOME"/.fehbg
+}
+
+set_i3_default_theme () {
+    bash "$HOME"/.aliases/i3/set_theme.sh --deep_blue
+}
+
+install_i3wm () {
+    echo "installing i3"
+    bash "$HOME"/.aliases/i3/install.sh
+
+    echo "install fonts"
+    bash "$HOME"/.aliases/fonts/install.sh
+
+    echo "install kitty"
+    bash "$HOME"/.aliases/terminal/kitty/install.sh
+
+    # install xorg clipboard and notification tools
+    sudo apt install xclip libnotify-bin -y
+
+    install_moc
+    install_brave
+    install_warpd
+    install_feh
+    set_i3_default_theme
+
+    sudo apt purge xterm -y
+}
+
+
+## - niri things
+
+set_i3_default_theme () {
+    bash "$HOME"/.aliases/niri/set_theme.sh --deep_blue
+}
+
+install_niri () {
+    echo "installing niri"
+    bash "$HOME"/.aliases/niri/install.sh
+
+    echo "configuring niri"
+    ln -s $HOME/.aliases/niri/niri $HOME/.config/
+
+    echo "configuring waybar"
+    ln -s $HOME/.aliases/niri/waybar $HOME/.config/ && \
+
+    echo "configuring fuzzel"
+    ln -s $HOME/.aliases/niri/fuzzel $HOME/.config/ && \
+
+    echo "install fonts"
+    bash "$HOME"/.aliases/fonts/install.sh
+
+    echo "install kitty"
+    bash "$HOME"/.aliases/terminal/kitty/install.sh
+
+    sudo apt install pipewire wireplumber playerctl pipewire-pulse -y && \
+    systemctl --user --now enable pipewire wireplumber pipewire-pulse
+
+    install_moc
+    install_brave
 }
 
 usage () {
@@ -157,12 +198,12 @@ usage () {
       --tmux\t\tinstall tmux and configure
       --docker\t\tinstall docker-ce (using https://get.docker.com script)
       --mail\t\tinstall postfix (to recive mail) and mutt (to read)
-      --i3wm\t\tinstall i3wm, i3status, rofi, feh, pulseaudio, libnotify-bin, scrot (screenshot), fonts, moc, kitty term, firefox, brave and configure them
-      --all_env\t\tinstall all (except mail and emacs)
-      --light\t\tinstall omz, aliases, utils, tldr, vim, neovim, tmux
+      --all_i3wm\t\tinstall omz, aliases, vim, utils, tldr, tmux, neovim, docker, i3wm
+      --all_niri\t\tinstall omz, aliases, vim, utils, tldr, tmux, neovim, docker, niri
+      --light\t\tinstall omz, aliases, utils, tldr, vim
 
       desktop use:
-      ./install.sh --all_env
+      ./install.sh --env_(i3wm|niri)
 
       without gui use:
       ./install.sh --aliases --vim --mail --docker
@@ -205,31 +246,46 @@ do
         --mail)
             install_mail
         ;;
-        --i3wm)
-            install_i3wm
+        --moc)
+            install_moc
         ;;
-        --all_env)
+        --brave)
+            install_brave
+        ;;
+        --env_i3)
             install_omz
             install_aliases
-            set_vim_editor
             set_no_passwd_when_sudo
             install_utils
             install_tldr
             install_tmux
             install_vim
+            set_vim_editor
             install_neovim
             install_docker
             install_i3wm
         ;;
+        --env_niri)
+            install_omz
+            install_aliases
+            set_no_passwd_when_sudo
+            install_utils
+            install_tldr
+            install_tmux
+            install_vim
+            set_vim_editor
+            install_neovim
+            install_docker
+            install_niri
+        ;;
         --light)
             install_omz
             install_aliases
-            set_vim_editor
             set_no_passwd_when_sudo
             install_utils
             install_tldr
             install_vim
-            install_neovim
+            set_vim_editor
         ;;
         --help)
             usage
@@ -237,5 +293,4 @@ do
     esac
     shift
 done
-
 

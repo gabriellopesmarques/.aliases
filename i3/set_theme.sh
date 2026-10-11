@@ -75,7 +75,7 @@ do
         ;;
         *)
             echo "$1 invalid option"
-            echo "use: set_theme.sh --help"
+            echo "use: i3/set_theme.sh --help"
             exit 1
         ;;
 
