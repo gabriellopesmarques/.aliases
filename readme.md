@@ -18,12 +18,32 @@ Check available installer scripts:
 
 ```sh
 $HOME/.zshrc:
-    - ~/.aliases/aliases.sh
-        - ~/.aliases/colors.sh
-        - ~/.aliases/env.sh
     - ~/.aliases/oh-my-zsh/config
         - $ZSH/oh-my-zsh.sh
-    - ~/.aliases/aliases.utils.sh
+    - ~/.aliases/aliases.niri.sh   # Wayland/niri specific (loaded on Wayland)
+    - ~/.aliases/aliases.i3.sh     # X11/i3wm specific (loaded on X11)
+    - ~/.aliases/aliases.sh        # Common aliases (works on both)
+        - ~/.aliases/colors.sh
+        - ~/.aliases/env.sh
+    - ~/.aliases/aliases.utils.sh  # Utility functions
+```
+
+## File Structure
+
+```
+~/.aliases/
+├── aliases.sh          # Common aliases (works on both Wayland and X11)
+├── aliases.i3.sh       # i3wm/Xorg specific aliases
+├── aliases.niri.sh     # niri/Wayland specific aliases
+├── aliases.utils.sh    # Utility functions (fzf, bat, eza, etc.)
+├── colors.sh           # Color definitions
+├── env.sh              # Environment variables
+├── i3/
+│   ├── i3/config       # i3wm config
+│   └── toggle-kbl.sh   # Keyboard layout toggle script
+└── niri/
+    ├── config.kdl      # niri config
+    └── install.sh      # niri installation script
 ```
 
 ## Shorthands
@@ -54,11 +74,12 @@ $HOME/.zshrc:
 
 | Command           | Action                                                  |
 | ----------------- | ------------------------------------------------------- |
-| `ac`              | Edits the alias files.                                  |
+| `ac`              | Edits the main alias file (`aliases.sh`).               |
 | `zc`              | Edits `.zshrc`.                                         |
-| `ic`              | Edits `i3.conf`.                                        |
 | `ec`              | Edits the env variables file. `~/.aliases/env.sh`       |
 | `vc`              | Edits `vimrc`.                                          |
+| `ic`              | **i3wm only:** Edits `i3.conf` (`~/.aliases/i3/i3/config`). |
+| `nc`              | **niri only:** Edits niri config (`~/.config/niri/config.kdl`). |
 
 ### Utilities and General Tools
 
@@ -68,12 +89,12 @@ $HOME/.zshrc:
 | `rank`                      | Counts and sorts duplicate lines.                       |
 | `du_by_size`                | Shows directory/file sizes in the current folder.       |
 | `weather`                   | Shows current weather using `wttr.in`.                  |
-| `togglekbl`                 | Toggles keyboard layout using a custom script.          |
+| `togglekbl`                 | **i3wm only:** Toggles keyboard layout using custom script. |
 | `find_directory`, `cdf`     | Finds directories with `fzf` and navigates to them.     |
 | `find_file`                 | Finds file with `fzf` and navigates to them.            |
 | `ccd <dir>`                 | Enters `<dir>`, clears the terminal, and lists files.   |
-| `mkcd <dir>`                | Creates and enters the directory if it doesn’t exist.   |
-| `cc <file>`                 | Copies file contents to the clipboard.                  |
+| `mkcd <dir>`                | Creates and enters the directory if it doesn't exist.   |
+| `cc <file>`                 | **Platform-specific:** Copies file contents to clipboard (xclip on X11, wl-copy on Wayland). |
 | `calc`                      | Calculator using `bc`.                                  |
 | `cat_csv`                   | Format and show csv file.                               |
 | `str2md5`                   | Generates a md5 from string.                            |
@@ -81,11 +102,11 @@ $HOME/.zshrc:
 | `unixtimestamp2date`        | Format unix timestamp to iso 8601.                      |
 | `ip_info <ip>`              | Shows IP information using `ipwho.is`.                  |
 | `apex_info <domain>`        | Shows subdomains information using `crt.name`.          |
-| `lorem <num>`               | Copies Lorem Ipsum text (5 sentences) to the clipboard. |
+| `lorem <num>`               | **Platform-specific:** Copies Lorem Ipsum text to clipboard (xclip on X11, wl-copy on Wayland). |
 | `explain <cmd>`             | Opens `explainshell.com` in `w3m`.                      |
 | `help <cmd>`                | Uses `cheat.sh` to show command help.                   |
 | `vim_card`                  | Displays the Vim cheat sheet.                           |
-| `rememberme "msg" 5 minutes`| Sends a notification after a delay using `at`.          |
+| `rememberme "msg" 5 minutes`| **Platform-specific:** Sends a notification after a delay using `at` (notify-send on both). |
 | `cat_from_url`              | Uses wget or curl and output response.                  |
 
 
@@ -124,7 +145,7 @@ $HOME/.zshrc:
 | ------------------------ | ----------------------------------------------- |
 | `tl`                     | list tmux sessions                              |
 | `tmux_dev` <name> <path> | create a dev session                            |
-| `tmux_copy_buffer`       | put tmux buffer to clipboard                    |
+| `tmux_copy_buffer`       | **Platform-specific:** put tmux buffer to clipboard (xclip on X11, wl-copy on Wayland) |
 | `cli`                    | create or open a tmux session called cli        |
 
 ### Docker
@@ -161,7 +182,55 @@ $HOME/.zshrc:
 | `php82_server`     | PHP 8.2 server.                                             |
 | `php80_dev_server` | PHP 8.0 development server.                                 |
 | `php82_dev_server` | PHP 8.2 development server.                                 |
+| `php84_dev_server` | PHP 8.4 development server.                                 |
 | `aws`              | Runs Universal CLI for Amazon Web Services (utils)          |
+
+---
+
+## Wayland/niri Specific Aliases (aliases.niri.sh)
+
+| Command              | Action                                                      |
+| -------------------- | ----------------------------------------------------------- |
+| `wl-copy` / `wl-paste` | Wayland clipboard commands                                |
+| `cc <file>`          | Copy file to clipboard (uses wl-copy)                       |
+| `lorem <num>`        | Lorem ipsum to clipboard (uses wl-copy)                     |
+| `nc`                 | Edit niri config (`~/.config/niri/config.kdl`)              |
+| `imv` / `iv`         | Wayland image viewer (replaces feh)                         |
+| `screenshot`         | Region screenshot (grim + slurp)                            |
+| `screenshot-full`    | Full screen screenshot                                      |
+| `screenrecord`       | Region screen recording (wf-recorder)                       |
+| `screenrecord-full`  | Full screen recording                                       |
+| `launcher` / `fuzzel`| Application launcher                                        |
+| `waybar`             | Status bar                                                  |
+| `waybar-restart`     | Restart waybar                                              |
+| `lock` / `swaylock`  | Screen lock                                                 |
+| `notify-test`        | Test notifications                                          |
+| `wlsunset`           | Color temperature (replaces redshift)                       |
+| `wlr-randr`          | Output management (replaces xrandr)                         |
+| `cliphist`           | Clipboard history manager                                   |
+| `rememberme "msg" 5m`| Send notification after delay (uses notify-send + at)       |
+| `tmux_copy_buffer`   | Copy tmux buffer to clipboard (uses wl-copy)                |
+
+---
+
+## i3wm/Xorg Specific Aliases (aliases.i3.sh)
+
+| Command              | Action                                                      |
+| -------------------- | ----------------------------------------------------------- |
+| `togglekbl`          | Toggle keyboard layout                                      |
+| `ic`                 | Edit i3 config (`~/.aliases/i3/i3/config`)                  |
+| `mocp` / `moc`       | MOC music player (X11 only)                                 |
+| `feh`                | Image viewer (X11 only)                                     |
+| `xclip` / `xpaste`   | X11 clipboard                                               |
+| `i3-reload`          | Reload i3 config                                            |
+| `i3-restart`         | Restart i3                                                  |
+| `picom-toggle`       | Toggle picom compositor                                     |
+| `redshift-toggle`    | Toggle redshift                                             |
+| `scrot` / `maim`     | Screenshot tools                                            |
+| `cc <file>`          | Copy file to clipboard (uses xclip)                         |
+| `lorem <num>`        | Lorem ipsum to clipboard (uses xclip)                       |
+| `rememberme "msg" 5m`| Send notification after delay (uses notify-send + at)       |
+| `tmux_copy_buffer`   | Copy tmux buffer to clipboard (uses xclip)                  |
 
 ---
 

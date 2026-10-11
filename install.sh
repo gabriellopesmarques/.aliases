@@ -144,6 +144,9 @@ install_i3wm () {
     install_feh
     set_i3_default_theme
 
+    echo "source ~/.aliases/aliases.i3.sh" >> "$HOME"/.bashrc
+    echo "source ~/.aliases/aliases.i3.sh" >> "$HOME"/.zshrc
+
     sudo apt purge xterm -y
 }
 
@@ -178,6 +181,9 @@ install_niri () {
 
     install_moc
     install_brave
+
+    echo "source ~/.aliases/aliases.niri.sh" >> "$HOME"/.bashrc
+    echo "source ~/.aliases/aliases.niri.sh" >> "$HOME"/.zshrc
 }
 
 usage () {
