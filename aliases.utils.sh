@@ -49,6 +49,25 @@ ai() {
     -d '{"messages": [{"role": "user", "content": "'"$question"'"}], "model": "openai/gpt-oss-20b"}' | tee /tmp/response-ai.md | jq -r '.choices[0].message.content' | glow - | less
 }
 
+explain() {
+  if [[ -z "$GROQ_API_KEY" ]]; then
+    echo "declare GROQ_API_KEY to use this function"
+    return 64
+  fi
+
+  if [[ -z "$1" ]]; then
+    echo "explain what?! use: explain 'command'"
+    exit 1
+  fi
+
+  question="explain $1"
+
+  curl --silent -X POST "https://api.groq.com/openai/v1/chat/completions" \
+    -H "Authorization: Bearer $GROQ_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{"messages": [{"role": "user", "content": "'"$question"'"}], "model": "openai/gpt-oss-20b"}' | tee /tmp/response-ai.md | jq -r '.choices[0].message.content' | glow - | less
+}
+
 gemini() {
   if [[ -z "$gemini_api_key" ]]; then
     echo "declare gemini_api_key to use this function"
