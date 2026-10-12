@@ -114,8 +114,8 @@ mkcd() {
     return 1
   fi
 
-  mkdir "$1"
-  cd "$1" || exit
+  mkdir -p "$1"
+  cd "$1" || return 1
 
   return 0
 }
