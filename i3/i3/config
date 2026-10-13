@@ -40,45 +40,69 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # mouse manipulation with keyboard
 exec --no-startup-id warpd
 
+# Compatibilidade Niri <-> i3: o modificador principal do WM é $super (Mod4),
+# igual ao Mod do Niri. Binds $alt+... antigos mantidos como LEGADO durante
+# a transição. Binds marcados "Niri-only" não têm equivalente no i3.
+# Ver niri/niri/cfg/keybinds.kdl como fonte da verdade.
+
 # Use pactl to adjust volume in PulseAudio.
+# (Niri usa wpctl, mas wpctl não existe neste PC Xorg — mantido pactl.)
 set $refresh_i3status killall -SIGUSR1 i3status
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-# @TODO: script to use scrot
+# Paridade Niri (playerctl/brightnessctl): funcionam quando instalados no Xorg.
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioStop exec --no-startup-id playerctl stop
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+# Screenshots: paridade Niri (Ctrl+Shift+1/2/3) via scrot no Xorg.
+# Niri: screenshot / screenshot-screen / screenshot-window
 bindsym Print exec scrot "$HOME/Screenshot-$(date '+%Y%m%d-%H%M%S').png" && notify-send "screenshot save at $HOME/Screenshot-$(date '+%Y%m%d-%H%M%S').png"
+bindsym Ctrl+Shift+1 exec scrot -s "$HOME/Screenshot-$(date '+%Y%m%d-%H%M%S').png" && notify-send "screenshot (select) saved"
+bindsym Ctrl+Shift+2 exec scrot "$HOME/Screenshot-$(date '+%Y%m%d-%H%M%S').png" && notify-send "screenshot (screen) saved"
+bindsym Ctrl+Shift+3 exec scrot -u "$HOME/Screenshot-$(date '+%Y%m%d-%H%M%S').png" && notify-send "screenshot (window) saved"
 
 # Use Mouse+$alt to drag floating windows to their wanted position
 floating_modifier $alt
 
 #exec --no-startup-id picom -CGb
 
-# start a terminal
+# start a terminal (Niri: Mod+Return -> kitty)
 bindsym $super+Return exec kitty
 
-# kill focused window
+# kill focused window (Niri: Mod+Q -> close-window)
+bindsym $super+q kill
+# LEGADO
 bindsym $alt+q kill
 
-# start dmenu (a program launcher)
+# start dmenu (a program launcher) (Niri: Mod+Space -> fuzzel; aqui rofi)
 bindsym $super+space exec --no-startup-id rofi -show drun -run-command "i3-msg exec '{cmd}'"
 
-bindsym $super+b exec firefox
-bindsym $super+w exec brave-browser --incognito --password-store=basic
+# toggle keyboard variant alt-intl (Niri: Mod+Ctrl+Space)
+bindsym $super+Ctrl+space exec --no-startup-id bash ~/.config/i3status/toggle-kbl.sh
 
+# browser (Niri: Mod+B -> brave-browser)
+bindsym $super+b exec brave-browser --password-store=basic
+
+# prompts via rofi (Niri: Mod+A/Y/S/T via prompt.sh+fuzzel; aqui rofi, mesmas teclas e URLs)
 #@TODO: set search engine from env
-bindsym $super+s exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://search.brave.com/search?q={}
+bindsym $super+s exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --password-store=basic --new-window https://www.google.com/search?q={}
+# https://search.brave.com/search?q={} # busca anterior
 # https://baresearch.org/search?q={} # searXNG instance (metasearch engine)
-# https://www.google.com/search?q={}
 # https://www.google.com/search?q={}\&btnI # feeling lucky
 # https://www.startpage.com/do/search?query={}
 # https://leta.mullvad.net/search?q={}
 # https://marginalia-search.com/search?query={}
-bindsym $super+a exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://lumo.proton.me/guest?q={}
-bindsym $super+y exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://youtube.com/results?search_query={}
-bindsym $super+t exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --incognito --new-window --password-store=basic https://translate.google.com/?sl=en\&tl=pt\&op=translate\&text={}
-bindsym $super+l exec i3lock --image ~/.aliases/i3/wallpapers/default/black-clouds.png
+bindsym $super+a exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --password-store=basic --new-window "https://www.google.com/search?q={}&udm=50&aep=1&ntc=1"
+bindsym $super+y exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --password-store=basic --new-window https://youtube.com/results?search_query={}
+bindsym $super+t exec rofi -no-show -no-fixed-num-lines -dmenu | xargs -I{} brave-browser --password-store=basic --new-window https://translate.google.com/?sl=en\&tl=pt\&op=translate\&text={}
+# lock screen (Niri: Mod+Shift+P -> swaylock; aqui i3lock no Xorg)
+bindsym $super+Shift+p exec i3lock --image ~/.aliases/i3/wallpapers/default/black-clouds.png
 
 
 # A more modern dmenu replacement is rofi:
@@ -87,29 +111,55 @@ bindsym $super+l exec i3lock --image ~/.aliases/i3/wallpapers/default/black-clou
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $alt+40 exec --no-startup-id i3-dmenu-desktop
 
-# change focus
+# change focus (Niri: Mod+H/Left -> focus-column-left, Mod+L/Right -> focus-column-right)
+bindsym $super+h focus left
+bindsym $super+l focus right
+bindsym $super+Left focus left
+bindsym $super+Right focus right
+# LEGADO (atalhos $alt antigos)
 bindsym $alt+h focus left
-bindsym $alt+j focus down
-bindsym $alt+k focus up
 bindsym $alt+l focus right
-
-# alternatively, you can use the cursor keys:
 bindsym $alt+Left focus left
-bindsym $alt+Down focus down
-bindsym $alt+Up focus up
 bindsym $alt+Right focus right
 
-# move focused window
+# Niri: Mod+K/Up -> focus-workspace-up, Mod+J/Down -> focus-workspace-down.
+# No i3 (sem scroll vertical): Super+K/Up = workspace anterior, Super+J/Down = próximo.
+bindsym $super+k workspace prev
+bindsym $super+j workspace next
+bindsym $super+Up workspace prev
+bindsym $super+Down workspace next
+# LEGADO (foco direcional antigo)
+bindsym $alt+j focus down
+bindsym $alt+k focus up
+bindsym $alt+Down focus down
+bindsym $alt+Up focus up
+
+# move focused window (Niri: Mod+Shift+H/L + setas esq/dir -> move-column)
+bindsym $super+Shift+h move left
+bindsym $super+Shift+l move right
+bindsym $super+Shift+Left move left
+bindsym $super+Shift+Right move right
+# LEGADO (atalhos $alt antigos)
 bindsym $alt+Shift+h move left
+bindsym $alt+Shift+l move right
+bindsym $alt+Shift+Left move left
+bindsym $alt+Shift+Right move right
 bindsym $alt+Shift+j move down
 bindsym $alt+Shift+k move up
-bindsym $alt+Shift+l move right
-
-# alternatively, you can use the cursor keys:
-bindsym $alt+Shift+Left move left
 bindsym $alt+Shift+Down move down
 bindsym $alt+Shift+Up move up
-bindsym $alt+Shift+Right move right
+
+# Niri: Mod+Shift+K/J (+Up/Down) -> move-column-to-workspace-up/down.
+# No i3: leva o container junto (follow).
+bindsym $super+Shift+k move container to workspace prev; workspace prev
+bindsym $super+Shift+j move container to workspace next; workspace next
+bindsym $super+Shift+Up move container to workspace prev; workspace prev
+bindsym $super+Shift+Down move container to workspace next; workspace next
+
+# Niri-only, sem equivalente direto no i3 (colunas / largura / Home-End):
+# Mod+F expand-column-to-available-width, Mod+C center-column,
+# Mod+Ctrl+C center-visible-columns, Mod+Minus / Mod+Shift+Equal set-column-width,
+# Mod+Home/End focus-column-first/last, Mod+Ctrl+Home/End move-column-to-first/last.
 
 # split in horizontal orientation (open on bottom)
 bindsym $alt+v split h
@@ -117,15 +167,21 @@ bindsym $alt+v split h
 # split in vertical orientation
 bindsym $alt+b split v
 
-# enter fullscreen mode for the focused container
+# enter fullscreen mode for the focused container (Niri: Mod+Shift+F -> fullscreen-window)
+bindsym $super+Shift+f fullscreen toggle
+# LEGADO
 bindsym $alt+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
+# i3-only, mantido no $alt: $super+S/A/W são busca/AI (paridade Niri).
+# Niri-only sem bind: Mod+Shift+W toggle-column-tabbed-display.
 bindsym $alt+s layout stacking
 bindsym $alt+w layout tabbed
 bindsym $alt+e layout toggle split
 
-# toggle tiling / floating
+# toggle tiling / floating (Niri: Mod+Shift+T -> toggle-window-floating)
+bindsym $super+Shift+t floating toggle
+# LEGADO
 bindsym $alt+Shift+space floating toggle
 
 # change focus between tiling / floating windows
@@ -150,7 +206,18 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# switch to workspace
+# switch to workspace (Niri: Mod+1..9 -> focus-workspace; $ws10 extra, só i3)
+bindsym $super+1 workspace number $ws1
+bindsym $super+2 workspace number $ws2
+bindsym $super+3 workspace number $ws3
+bindsym $super+4 workspace number $ws4
+bindsym $super+5 workspace number $ws5
+bindsym $super+6 workspace number $ws6
+bindsym $super+7 workspace number $ws7
+bindsym $super+8 workspace number $ws8
+bindsym $super+9 workspace number $ws9
+bindsym $super+0 workspace number $ws10
+# LEGADO (atalhos $alt antigos)
 bindsym $alt+1 workspace number $ws1
 bindsym $alt+2 workspace number $ws2
 bindsym $alt+3 workspace number $ws3
@@ -162,7 +229,18 @@ bindsym $alt+8 workspace number $ws8
 bindsym $alt+9 workspace number $ws9
 bindsym $alt+0 workspace number $ws10
 
-# move focused container to workspace
+# move focused container to workspace (Niri: Mod+Shift+1..9 -> move-column-to-workspace)
+bindsym $super+Shift+1 move container to workspace number $ws1
+bindsym $super+Shift+2 move container to workspace number $ws2
+bindsym $super+Shift+3 move container to workspace number $ws3
+bindsym $super+Shift+4 move container to workspace number $ws4
+bindsym $super+Shift+5 move container to workspace number $ws5
+bindsym $super+Shift+6 move container to workspace number $ws6
+bindsym $super+Shift+7 move container to workspace number $ws7
+bindsym $super+Shift+8 move container to workspace number $ws8
+bindsym $super+Shift+9 move container to workspace number $ws9
+bindsym $super+Shift+0 move container to workspace number $ws10
+# LEGADO (atalhos $alt antigos)
 bindsym $alt+Shift+1 move container to workspace number $ws1
 bindsym $alt+Shift+2 move container to workspace number $ws2
 bindsym $alt+Shift+3 move container to workspace number $ws3
@@ -174,7 +252,10 @@ bindsym $alt+Shift+8 move container to workspace number $ws8
 bindsym $alt+Shift+9 move container to workspace number $ws9
 bindsym $alt+Shift+0 move container to workspace number $ws10
 
+# overview / volta ao workspace anterior (Niri: Mod+Tab -> toggle-overview)
+bindsym $super+Tab workspace back_and_forth
 # move around workspaces
+# LEGADO
 bindsym $alt+Tab workspace next
 bindsym $alt+Shift+Tab workspace prev
 
@@ -186,6 +267,8 @@ bindsym $alt+Shift+r restart
 #bindsym $alt+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $super+Escape exec i3-msg exit
 bindsym $super+Shift+Escape exec systemctl poweroff
+# Niri: Ctrl+Alt+Delete -> quit
+bindsym Ctrl+Alt+Delete exec i3-msg exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -213,8 +296,8 @@ mode "resize" {
 }
 
 bindsym $alt+r mode "resize"
-
-bindsym $super+k exec --no-startup-id bash ~/.config/i3status/toggle-kbl.sh
+# alias Super, paridade com o resto do mapa
+bindsym $super+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -224,7 +307,8 @@ default_floating_border pixel 2
 
 # set bg
 exec --no-startup-id ~/.fehbg &
-exec --no-startup-id xset s off -dpms # Disable DPMS and prevent screen from blanking
+# Disable DPMS and prevent screen from blanking
+exec --no-startup-id xset s off -dpms
 
 # startup script
 exec --no-startup-id ~/.aliases/i3/startup.sh
