@@ -20,6 +20,6 @@
         open-maximized true
     }
 
-    spawn-at-startup "brave-browser"
+    spawn-at-startup "brave-browser" "--password-store=basic"
     spawn-at-startup "kitty"
 
