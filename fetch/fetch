@@ -63,7 +63,7 @@ info="${reset}${white}"
 banner_file=$HOME/.config/banner
 banner_content=""
 if test -r $banner_file ; then
-	banner_content=$(<$banner_file)
+  cat $banner_file
 fi
 
 ## OUTPUT
