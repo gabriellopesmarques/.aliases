@@ -7,6 +7,7 @@
 
 alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
 alias ic="vim ~/.aliases/i3/i3/config"
+alias ik="~/.aliases/i3/keybinds.sh"
 
 cc() {
   if [[ -f "$1" ]]; then

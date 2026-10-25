@@ -263,10 +263,16 @@ Loaded automatically when running on X11.
 |---------|--------|
 | `togglekbl` | Toggle keyboard layout (`~/.aliases/i3/toggle-kbl.sh`) |
 | `ic` | Edit i3 config (`~/.aliases/i3/i3/config`) |
+| `ik` | Show i3 keybindings in a rofi overlay (`~/.aliases/i3/keybinds.sh`) |
 | `cc <file>` | Copy file to clipboard (uses `xclip`) |
 | `lorem <num>` | Lorem ipsum to clipboard (uses `xclip`, default 3 sentences) |
 | `rememberme "msg" 5m` | Send notification after delay (uses `notify-send` + `at`) |
 | `tmux_copy_buffer` | Copy tmux buffer to clipboard (uses `xclip`) |
+
+### i3wm keybindings overlay
+
+`Super+Shift+/` (or `ik`) opens a searchable list generated directly from
+`~/.aliases/i3/i3/config`, equivalent to niri's `Mod+Shift+/` hotkey overlay.
 
 ---
 

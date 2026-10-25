@@ -67,6 +67,9 @@ bindsym Ctrl+Shift+1 exec scrot -s "$HOME/Screenshot-$(date '+%Y%m%d-%H%M%S').pn
 bindsym Ctrl+Shift+2 exec scrot "$HOME/Screenshot-$(date '+%Y%m%d-%H%M%S').png" && notify-send "screenshot (screen) saved"
 bindsym Ctrl+Shift+3 exec scrot -u "$HOME/Screenshot-$(date '+%Y%m%d-%H%M%S').png" && notify-send "screenshot (window) saved"
 
+# show keybindings (Niri: Mod+Shift+Slash -> show-hotkey-overlay; aqui rofi)
+bindsym $super+Shift+slash exec --no-startup-id ~/.aliases/i3/keybinds.sh
+
 # Use Mouse+$alt to drag floating windows to their wanted position
 floating_modifier $alt
 
