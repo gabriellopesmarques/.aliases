@@ -7,6 +7,7 @@ cd "$dir" || exit 1
 
 echo "installing dependencies . . ."
 sudo apt install -y \
+  build-essential \
   libxi-dev \
   libxinerama-dev \
   libxft-dev \
@@ -16,5 +17,6 @@ sudo apt install -y \
   libcairo2-dev \
   libxkbcommon-dev \
   libwayland-dev &&
-  make && sudo make install &&
+  make && \
+  sudo make install &&
   rm -rf "$dir"
