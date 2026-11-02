@@ -5,9 +5,9 @@
 # This file contains aliases and functions specific to i3wm/Xorg
 # Loaded only when running on X11
 
-alias togglekbl="~/.aliases/i3/toggle-kbl.sh"
-alias ic="vim ~/.aliases/i3/i3/config"
-alias ik="~/.aliases/i3/keybinds.sh"
+alias togglekbl="~/.aliases/packages/i3wm/toggle-kbl.sh"
+alias ic="vim ~/.aliases/packages/i3wm/i3/config"
+alias ik="~/.aliases/packages/i3wm/keybinds.sh"
 
 cc() {
   if [[ -f "$1" ]]; then
@@ -36,4 +36,3 @@ rememberme() {
 tmux_copy_buffer() {
   tmux save-buffer - | xclip -i -sel clipboard
 }
-

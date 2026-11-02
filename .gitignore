@@ -1,8 +1,8 @@
-nvim/nvim/lazy-lock.json
+packages/neovim/nvim/lazy-lock.json
 env.sh
-i3/i3/theme
-i3/rofi/config.rasi
-niri/niri/cfg/theme.kdl
-niri/waybar/style.css
-niri/fuzzel/fuzzel.ini
+packages/i3wm/i3/theme
+packages/i3wm/rofi/config.rasi
+packages/niri/niri/cfg/theme.kdl
+packages/niri/waybar/style.css
+packages/niri/fuzzel/fuzzel.ini
 

@@ -80,7 +80,7 @@ alias wd='cd $WORK_DIR; clear; pwd; l'
 alias aliases="cd ~/.aliases"
 
 ## config files
-alias vimconfig="vim ~/.aliases/vim/vimrc"
+alias vimconfig="vim ~/.aliases/packages/vim/vimrc"
 alias vc=vimconfig
 alias ac="vim ~/.aliases/aliases.sh"
 alias zc="vim ~/.zshrc"

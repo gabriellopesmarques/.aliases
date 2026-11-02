@@ -24,7 +24,7 @@ shpkg list
 
 ```sh
 $HOME/.zshrc:
-    - ~/.aliases/oh-my-zsh/config
+    - ~/.aliases/packages/omz/config
         - $ZSH/oh-my-zsh.sh
     - ~/.aliases/aliases.sh        # Common aliases (works on both)
         - ~/.aliases/colors.sh
@@ -38,49 +38,33 @@ $HOME/.zshrc:
 
 | Command | Description |
 |---------|-------------|
-| `shpkg install <pkg> [<pkg>...]` | Install one or more packages, resolving dependencies |
+| `shpkg install <pkg> [<pkg>...]` | Install one or more packages or groups |
 | `shpkg list` | List available packages and groups with their installation status |
-| `shpkg info <pkg>` | Show package description, type, dependencies and status |
+| `shpkg info <pkg>` | Show package type, status, directory, README and uninstall availability |
 | `shpkg --help` | Show usage information |
 
 Installed packages are recorded in `${XDG_STATE_HOME:-$HOME/.local/state}/shpkg/installed`.
 
-### Packages
+`shpkg` discovers packages and groups from the repository:
 
-| Package | Description |
-|---------|-------------|
-| `shpkg` | Install the `shpkg` command in `/usr/local/bin` |
-| `omz` | Install Oh My Zsh with autosuggestions and minimalist theme |
-| `aliases` | Install aliases and dependencies, and source them in bash/zsh |
-| `utils` | Install utility tools (ncdu, fdupes, shellcheck, shfmt, eza, fzf, jq, etc.) |
-| `tldr` | Install the tealdeer tldr client |
-| `db-client` | Install mycli and pgcli |
-| `dnsglobe` | Install the dnsglobe DNS lookup tool |
-| `tmux` | Install and configure tmux |
-| `vim` | Install and configure vim |
-| `neovim` | Build and configure neovim |
-| `emacs` | Install emacs |
-| `docker` | Install Docker CE |
-| `mail` | Install postfix and mutt |
-| `moc` | Install moc (music on console) |
-| `brave` | Install Brave browser |
-| `warpd` | Install warpd |
-| `wallpapers` | Install wallpapers |
-| `feh` | Install feh and set the default wallpaper |
-| `i3wm` | Install i3wm and its desktop configuration |
-| `niri` | Install niri and its desktop configuration |
-| `fonts` | Install desktop fonts |
-| `kitty` | Install and configure the kitty terminal |
-| `set-vim-editor` | Set vim as the default editor |
-| `no-passwd-sudo` | Configure passwordless sudo |
+```text
+packages/<name>/install.sh   # package
+groups/<name>/install.sh     # group
+```
 
-### Groups
+A package or group may also provide `uninstall.sh` and `README.md`. The
+`README.md` first heading/line is used as the description in `shpkg list`.
 
-| Group | Description |
-|-------|-------------|
-| `light` | Light install: omz, aliases, utils, tldr, vim, default editor |
-| `env-i3wm` | **Full i3wm environment**: omz, aliases, utils, tldr, tmux, vim, neovim, docker, i3wm |
-| `env-niri` | **Full niri/Wayland environment**: omz, aliases, utils, tldr, tmux, vim, neovim, docker, niri |
+### Repository Layout
+
+```text
+packages/     Individual installable components and their assets
+groups/       Compositions that install multiple packages
+aliases*.sh   Shared shell aliases/functions loaded by bash/zsh
+shpkg         Package manager entrypoint
+```
+
+Use `shpkg list` as the authoritative list of packages and groups.
 
 ### Usage Examples
 
@@ -141,9 +125,9 @@ shpkg install dnsglobe
 | `ac` | Edits the main alias file (`~/.aliases/aliases.sh`) |
 | `zc` | Edits `.zshrc` |
 | `ec` | Edits the env variables file (`~/.aliases/env.sh`) |
-| `vc` / `vimconfig` | Edits vim config (`~/.aliases/vim/vimrc`) |
+| `vc` / `vimconfig` | Edits vim config (`~/.aliases/packages/vim/vimrc`) |
 | `nc` | **niri only:** Edits niri config (`~/.config/niri/config.kdl`) |
-| `ic` | **i3wm only:** Edits i3 config (`~/.aliases/i3/i3/config`) |
+| `ic` | **i3wm only:** Edits i3 config (`~/.aliases/packages/i3wm/i3/config`) |
 
 ### Utilities and General Tools
 
@@ -286,9 +270,9 @@ Loaded automatically when running on X11.
 
 | Command | Action |
 |---------|--------|
-| `togglekbl` | Toggle keyboard layout (`~/.aliases/i3/toggle-kbl.sh`) |
-| `ic` | Edit i3 config (`~/.aliases/i3/i3/config`) |
-| `ik` | Show i3 keybindings in a rofi overlay (`~/.aliases/i3/keybinds.sh`) |
+| `togglekbl` | Toggle keyboard layout (`~/.aliases/packages/i3wm/toggle-kbl.sh`) |
+| `ic` | Edit i3 config (`~/.aliases/packages/i3wm/i3/config`) |
+| `ik` | Show i3 keybindings in a rofi overlay (`~/.aliases/packages/i3wm/keybinds.sh`) |
 | `cc <file>` | Copy file to clipboard (uses `xclip`) |
 | `lorem <num>` | Lorem ipsum to clipboard (uses `xclip`, default 3 sentences) |
 | `rememberme "msg" 5m` | Send notification after delay (uses `notify-send` + `at`) |
@@ -297,7 +281,7 @@ Loaded automatically when running on X11.
 ### i3wm keybindings overlay
 
 `Super+Shift+/` (or `ik`) opens a searchable list generated directly from
-`~/.aliases/i3/i3/config`, equivalent to niri's `Mod+Shift+/` hotkey overlay.
+`~/.aliases/packages/i3wm/i3/config`, equivalent to niri's `Mod+Shift+/` hotkey overlay.
 
 ---
 
@@ -316,14 +300,14 @@ The niri installation includes a complete desktop configuration:
 
 ```sh
 # Switch niri theme
-~/.aliases/niri/set_theme.sh --catppuccin_mocha
-~/.aliases/niri/set_theme.sh --deep_blue
+~/.aliases/packages/niri/set_theme.sh --catppuccin_mocha
+~/.aliases/packages/niri/set_theme.sh --deep_blue
 # etc.
 ```
 
 ### Niri Install Script
 
-The `niri/install.sh` script:
+The `packages/niri/install.sh` script:
 - Downloads and installs niri from a pre-built Debian package (tested on Debian 13/Trixie)
 - Verifies all required binaries are installed
 - Checks graphics device availability (`/dev/dri`)

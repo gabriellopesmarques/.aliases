@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sudo apt install bat -y
+
+mkdir -p "$HOME"/.config/bat/themes/
+
+ln -s "$HOME"/.aliases/packages/bat/TokyoNordStorm.tmTheme "$HOME"/.config/bat/themes/TokyoNordStorm.tmTheme
+
+batcat cache --build
