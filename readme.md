@@ -64,6 +64,25 @@ groups/<name>/install.sh     # group
 A package or group may also provide `uninstall.sh` and `README.md`. The
 `README.md` first heading/line is used as the description in `shpkg list`.
 
+### Interactive Groups
+
+Installing a group opens a `dialog` checklist with all items preselected.
+Use space to toggle an item and select `Install` to proceed. Nested groups,
+such as `utils` inside `env-i3wm`, appear as a single selectable item.
+
+If stdin/stdout is not a terminal, all items are installed without opening
+the checklist. Cancelling the dialog or selecting nothing aborts the
+installation without recording the group.
+
+After a partial selection, the group is recorded as installed. Reopen the
+checklist later with:
+```sh
+shpkg install --force env-i3wm
+```
+
+If `dialog` is not available, its package is installed automatically before
+the checklist is shown.
+
 ### Repository Layout
 
 ```text

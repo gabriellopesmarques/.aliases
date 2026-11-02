@@ -4,4 +4,7 @@ set -euo pipefail
 
 SHPKG_ROOT="${SHPKG_ROOT:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)}"
 
-"$SHPKG_ROOT/shpkg" install omz aliases utils tldr tmux vim set-vim-editor neovim docker niri
+# shellcheck disable=SC1091
+source "$SHPKG_ROOT/groups/common.sh"
+
+group_select "env-niri" omz aliases utils tldr tmux vim set-vim-editor neovim docker niri
