@@ -25,7 +25,7 @@ install_tldr () {
 
 install_utils () {
     echo "installing utils tools"
-    sudo apt install ncdu fdupes shellcheck shfmt eza fzf jq exfat-fuse dtrx smartmontools fio -y
+    sudo apt install ncdu fdupes shellcheck shfmt eza fzf jq exfat-fuse dtrx smartmontools fio visidata yq -y
 
     # if is a laptop, install laptop things
     if [[ -d "/proc/acpi/button/lid" ]]; then
