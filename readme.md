@@ -14,6 +14,12 @@ cd ~/.aliases
 ```
 
 This creates the symlink `/usr/local/bin/shpkg -> ~/.aliases/shpkg` using `sudo`.
+If the state already marks `shpkg` as installed but the symlink is missing, repair it with:
+```sh
+cd ~/.aliases
+./shpkg install --force shpkg
+```
+
 After that, `shpkg` can be executed from any directory:
 ```sh
 cd /tmp
@@ -38,12 +44,15 @@ $HOME/.zshrc:
 
 | Command | Description |
 |---------|-------------|
-| `shpkg install <pkg> [<pkg>...]` | Install one or more packages or groups |
+| `shpkg install <pkg> [<pkg>...]` | Install one or more packages or groups, skipping installed ones |
+| `shpkg install --force <pkg> [<pkg>...]` | Reinstall packages even if already recorded as installed |
 | `shpkg list` | List available packages and groups with their installation status |
 | `shpkg info <pkg>` | Show package type, status, directory, README and uninstall availability |
 | `shpkg --help` | Show usage information |
 
 Installed packages are recorded in `${XDG_STATE_HOME:-$HOME/.local/state}/shpkg/installed`.
+`shpkg install` checks this list and skips packages already marked as installed.
+Use `--force` (or `-f`) to reinstall them.
 
 `shpkg` discovers packages and groups from the repository:
 
@@ -92,6 +101,11 @@ shpkg install light
 ```sh
 shpkg install niri
 shpkg install dnsglobe
+```
+
+**Reinstall packages already recorded as installed:**
+```sh
+shpkg install --force niri dnsglobe
 ```
 
 ## Shorthands

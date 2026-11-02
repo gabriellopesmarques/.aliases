@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###########################
-##     shpkg v2.1.0      ##
+##     shpkg v2.2.0      ##
 ###########################
 
 set -euo pipefail
@@ -144,6 +144,7 @@ info_package() {
 
 install_pkg() {
   local name="$1"
+  local force="${2:-0}"
   local type
   local dir
   local script
@@ -167,8 +168,8 @@ install_pkg() {
     return 1
   fi
 
-  if [[ "$name" != "shpkg" ]] && is_installed "$name"; then
-    printf '==> %s already installed\n' "$name"
+  if [[ "$force" -eq 0 ]] && is_installed "$name"; then
+    printf '==> %s already installed (use --force to reinstall)\n' "$name"
     return 0
   fi
 
@@ -191,13 +192,16 @@ install_pkg() {
 
 usage() {
   cat <<'EOF'
-shpkg v2.1.0 - package manager for the ~/.aliases repository
+shpkg v2.2.0 - package manager for the ~/.aliases repository
 
 Usage:
-  shpkg install <pkg> [<pkg>...]   Install one or more packages or groups
-  shpkg list                       List available packages and groups
-  shpkg info <pkg>                 Show package details
-  shpkg --help                     Show this help message
+  shpkg install [--force] <pkg> [<pkg>...]   Install packages or groups
+  shpkg list                                 List available packages and groups
+  shpkg info <pkg>                           Show package details
+  shpkg --help                               Show this help message
+
+Options:
+  -f, --force   Reinstall packages even if already recorded as installed
 
 Packages live in packages/<name>/install.sh and groups in
 groups/<name>/install.sh.
@@ -205,6 +209,10 @@ groups/<name>/install.sh.
 Bootstrap shpkg itself:
   cd ~/.aliases
   ./shpkg install shpkg
+
+Repair an existing shpkg symlink:
+  cd ~/.aliases
+  ./shpkg install --force shpkg
 
 After bootstrap, run shpkg from any directory:
   shpkg install dnsglobe
@@ -218,14 +226,37 @@ main() {
 
   case "$command" in
   install)
-    if [[ $# -eq 0 ]]; then
+    local force=0
+    local -a names=()
+    while [[ $# -gt 0 ]]; do
+      case "$1" in
+      -f | --force)
+        force=1
+        ;;
+      --)
+        shift
+        names+=("$@")
+        break
+        ;;
+      -*)
+        printf "error: unknown option '%s'\n" "$1" >&2
+        usage >&2
+        return 1
+        ;;
+      *)
+        names+=("$1")
+        ;;
+      esac
+      shift
+    done
+    if [[ ${#names[@]} -eq 0 ]]; then
       printf 'error: install requires at least one package\n' >&2
       usage >&2
       return 1
     fi
     local name
-    for name in "$@"; do
-      install_pkg "$name"
+    for name in "${names[@]}"; do
+      install_pkg "$name" "$force"
     done
     ;;
   list)
