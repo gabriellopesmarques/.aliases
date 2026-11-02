@@ -5,6 +5,19 @@
 
 set -u
 
+link_path() {
+  local src="$1"
+  local dst="$2"
+
+  if [[ -e "$dst" && ! -L "$dst" ]]; then
+    printf 'error: %s exists and is not a symlink\n' "$dst" >&2
+    exit 1
+  fi
+
+  mkdir -p "$(dirname -- "$dst")"
+  ln -sfn "$src" "$dst"
+}
+
 themes_dir="$HOME/.aliases/packages/niri"
 kitty_themes_dir="$HOME/.aliases/packages/kitty"
 
@@ -34,15 +47,15 @@ set_theme() {
 
   # change niri theme (borders / background-color)
   prev_niri_target="$(readlink "$niri_theme_link" 2>/dev/null || true)"
-  rm -f "$niri_theme_link"
-  ln -s "../themes/$theme.kdl" "$niri_theme_link"
+  link_path "../themes/$theme.kdl" "$niri_theme_link"
   if command -v niri >/dev/null 2>&1; then
     if ! niri validate >/dev/null 2>&1; then
       echo "niri validate failed, reverting theme symlink" >&2
       niri validate >&2 || true
-      rm -f "$niri_theme_link"
       if [[ -n "$prev_niri_target" ]]; then
-        ln -s "$prev_niri_target" "$niri_theme_link"
+        link_path "$prev_niri_target" "$niri_theme_link"
+      else
+        rm -f "$niri_theme_link"
       fi
       exit 1
     fi
@@ -50,8 +63,7 @@ set_theme() {
   fi
 
   # change waybar theme (restart to apply)
-  rm -f "$waybar_theme_link"
-  ln -s "themes/$theme.css" "$waybar_theme_link"
+  link_path "themes/$theme.css" "$waybar_theme_link"
   if pgrep -x waybar >/dev/null 2>&1; then
     pkill -x waybar
     setsid waybar >/dev/null 2>&1 &
@@ -63,8 +75,7 @@ set_theme() {
     >"$HOME/.config/fuzzel/fuzzel.ini"
 
   # change kitty term theme
-  rm -f "$kitty_conf_link"
-  ln -s "$kitty_themes_dir/$theme.conf" "$kitty_conf_link"
+  link_path "$kitty_themes_dir/$theme.conf" "$kitty_conf_link"
 
   # change wallpaper (swaybg)
   mkdir -p "$state_dir"

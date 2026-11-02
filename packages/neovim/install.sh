@@ -28,11 +28,17 @@ fi
 source "$HOME"/.nvm/nvm.sh
 nvm install --lts
 
-# to ensure .config directory exists
-mkdir -p "$HOME"/.config/
-
 # nvim config
-ln -s "$HOME"/.aliases/packages/neovim/nvim "$HOME"/.config/nvim
+src="$HOME/.aliases/packages/neovim/nvim"
+dst="$HOME/.config/nvim"
+
+if [[ -e "$dst" && ! -L "$dst" ]]; then
+  printf 'error: %s exists and is not a symlink\n' "$dst" >&2
+  exit 1
+fi
+
+mkdir -p "$(dirname -- "$dst")"
+ln -sfn "$src" "$dst"
 
 # set up nvm to install plugins now
 export NVM_DIR="$HOME/.nvm"

@@ -2,8 +2,15 @@
 
 sudo apt install bat -y
 
-mkdir -p "$HOME"/.config/bat/themes/
+src="$HOME/.aliases/packages/bat/TokyoNordStorm.tmTheme"
+dst="$HOME/.config/bat/themes/TokyoNordStorm.tmTheme"
 
-ln -s "$HOME"/.aliases/packages/bat/TokyoNordStorm.tmTheme "$HOME"/.config/bat/themes/TokyoNordStorm.tmTheme
+if [[ -e "$dst" && ! -L "$dst" ]]; then
+  printf 'error: %s exists and is not a symlink\n' "$dst" >&2
+  exit 1
+fi
+
+mkdir -p "$(dirname -- "$dst")"
+ln -sfn "$src" "$dst"
 
 batcat cache --build

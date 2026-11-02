@@ -1,5 +1,18 @@
 #!/bin/bash
 
+link_path() {
+  local src="$1"
+  local dst="$2"
+
+  if [[ -e "$dst" && ! -L "$dst" ]]; then
+    printf 'error: %s exists and is not a symlink\n' "$dst" >&2
+    exit 1
+  fi
+
+  mkdir -p "$(dirname -- "$dst")"
+  ln -sfn "$src" "$dst"
+}
+
 set_theme() {
   theme="$1"
 
@@ -17,16 +30,14 @@ set_theme() {
   kitty_conf="$HOME/.config/kitty/kitty.conf"
 
   # change i3wm theme
-  rm -f "$HOME/.config/i3/theme"
-  ln -s "$HOME/.config/i3/themes/$theme.theme" "$HOME/.config/i3/theme"
+  link_path "themes/$theme.theme" "$HOME/.config/i3/theme"
 
   # change rofi theme
   echo '@theme "'"$theme"'"' >"$HOME/.config/rofi/config.rasi"
   cat "$HOME/.config/rofi/common_settings.rasi" >>"$HOME/.config/rofi/config.rasi"
 
   # change kitty term theme
-  rm -f "$kitty_conf"
-  ln -s "$themes_dir/$theme.conf" "$kitty_conf"
+  link_path "$themes_dir/$theme.conf" "$kitty_conf"
 
   # change wallpaper
   feh "${wallpapers[$theme]}"

@@ -8,8 +8,12 @@ if [[ ! -f "$themes_dir/$1" ]]; then
   exit 1
 fi
 
-rm -f "$kitty_conf"
+if [[ -e "$kitty_conf" && ! -L "$kitty_conf" ]]; then
+  printf 'error: %s exists and is not a symlink\n' "$kitty_conf" >&2
+  exit 1
+fi
 
-ln -s "$themes_dir/$1" "$kitty_conf"
+mkdir -p "$(dirname -- "$kitty_conf")"
+ln -sfn "$themes_dir/$1" "$kitty_conf"
 
 exit 0

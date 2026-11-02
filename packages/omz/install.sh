@@ -16,7 +16,16 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM
 echo "source ~/.aliases/packages/omz/config" >"$HOME"/.zshrc
 
 ## custom theme
-ln -s "$HOME"/.aliases/packages/omz/themes/x.zsh-theme "$HOME"/.oh-my-zsh/custom/themes/x.zsh-theme
+src="$HOME/.aliases/packages/omz/themes/x.zsh-theme"
+dst="$HOME/.oh-my-zsh/custom/themes/x.zsh-theme"
+
+if [[ -e "$dst" && ! -L "$dst" ]]; then
+  printf 'error: %s exists and is not a symlink\n' "$dst" >&2
+  exit 1
+fi
+
+mkdir -p "$(dirname -- "$dst")"
+ln -sfn "$src" "$dst"
 
 ## set zsh as default shell
 sudo chsh "$USER" --shell "$(command -v zsh)"

@@ -2,19 +2,23 @@
 
 dir="$HOME/.moc"
 
+link_path() {
+  local src="$1"
+  local dst="$2"
+
+  if [[ -e "$dst" && ! -L "$dst" ]]; then
+    printf 'error: %s exists and is not a symlink\n' "$dst" >&2
+    exit 1
+  fi
+
+  mkdir -p "$(dirname -- "$dst")"
+  ln -sfn "$src" "$dst"
+}
+
 sudo apt install moc -y
 
 mkdir -p "$dir"
 
-if [ -f "$dir/config" ]; then
-  rm -f "$dir/config"
-fi
-
-ln -s ~/.aliases/packages/moc/config "$dir/config" &&
-  chmod 600 ~/.moc/config
-
-if [ -f "$dir/keymap" ]; then
-  rm -f "$dir/keymap"
-fi
-
-ln -s ~/.aliases/packages/moc/keymap "$dir/keymap"
+link_path "$HOME/.aliases/packages/moc/config" "$dir/config"
+chmod 600 "$HOME/.moc/config"
+link_path "$HOME/.aliases/packages/moc/keymap" "$dir/keymap"
