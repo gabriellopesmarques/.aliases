@@ -1,0 +1,446 @@
+#!/bin/bash
+
+###########################
+##     shpkg v2.0.0      ##
+###########################
+
+set -euo pipefail
+
+SHPKG_ROOT="$(cd -- "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")" && pwd)"
+SHPKG_BIN="/usr/local/bin/shpkg"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/shpkg"
+STATE_FILE="$STATE_DIR/installed"
+
+declare -A PKG_DESC=()
+declare -A PKG_DEPS=()
+declare -A PKG_HANDLER=()
+declare -A PKG_KIND=()
+declare -A COMPLETED=()
+declare -A VISITING=()
+
+register_pkg() {
+  local name="$1"
+  local desc="$2"
+  local handler="$3"
+  local deps="${4:-}"
+
+  PKG_DESC[$name]="$desc"
+  PKG_HANDLER[$name]="$handler"
+  PKG_DEPS[$name]="$deps"
+  PKG_KIND[$name]="package"
+}
+
+register_group() {
+  local name="$1"
+  local desc="$2"
+  local deps="$3"
+
+  PKG_DESC[$name]="$desc"
+  PKG_DEPS[$name]="$deps"
+  PKG_KIND[$name]="group"
+}
+
+register_pkg "shpkg" "Install the shpkg command in /usr/local/bin" "pkg_shpkg"
+register_pkg "omz" "Install Oh My Zsh with autosuggestions and minimalist theme" "pkg_omz"
+register_pkg "aliases" "Install aliases and dependencies, and source them in bash/zsh" "pkg_aliases"
+register_pkg "utils" "Install utility tools and modern CLI aliases" "pkg_utils"
+register_pkg "tldr" "Install the tealdeer tldr client" "pkg_tldr"
+register_pkg "db-client" "Install mycli and pgcli database clients" "pkg_db_client"
+register_pkg "dnsglobe" "Install the dnsglobe DNS lookup tool" "pkg_dnsglobe"
+register_pkg "tmux" "Install and configure tmux" "pkg_tmux"
+register_pkg "vim" "Install and configure vim" "pkg_vim"
+register_pkg "neovim" "Build and configure neovim" "pkg_neovim"
+register_pkg "emacs" "Install emacs" "pkg_emacs"
+register_pkg "docker" "Install Docker CE" "pkg_docker"
+register_pkg "mail" "Install postfix and mutt" "pkg_mail"
+register_pkg "moc" "Install moc (music on console)" "pkg_moc"
+register_pkg "brave" "Install the Brave browser" "pkg_brave"
+register_pkg "warpd" "Install warpd keyboard-driven pointer" "pkg_warpd"
+register_pkg "wallpapers" "Install wallpapers" "pkg_wallpapers"
+register_pkg "feh" "Install feh and set the default wallpaper" "pkg_feh" "wallpapers"
+register_pkg "i3wm" "Install i3wm and its desktop configuration" "pkg_i3wm" "fonts kitty moc brave warpd feh"
+register_pkg "niri" "Install niri and its desktop configuration" "pkg_niri" "fonts kitty wallpapers moc brave"
+register_pkg "fonts" "Install desktop fonts" "pkg_fonts"
+register_pkg "kitty" "Install and configure the kitty terminal" "pkg_kitty"
+register_pkg "set-vim-editor" "Set vim as the default editor" "pkg_set_vim_editor"
+register_pkg "no-passwd-sudo" "Enable passwordless sudo for the current user" "pkg_no_passwd_sudo"
+
+register_group "light" "omz, aliases, utils, tldr, vim and default editor" "omz aliases utils tldr vim set-vim-editor"
+register_group "env-i3wm" "Full i3wm desktop environment" "omz aliases utils tldr tmux vim set-vim-editor neovim docker i3wm"
+register_group "env-niri" "Full niri/Wayland desktop environment" "omz aliases utils tldr tmux vim set-vim-editor neovim docker niri"
+
+is_installed() {
+  [[ -f "$STATE_FILE" ]] && grep -qxF -- "$1" "$STATE_FILE"
+}
+
+record_install() {
+  mkdir -p "$STATE_DIR"
+  if ! is_installed "$1"; then
+    printf '%s\n' "$1" >>"$STATE_FILE"
+  fi
+}
+
+append_source_once() {
+  local file="$1"
+  local line="$2"
+
+  touch "$file"
+  if ! grep -qxF -- "$line" "$file"; then
+    printf '%s\n' "$line" >>"$file"
+  fi
+}
+
+link_path() {
+  local src="$1"
+  local dst="$2"
+
+  if [[ ! -e "$src" ]]; then
+    printf 'error: source path does not exist: %s\n' "$src" >&2
+    return 1
+  fi
+
+  if [[ -L "$dst" ]]; then
+    ln -sfn "$src" "$dst"
+  elif [[ -e "$dst" ]]; then
+    printf 'warning: %s exists and is not a symlink; leaving it untouched\n' "$dst" >&2
+  else
+    mkdir -p "$(dirname -- "$dst")"
+    ln -s "$src" "$dst"
+  fi
+}
+
+pkg_shpkg() {
+  sudo ln -sfn "$SHPKG_ROOT/shpkg" "$SHPKG_BIN"
+  printf 'installed: %s -> %s\n' "$SHPKG_BIN" "$SHPKG_ROOT/shpkg"
+}
+
+pkg_omz() {
+  bash "$SHPKG_ROOT/oh-my-zsh/install.sh"
+}
+
+pkg_aliases() {
+  sudo apt install git zsh htop tree bc lm-sensors aria2 at w3m -y
+  append_source_once "$HOME/.bashrc" "source ~/.aliases/aliases.sh"
+  append_source_once "$HOME/.zshrc" "source ~/.aliases/aliases.sh"
+}
+
+pkg_utils() {
+  sudo apt install ncdu fdupes shellcheck shfmt eza fzf jq exfat-fuse dtrx smartmontools fio visidata yq -y
+
+  if [[ -d "/proc/acpi/button/lid" ]]; then
+    sudo apt install network-manager acpi brightnessctl -y
+  fi
+
+  bash "$SHPKG_ROOT/fx/install.sh"
+  bash "$SHPKG_ROOT/bat/install.sh"
+  bash "$SHPKG_ROOT/sdcv/install.sh"
+  bash "$SHPKG_ROOT/glow/install.sh"
+  bash "$SHPKG_ROOT/gitui/install.sh"
+  bash "$SHPKG_ROOT/gitdelta/install.sh"
+  bash "$SHPKG_ROOT/dialog/install.sh"
+  sudo bash "$SHPKG_ROOT/fetch/install.sh"
+
+  append_source_once "$HOME/.bashrc" "source ~/.aliases/aliases.utils.sh"
+  append_source_once "$HOME/.zshrc" "source ~/.aliases/aliases.utils.sh"
+}
+
+pkg_tldr() {
+  bash "$SHPKG_ROOT/tldr/install.sh"
+}
+
+pkg_db_client() {
+  sudo apt update
+  sudo apt install mycli pgcli -y
+  append_source_once "$HOME/.zshrc" "source ~/.aliases/db-client/dbcli.sh"
+}
+
+pkg_dnsglobe() {
+  bash "$SHPKG_ROOT/dnsglobe/install.sh"
+}
+
+pkg_tmux() {
+  bash "$SHPKG_ROOT/tmux/install.sh"
+}
+
+pkg_vim() {
+  bash "$SHPKG_ROOT/vim/install.sh"
+}
+
+pkg_neovim() {
+  bash "$SHPKG_ROOT/nvim/install.sh"
+}
+
+pkg_emacs() {
+  bash "$SHPKG_ROOT/emacs/install.sh"
+}
+
+pkg_docker() {
+  local tmp_dir
+
+  tmp_dir="$(mktemp -d)"
+  sudo apt install curl -y
+  curl -fsSL https://get.docker.com -o "$tmp_dir/get-docker.sh"
+  sudo sh "$tmp_dir/get-docker.sh"
+  sudo usermod -aG docker "$USER"
+  rm -rf "$tmp_dir"
+  echo "reboot or run 'newgrp docker'"
+}
+
+pkg_mail() {
+  DEBIAN_FRONTEND=noninteractive sudo apt install postfix mutt -y
+}
+
+pkg_moc() {
+  bash "$SHPKG_ROOT/moc/install.sh"
+}
+
+pkg_brave() {
+  sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+  sudo apt update
+  sudo apt install brave-browser -y
+}
+
+pkg_warpd() {
+  bash "$SHPKG_ROOT/i3/warpd/install.sh"
+}
+
+pkg_wallpapers() {
+  mkdir -p "$HOME/Pictures/Wallpapers/"
+  link_path "$SHPKG_ROOT/wallpapers/default" "$HOME/Pictures/Wallpapers/default"
+}
+
+pkg_feh() {
+  sudo apt install feh -y
+  {
+    printf '#!/bin/sh\n'
+    printf 'feh --no-fehbg --bg-fill %s\n' "$HOME/Pictures/Wallpapers/default/deep_blue-jeremy-bishop-DFJahLoBHK4-unsplash.jpg"
+  } >"$HOME/.fehbg"
+  sudo chmod 754 "$HOME/.fehbg"
+}
+
+pkg_i3wm() {
+  bash "$SHPKG_ROOT/i3/install.sh"
+  sudo apt install xclip libnotify-bin -y
+  bash "$SHPKG_ROOT/i3/set_theme.sh" --deep_blue
+  append_source_once "$HOME/.bashrc" "source ~/.aliases/aliases.i3.sh"
+  append_source_once "$HOME/.zshrc" "source ~/.aliases/aliases.i3.sh"
+  sudo apt purge xterm -y
+}
+
+pkg_niri() {
+  bash "$SHPKG_ROOT/niri/install.sh"
+  link_path "$SHPKG_ROOT/niri/niri" "$HOME/.config/niri"
+  link_path "$SHPKG_ROOT/niri/waybar" "$HOME/.config/waybar"
+  link_path "$SHPKG_ROOT/niri/fuzzel" "$HOME/.config/fuzzel"
+  sudo apt install playerctl pipewire-pulse -y
+  systemctl --user --now enable pipewire-pulse || true
+  bash "$SHPKG_ROOT/niri/set_theme.sh" --deep_blue
+  append_source_once "$HOME/.bashrc" "source ~/.aliases/aliases.niri.sh"
+  append_source_once "$HOME/.zshrc" "source ~/.aliases/aliases.niri.sh"
+}
+
+pkg_fonts() {
+  bash "$SHPKG_ROOT/fonts/install.sh"
+}
+
+pkg_kitty() {
+  bash "$SHPKG_ROOT/terminal/kitty/install.sh"
+}
+
+pkg_set_vim_editor() {
+  sudo update-alternatives --set editor /usr/bin/vim.basic
+}
+
+pkg_no_passwd_sudo() {
+  local user
+  local sudoers_file
+
+  user="$(logname)"
+  sudoers_file="/etc/sudoers.d/$user"
+  echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo tee "$sudoers_file" >/dev/null
+  sudo chmod 0440 "$sudoers_file"
+}
+
+pkg_exists() {
+  [[ -n "${PKG_DESC[$1]:-}" ]]
+}
+
+pkg_names() {
+  printf '%s\n' "${!PKG_DESC[@]}" | sort
+}
+
+install_pkg() {
+  local name="$1"
+  local kind
+  local handler
+  local dep
+  local -a deps=()
+
+  if ! pkg_exists "$name"; then
+    printf "error: unknown package '%s'\n" "$name" >&2
+    printf "run 'shpkg list' to see available packages\n" >&2
+    return 1
+  fi
+
+  if [[ -n "${COMPLETED[$name]:-}" ]]; then
+    return 0
+  fi
+
+  if [[ -n "${VISITING[$name]:-}" ]]; then
+    printf "error: dependency cycle involving '%s'\n" "$name" >&2
+    return 1
+  fi
+
+  kind="${PKG_KIND[$name]}"
+
+  if [[ "$kind" == "package" && "$name" != "shpkg" ]] && is_installed "$name"; then
+    printf '==> %s already installed\n' "$name"
+    COMPLETED[$name]=1
+    return 0
+  fi
+
+  VISITING[$name]=1
+
+  read -r -a deps <<<"${PKG_DEPS[$name]:-}"
+  for dep in "${deps[@]}"; do
+    install_pkg "$dep"
+  done
+
+  if [[ "$kind" == "group" ]]; then
+    printf '==> group %s\n' "$name"
+  else
+    handler="${PKG_HANDLER[$name]}"
+    printf '==> installing %s\n' "$name"
+    (
+      set -eE
+      trap 'printf "error: failed to install %s\n" "$name" >&2' ERR
+      "$handler"
+    )
+  fi
+
+  unset 'VISITING[$name]'
+  record_install "$name"
+  COMPLETED[$name]=1
+}
+
+list_packages() {
+  local name
+  local status
+
+  printf '\nPackages:\n'
+  printf '  %-20s %-11s %s\n' "NAME" "STATUS" "DESCRIPTION"
+
+  while IFS= read -r name; do
+    if [[ "${PKG_KIND[$name]}" == "group" ]]; then
+      continue
+    fi
+    status="available"
+    if is_installed "$name"; then
+      status="installed"
+    fi
+    printf '  %-20s %-11s %s\n' "$name" "$status" "${PKG_DESC[$name]}"
+  done < <(pkg_names)
+
+  printf '\nGroups:\n'
+  printf '  %-20s %-11s %s\n' "NAME" "STATUS" "DESCRIPTION"
+
+  while IFS= read -r name; do
+    if [[ "${PKG_KIND[$name]}" != "group" ]]; then
+      continue
+    fi
+    status="available"
+    if is_installed "$name"; then
+      status="installed"
+    fi
+    printf '  %-20s %-11s %s\n' "$name" "$status" "${PKG_DESC[$name]}"
+  done < <(pkg_names)
+  printf '\n'
+}
+
+info_package() {
+  local name="$1"
+
+  if ! pkg_exists "$name"; then
+    printf "error: unknown package '%s'\n" "$name" >&2
+    printf "run 'shpkg list' to see available packages\n" >&2
+    return 1
+  fi
+
+  printf 'name:         %s\n' "$name"
+  printf 'type:         %s\n' "${PKG_KIND[$name]}"
+  printf 'description:  %s\n' "${PKG_DESC[$name]}"
+  if [[ -n "${PKG_DEPS[$name]:-}" ]]; then
+    printf 'dependencies: %s\n' "${PKG_DEPS[$name]}"
+  else
+    printf 'dependencies: none\n'
+  fi
+  if is_installed "$name"; then
+    printf 'status:       installed\n'
+  else
+    printf 'status:       available\n'
+  fi
+}
+
+usage() {
+  cat <<'EOF'
+shpkg v2.0.0 - package manager for the ~/.aliases repository
+
+Usage:
+  shpkg install <pkg> [<pkg>...]   Install one or more packages
+  shpkg list                       List available packages and groups
+  shpkg info <pkg>                 Show package details
+  shpkg --help                     Show this help message
+
+Bootstrap shpkg itself:
+  cd ~/.aliases
+  ./shpkg install shpkg
+
+After bootstrap, run shpkg from any directory:
+  shpkg install dnsglobe
+EOF
+}
+
+main() {
+  local command="${1:-}"
+
+  shift || true
+
+  case "$command" in
+  install)
+    if [[ $# -eq 0 ]]; then
+      printf 'error: install requires at least one package\n' >&2
+      usage >&2
+      return 1
+    fi
+    local name
+    for name in "$@"; do
+      install_pkg "$name"
+    done
+    ;;
+  list)
+    if [[ $# -ne 0 ]]; then
+      printf 'error: list does not accept arguments\n' >&2
+      return 1
+    fi
+    list_packages
+    ;;
+  info)
+    if [[ $# -ne 1 ]]; then
+      printf 'error: info requires exactly one package\n' >&2
+      return 1
+    fi
+    info_package "$1"
+    ;;
+  help | -h | --help | "")
+    usage
+    ;;
+  *)
+    printf "error: unknown command '%s'\n" "$command" >&2
+    usage >&2
+    return 1
+    ;;
+  esac
+}
+
+main "$@"

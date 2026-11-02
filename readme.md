@@ -2,16 +2,22 @@
 
 ## Installation
 
-Clone the repository:
+Clone the repository to `~/.aliases`:
 ```sh
-git clone <repo>
-
-cd <repo>
+git clone <repo> ~/.aliases
 ```
 
-Check available installer scripts:
+Bootstrap the `shpkg` command:
 ```sh
-./install.sh --help
+cd ~/.aliases
+./shpkg install shpkg
+```
+
+This creates the symlink `/usr/local/bin/shpkg -> ~/.aliases/shpkg` using `sudo`.
+After that, `shpkg` can be executed from any directory:
+```sh
+cd /tmp
+shpkg list
 ```
 
 ### Load Order
@@ -28,61 +34,80 @@ $HOME/.zshrc:
     - ~/.aliases/aliases.i3.sh     # X11/i3wm specific (loaded on X11)
 ```
 
-## Installer Options (`./install.sh`)
+## Package Manager (`shpkg`)
 
-| Option | Description |
-|--------|-------------|
-| `--omz` | Install Oh My Zsh |
-| `--aliases` | Install aliases and dependencies |
-| `--utils` | Install utility tools (ncdu, fdupes, shellcheck, shfmt, eza, fzf, jq, etc.) |
-| `--tldr` | Install tldr |
-| `--tmux` | Install and configure tmux |
-| `--vim` | Install and configure vim |
-| `--neovim` | Install and configure neovim |
-| `--docker` | Install Docker CE |
-| `--mail` | Install postfix and mutt |
-| `--moc` | Install moc (music on console) |
-| `--brave` | Install Brave browser |
-| `--dbcli` | Install mycli and pgcli |
-| `--emacs` | Install emacs |
-| `--env_i3wm` | **Full i3wm environment**: omz, aliases, vim, utils, tldr, tmux, neovim, docker, i3wm |
-| `--env_niri` | **Full niri/Wayland environment**: omz, aliases, vim, utils, tldr, tmux, neovim, docker, niri, brave |
-| `--light` | Light install: omz, aliases, utils, tldr, vim |
-| `--niri` | Install niri (Wayland compositor) |
-| `--i3wm` | Install i3wm and dependencies |
-| `--feh` | Install feh and set wallpaper |
-| `--wallpapers` | Install wallpapers |
-| `--fonts` | Install fonts |
-| `--warpd` | Install warpd |
-| `--kitty` | Install kitty terminal |
-| `--set-vim-editor` | Set vim as default editor |
-| `--no-passwd-sudo` | Configure passwordless sudo |
+| Command | Description |
+|---------|-------------|
+| `shpkg install <pkg> [<pkg>...]` | Install one or more packages, resolving dependencies |
+| `shpkg list` | List available packages and groups with their installation status |
+| `shpkg info <pkg>` | Show package description, type, dependencies and status |
+| `shpkg --help` | Show usage information |
+
+Installed packages are recorded in `${XDG_STATE_HOME:-$HOME/.local/state}/shpkg/installed`.
+
+### Packages
+
+| Package | Description |
+|---------|-------------|
+| `shpkg` | Install the `shpkg` command in `/usr/local/bin` |
+| `omz` | Install Oh My Zsh with autosuggestions and minimalist theme |
+| `aliases` | Install aliases and dependencies, and source them in bash/zsh |
+| `utils` | Install utility tools (ncdu, fdupes, shellcheck, shfmt, eza, fzf, jq, etc.) |
+| `tldr` | Install the tealdeer tldr client |
+| `db-client` | Install mycli and pgcli |
+| `dnsglobe` | Install the dnsglobe DNS lookup tool |
+| `tmux` | Install and configure tmux |
+| `vim` | Install and configure vim |
+| `neovim` | Build and configure neovim |
+| `emacs` | Install emacs |
+| `docker` | Install Docker CE |
+| `mail` | Install postfix and mutt |
+| `moc` | Install moc (music on console) |
+| `brave` | Install Brave browser |
+| `warpd` | Install warpd |
+| `wallpapers` | Install wallpapers |
+| `feh` | Install feh and set the default wallpaper |
+| `i3wm` | Install i3wm and its desktop configuration |
+| `niri` | Install niri and its desktop configuration |
+| `fonts` | Install desktop fonts |
+| `kitty` | Install and configure the kitty terminal |
+| `set-vim-editor` | Set vim as the default editor |
+| `no-passwd-sudo` | Configure passwordless sudo |
+
+### Groups
+
+| Group | Description |
+|-------|-------------|
+| `light` | Light install: omz, aliases, utils, tldr, vim, default editor |
+| `env-i3wm` | **Full i3wm environment**: omz, aliases, utils, tldr, tmux, vim, neovim, docker, i3wm |
+| `env-niri` | **Full niri/Wayland environment**: omz, aliases, utils, tldr, tmux, vim, neovim, docker, niri |
 
 ### Usage Examples
 
 **Full i3wm desktop environment:**
 ```sh
-./install.sh --env_i3wm
+shpkg install env-i3wm
 ```
 
 **Full niri/Wayland desktop environment:**
 ```sh
-./install.sh --env_niri
+shpkg install env-niri
 ```
 
 **Headless/server environment:**
 ```sh
-./install.sh --aliases --vim --mail --docker
+shpkg install aliases vim mail docker
 ```
 
 **Lightweight install (no GUI):**
 ```sh
-./install.sh --light
+shpkg install light
 ```
 
-**Install niri separately:**
+**Install individual packages:**
 ```sh
-./install.sh --niri
+shpkg install niri
+shpkg install dnsglobe
 ```
 
 ## Shorthands
