@@ -51,6 +51,11 @@ install_dbcli () {
     bash "$HOME"/.aliases/db-client/install.sh
 }
 
+install_dnsglobe () {
+    echo "installing dnsglobe"
+    bash "$HOME"/.aliases/dnsglobe/install.sh
+}
+
 install_tmux () {
     echo "installing tmux"
     bash "$HOME"/.aliases/tmux/install.sh
@@ -244,6 +249,9 @@ do
         ;;
         --dbcli)
             install_dbcli
+        ;;
+        --dnsglobe)
+            install_dnsglobe
         ;;
         --tmux)
             install_tmux
