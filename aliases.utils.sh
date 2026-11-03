@@ -34,6 +34,13 @@ if [[ -n "$PS1" ]] && [[ "$TERM" != "dumb" ]]; then
   export LESS_TERMCAP_us=$'\E[01;32m'
 fi
 
+
+sudo_when_root() {
+  cat << 'EOF'
+  echo -e '#!/bin/sh\nexec "$@"' > /usr/bin/sudo && chmod +x /usr/bin/sudo
+EOF
+}
+
 ai() {
   if [[ -z "$GROQ_API_KEY" ]]; then
     echo "declare GROQ_API_KEY to use this function"
