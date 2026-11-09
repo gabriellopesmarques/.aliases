@@ -46,8 +46,11 @@ $HOME/.zshrc:
 |---------|-------------|
 | `shpkg install <pkg> [<pkg>...]` | Install one or more packages or groups, skipping installed ones |
 | `shpkg install --force <pkg> [<pkg>...]` | Reinstall packages even if already recorded as installed |
+| `shpkg purge <pkg> [<pkg>...]` | Purge packages or groups, removing configuration files too |
+| `shpkg purge --yes <pkg> [<pkg>...]` | Purge without asking for confirmation |
+| `shpkg purge --force <pkg> [<pkg>...]` | Purge even if not recorded as installed |
 | `shpkg list` | List available packages and groups with their installation status |
-| `shpkg info <pkg>` | Show package type, status, directory, README and uninstall availability |
+| `shpkg info <pkg>` | Show package type, status, directory, install/purge availability and README |
 | `shpkg --help` | Show usage information |
 
 Installed packages are recorded in `${XDG_STATE_HOME:-$HOME/.local/state}/shpkg/installed`.
@@ -58,11 +61,19 @@ Use `--force` (or `-f`) to reinstall them.
 
 ```text
 packages/<name>/install.sh   # package
+packages/<name>/purge.sh     # package removal
+packages/<name>/description  # short description used by list/info
 groups/<name>/install.sh     # group
+groups/<name>/purge.sh       # group removal
+groups/<name>/description    # short description used by list/info
 ```
 
-A package or group may also provide `uninstall.sh` and `README.md`. The
-`README.md` first heading/line is used as the description in `shpkg list`.
+A package or group may also provide `README.md` for longer documentation. The
+`description` file is used by `shpkg list` and `shpkg info`; if it does not
+exist, the first heading/line of `README.md` is used as a fallback.
+
+Removal is only supported through `purge.sh`. An `uninstall.sh` file is not
+executed: packages without `purge.sh` report `can't remove this package`.
 
 ### Interactive Groups
 
@@ -83,10 +94,42 @@ shpkg install --force env-i3wm
 If `dialog` is not available, its package is installed automatically before
 the checklist is shown.
 
+### Purging
+
+`shpkg purge` removes the apt packages and the configuration files, symlinks
+and caches created by a package or group. It asks for confirmation unless
+`--yes` is given. When stdin/stdout is not a terminal, `--yes` is required.
+
+```sh
+shpkg purge tldr
+shpkg purge --yes tldr
+shpkg purge --force tldr   # also runs if not recorded as installed
+```
+
+Packages that are not recorded as installed are skipped unless `--force` is
+used. When a group has its own `purge.sh`, it runs the purge script of each
+member in sequence (in reverse install order) and skips members that are not
+installed.
+
+Only `purge.sh` is supported. `uninstall.sh` is ignored, and a package without
+`purge.sh` returns `can't remove this package: <name>` without changing
+anything.
+
+Purging is **not recursive** for dependencies. Purging `niri` or `i3wm` does
+not purge `kitty`, `fonts`, `moc`, `brave` or other packages they install.
+Purge those separately if desired.
+
+Some packages share system dependencies. Purging a package may remove a tool
+that another package still expects; reinstall the affected package or purge in
+reverse dependency order. Docker data in `/var/lib/docker` is never removed
+automatically. Files that install scripts overwrite, such as `~/.zshrc` and
+`~/.tmux.conf`, cannot be restored by purge; only the lines known to belong to
+the package are removed.
+
 ### Repository Layout
 
 ```text
-packages/     Individual installable components and their assets
+packages/     Individual installable components, install.sh, purge.sh and assets
 groups/       Compositions that install multiple packages
 aliases*.sh   Shared shell aliases/functions loaded by bash/zsh
 shpkg         Package manager entrypoint
@@ -125,6 +168,12 @@ shpkg install dnsglobe
 **Reinstall packages already recorded as installed:**
 ```sh
 shpkg install --force niri dnsglobe
+```
+
+**Purge packages and their configuration:**
+```sh
+shpkg purge tldr
+shpkg purge --yes bat glow gitui
 ```
 
 ## Shorthands
