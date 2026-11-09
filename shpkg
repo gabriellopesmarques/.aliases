@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###########################
-##     shpkg v2.2.0      ##
+##     shpkg v2.3.0      ##
 ###########################
 
 set -euo pipefail
@@ -20,6 +20,17 @@ record_install() {
   if ! is_installed "$1"; then
     printf '%s\n' "$1" >>"$STATE_FILE"
   fi
+}
+
+unrecord_install() {
+  local name="$1"
+  local tmp
+
+  [[ -f "$STATE_FILE" ]] || return 0
+
+  tmp="$(mktemp)"
+  grep -vxF -- "$name" "$STATE_FILE" >"$tmp" || true
+  mv "$tmp" "$STATE_FILE"
 }
 
 valid_name() {
@@ -47,8 +58,18 @@ pkg_dir() {
 
 pkg_description() {
   local dir="$1"
+  local description_file="$dir/description"
   local readme="$dir/README.md"
   local line
+
+  if [[ -f "$description_file" ]]; then
+    while IFS= read -r line; do
+      line="${line#"${line%%[![:space:]]*}"}"
+      [[ -z "$line" ]] && continue
+      printf '%s' "$line"
+      return
+    done <"$description_file"
+  fi
 
   if [[ ! -f "$readme" ]]; then
     printf -- '-'
@@ -125,10 +146,11 @@ info_package() {
   printf 'type:         %s\n' "$type"
   printf 'description:  %s\n' "$(pkg_description "$dir")"
   printf 'directory:    %s\n' "$dir"
-  if [[ -f "$dir/uninstall.sh" ]]; then
-    printf 'uninstall:    available\n'
+  printf 'install:      available\n'
+  if [[ -f "$dir/purge.sh" ]]; then
+    printf 'purge:        available\n'
   else
-    printf 'uninstall:    not available\n'
+    printf 'purge:        not available\n'
   fi
   if [[ -f "$dir/README.md" ]]; then
     printf 'readme:       %s/README.md\n' "$dir"
@@ -178,33 +200,92 @@ install_pkg() {
   (
     set -eE
     trap 'printf "error: failed to install %s\n" "$name" >&2' ERR
-    export SHPKG_ROOT
-    export SHPKG_BIN
-    export SHPKG_NAME="$name"
-    export SHPKG_TYPE="$type"
-    export SHPKG_PKG_DIR="$dir"
-    export SHPKG_STACK="${SHPKG_STACK:+$SHPKG_STACK }$name"
-    bash -e "$script"
+    env \
+      SHPKG_ROOT="$SHPKG_ROOT" \
+      SHPKG_BIN="$SHPKG_BIN" \
+      SHPKG_NAME="$name" \
+      SHPKG_TYPE="$type" \
+      SHPKG_PKG_DIR="$dir" \
+      SHPKG_STACK="${SHPKG_STACK:+$SHPKG_STACK }$name" \
+      bash -e "$script"
   )
 
   record_install "$name"
 }
 
+purge_pkg() {
+  local name="$1"
+  local force="${2:-0}"
+  local type
+  local dir
+  local script
+
+  if ! valid_name "$name"; then
+    printf "error: invalid package name '%s'\n" "$name" >&2
+    return 1
+  fi
+
+  if ! type="$(pkg_type "$name")"; then
+    printf "error: unknown package '%s'\n" "$name" >&2
+    printf "run 'shpkg list' to see available packages\n" >&2
+    return 1
+  fi
+
+  dir="$(pkg_dir "$name" "$type")"
+  script="$dir/purge.sh"
+
+  if [[ ! -f "$script" ]]; then
+    printf "can't remove this package: %s\n" "$name" >&2
+    return 1
+  fi
+
+  if [[ " ${SHPKG_STACK:-} " == *" $name "* ]]; then
+    printf "error: dependency cycle involving '%s'\n" "$name" >&2
+    return 1
+  fi
+
+  if [[ "$force" -eq 0 ]] && ! is_installed "$name"; then
+    printf '==> %s is not installed, skipping\n' "$name"
+    return 0
+  fi
+
+  printf '==> purging %s (%s)\n' "$name" "$type"
+
+  (
+    set -eE
+    trap 'printf "error: failed to purge %s\n" "$name" >&2' ERR
+    env \
+      SHPKG_ROOT="$SHPKG_ROOT" \
+      SHPKG_BIN="$SHPKG_BIN" \
+      SHPKG_NAME="$name" \
+      SHPKG_TYPE="$type" \
+      SHPKG_PKG_DIR="$dir" \
+      SHPKG_PURGE_CONFIRMED=1 \
+      SHPKG_STACK="${SHPKG_STACK:+$SHPKG_STACK }$name" \
+      bash -e "$script"
+  )
+
+  unrecord_install "$name"
+}
+
 usage() {
   cat <<'EOF'
-shpkg v2.2.0 - package manager for the ~/.aliases repository
+shpkg v2.3.0 - package manager for the ~/.aliases repository
 
 Usage:
   shpkg install [--force] <pkg> [<pkg>...]   Install packages or groups
+  shpkg purge [--yes] [--force] <pkg>...     Purge packages or groups
   shpkg list                                 List available packages and groups
   shpkg info <pkg>                           Show package details
   shpkg --help                               Show this help message
 
 Options:
-  -f, --force   Reinstall packages even if already recorded as installed
+  -f, --force   Reinstall, or purge even if not recorded as installed
+  -y, --yes     Do not ask for confirmation when purging
 
 Packages live in packages/<name>/install.sh and groups in
-groups/<name>/install.sh.
+groups/<name>/install.sh. Removal is only supported through
+packages/<name>/purge.sh and groups/<name>/purge.sh.
 
 Bootstrap shpkg itself:
   cd ~/.aliases
@@ -257,6 +338,81 @@ main() {
     local name
     for name in "${names[@]}"; do
       install_pkg "$name" "$force"
+    done
+    ;;
+  purge)
+    local purge_force=0
+    local assume_yes=0
+    local -a purge_names=()
+    while [[ $# -gt 0 ]]; do
+      case "$1" in
+      -f | --force)
+        purge_force=1
+        ;;
+      -y | --yes)
+        assume_yes=1
+        ;;
+      --)
+        shift
+        purge_names+=("$@")
+        break
+        ;;
+      -*)
+        printf "error: unknown option '%s'\n" "$1" >&2
+        usage >&2
+        return 1
+        ;;
+      *)
+        purge_names+=("$1")
+        ;;
+      esac
+      shift
+    done
+    if [[ ${#purge_names[@]} -eq 0 ]]; then
+      printf 'error: purge requires at least one package\n' >&2
+      usage >&2
+      return 1
+    fi
+    local purge_name
+    local purge_type
+    local purge_dir
+    for purge_name in "${purge_names[@]}"; do
+      if ! valid_name "$purge_name"; then
+        printf "error: invalid package name '%s'\n" "$purge_name" >&2
+        return 1
+      fi
+      if ! purge_type="$(pkg_type "$purge_name")"; then
+        printf "error: unknown package '%s'\n" "$purge_name" >&2
+        printf "run 'shpkg list' to see available packages\n" >&2
+        return 1
+      fi
+      purge_dir="$(pkg_dir "$purge_name" "$purge_type")"
+      if [[ ! -f "$purge_dir/purge.sh" ]]; then
+        printf "can't remove this package: %s\n" "$purge_name" >&2
+        return 1
+      fi
+    done
+    if [[ "$assume_yes" -eq 0 ]]; then
+      if [[ ! -t 0 || ! -t 1 ]]; then
+        printf 'error: purge requires --yes when stdin/stdout is not a terminal\n' >&2
+        return 1
+      fi
+      printf 'The following will be purged:\n'
+      for purge_name in "${purge_names[@]}"; do
+        printf '  - %s\n' "$purge_name"
+      done
+      local answer=""
+      read -r -p 'Continue? [y/N] ' answer || answer=""
+      case "$answer" in
+      [yY] | [yY][eE][sS]) ;;
+      *)
+        printf '==> purge cancelled\n' >&2
+        return 1
+        ;;
+      esac
+    fi
+    for purge_name in "${purge_names[@]}"; do
+      purge_pkg "$purge_name" "$purge_force"
     done
     ;;
   list)
